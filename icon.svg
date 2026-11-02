@@ -1,0 +1,26 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="512" height="512">
+  <defs>
+    <linearGradient id="bgGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#0f172a"/>
+      <stop offset="100%" stop-color="#020617"/>
+    </linearGradient>
+    <linearGradient id="accentGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#fb923c"/>
+      <stop offset="100%" stop-color="#ea580c"/>
+    </linearGradient>
+    <filter id="glow" x="-20%" y="-20%" width="140%" height="140%">
+      <feDropShadow dx="0" dy="8" stdDeviation="16" flood-color="#ea580c" flood-opacity="0.35"/>
+    </filter>
+  </defs>
+  <rect width="512" height="512" rx="128" fill="url(#bgGrad)"/>
+  <rect width="504" height="504" x="4" y="4" rx="124" fill="none" stroke="#1e293b" stroke-width="4"/>
+  <g transform="translate(64, 64) scale(0.75)" filter="url(#glow)">
+    <path d="M256 38 L445 147 V365 L256 474 L67 365 V147 Z" fill="url(#accentGrad)"/>
+    <g stroke="#0f172a" stroke-width="36" stroke-linecap="round">
+      <line x1="166" y1="324" x2="166" y2="264"/>
+      <line x1="226" y1="324" x2="226" y2="218"/>
+      <line x1="286" y1="324" x2="286" y2="196"/>
+      <line x1="346" y1="324" x2="346" y2="166"/>
+    </g>
+  </g>
+</svg>

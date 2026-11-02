@@ -1,0 +1,8 @@
+{
+  "name": "Crypto Score AI",
+  "description": "Cryptocurrency evaluation, CEM-100 scoring, DeFi radar, tokenized stocks, and on-chain intelligence.",
+  "requestFramePermissions": [],
+  "majorCapabilities": [
+    "MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"
+  ]
+}
