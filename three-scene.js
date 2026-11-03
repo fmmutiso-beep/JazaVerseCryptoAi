@@ -942,6 +942,26 @@ function updateBadgeUI() {
     change.className = isUp ? 'up' : 'down';
     change.textContent = `${isUp ? '+' : ''}${(currentCoin.ch24 || 0).toFixed(2)}%`;
   }
+
+  // Update screensaver badge with clean text
+  const scName = document.getElementById('scName');
+  const scSym = document.getElementById('scSym');
+  const scPrice = document.getElementById('scPrice');
+  const scChg = document.getElementById('scChg');
+  const scScore = document.getElementById('scScore');
+  const scRating = document.getElementById('scRating');
+
+  if (scName) scName.textContent = currentCoin.name || 'Bitcoin';
+  if (scSym) scSym.textContent = currentCoin.sym || 'BTC';
+  if (scPrice) scPrice.textContent = `$${Number(currentCoin.price || 0).toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`;
+  if (scChg) {
+    const isUp = (currentCoin.ch24 || 0) >= 0;
+    const arrow = isUp ? '▲' : '▼';
+    scChg.style.color = isUp ? '#22c55e' : '#ef4444';
+    scChg.textContent = `${arrow} ${isUp ? '+' : ''}${Number(currentCoin.ch24 || 0).toFixed(2)}%`;
+  }
+  if (scScore) scScore.textContent = `MC Score ${(currentCoin.mc || 0).toFixed(1)}`;
+  if (scRating) scRating.textContent = (currentCoin.rating && currentCoin.rating.label) || 'High Quality';
 }
 
 export function refreshGalaxyCoins(coinsList) {

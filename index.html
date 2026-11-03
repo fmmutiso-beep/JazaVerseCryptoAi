@@ -487,10 +487,7 @@ footer strong{color:var(--fg)}
 .toasts{position:fixed;left:max(16px,env(safe-area-inset-left,0px));bottom:calc(16px + env(safe-area-inset-bottom,0px));display:flex;flex-direction:column;gap:8px;z-index:80;max-width:calc(100vw - 32px)}
 .toast{background:var(--fg);color:var(--bg);padding:10px 16px;border-radius:12px;font-size:13px;font-weight:500;box-shadow:var(--shadow);animation:in .25s ease}
 @keyframes in{from{opacity:0;transform:translateY(8px)}}
-/* 3D Vault Styles */
-.three-view{display:flex;flex-direction:column;gap:16px;width:100%;margin:0 auto}
-.three-view[hidden]{display:none}
-.three-container{position:relative;width:100%;height:min(760px,calc(100vh - 140px));min-height:540px;background:radial-gradient(ellipse at center,#1e293b 0%,#0b1120 100%);border:1px solid var(--line);border-radius:20px;overflow:hidden;box-shadow:var(--shadow)}
+/* 3D Screensaver Styles */
 .three-canvas{width:100%!important;height:100%!important;display:block;outline:none}
 .three-badge{position:absolute;top:20px;left:20px;z-index:20;background:rgba(15,23,42,0.88);border:1px solid var(--line);border-radius:14px;padding:14px 18px;display:flex;flex-direction:column;gap:6px;color:#fff;pointer-events:none;backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px)}
 .three-badge h3{margin:0;font-size:18px;font-weight:700;display:flex;align-items:center;gap:8px}
@@ -523,9 +520,10 @@ footer strong{color:var(--fg)}
 .screensaver-coin{display:flex;align-items:center;gap:10px}
 .screensaver-coin .sc-name{font-size:22px;font-weight:700;font-family:var(--font-display);letter-spacing:-0.02em}
 .screensaver-coin .sc-sym{font-size:12px;font-family:var(--font-mono);background:var(--accent);color:var(--accent-ink);padding:3px 8px;border-radius:6px;font-weight:700}
+.screensaver-coin .sc-rating-pill{font-size:11px;font-family:var(--font-mono);background:rgba(255,255,255,0.12);color:#cbd5e1;padding:3px 8px;border-radius:6px;font-weight:600;letter-spacing:0.02em}
 .screensaver-metrics{display:flex;align-items:baseline;gap:12px;margin-top:6px;font-family:var(--font-mono);font-size:14px}
 .screensaver-metrics .sc-price{font-size:18px;font-weight:700;color:#fff}
-.screensaver-metrics .sc-chg{font-weight:700;color:var(--good)}
+.screensaver-metrics .sc-chg{font-weight:700;color:var(--good);display:inline-flex;align-items:center;gap:4px}
 .screensaver-metrics .sc-score{color:#94a3b8;font-size:13px}
 .screensaver-actions{display:flex;align-items:center;gap:10px;pointer-events:auto}
 .screensaver-chips{display:flex;gap:6px;background:rgba(15,23,42,0.85);border:1px solid rgba(255,255,255,0.12);border-radius:12px;padding:4px;backdrop-filter:blur(10px)}
@@ -571,7 +569,7 @@ footer strong{color:var(--fg)}
       <svg width="34" height="34" viewBox="0 0 34 34" aria-hidden="true"><path d="M17 2.5 29.5 9.75v14.5L17 31.5 4.5 24.25V9.75z" fill="var(--accent)"/><path d="M11 21.5v-4M15 21.5v-7M19 21.5v-5.5M23 21.5V11" stroke="var(--accent-ink)" stroke-width="2.4" stroke-linecap="round"/></svg>
       <span><b>Crypto Score AI</b><small>CEM-100 evaluation</small></span>
     </button>
-    <nav class="nav" aria-label="Pages"><button data-view="dash" aria-current="true">Dashboard</button><button data-view="trending" aria-current="false">Trending</button><button data-view="three" aria-current="false">3D Vault</button><button data-act="screensaver" aria-current="false">3D Screensaver</button><button data-view="defi" aria-current="false">DeFi</button><button data-view="chain" aria-current="false">On-chain</button></nav>
+    <nav class="nav" aria-label="Pages"><button data-view="dash" aria-current="true">Dashboard</button><button data-view="trending" aria-current="false">Trending</button><button data-act="screensaver" aria-current="false">3D Screensaver</button><button data-view="defi" aria-current="false">DeFi</button><button data-view="chain" aria-current="false">On-chain</button></nav>
     <span class="top-sp"></span>
     <span class="chip" id="status" role="status"><i class="dot" id="statusDot"></i><span id="statusText">Sample data</span></span>
     <button class="btn" id="refreshBtn" data-act="refresh"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12a9 9 0 1 1-3-6.7L21 8"/><path d="M21 3v5h-5"/></svg>Refresh now</button>
@@ -597,7 +595,7 @@ footer strong{color:var(--fg)}
       <div style="display:flex;align-items:center;gap:10px;margin-top:12px;margin-bottom:14px;flex-wrap:wrap">
         <button class="btn sm" type="button" data-act="screensaver" id="screensaverDashBtn" style="display:inline-flex;align-items:center;gap:6px;font-weight:600">
           <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><polygon points="10 8 16 12 10 16 10 8" fill="currentColor"/></svg>
-          <span>3D Vault Screen Display</span>
+          <span>3D Screensaver</span>
         </button>
         <span style="font-size:12px;color:var(--muted)">Auto-emerges after 1 min idle</span>
       </div>
@@ -648,83 +646,6 @@ footer strong{color:var(--fg)}
       </div>
       <div class="wlist" id="wlist"></div>
     </section>
-  </section>
-  <section id="viewThree" hidden class="three-view">
-    <div class="three-container" id="threeContainer">
-      <div class="three-badge" id="threeBadge">
-        <h3 id="threeBadgeTitle"><span id="threeBadgeName">Bitcoin</span> <span class="badge-tag" id="threeBadgeSymbol">BTC</span></h3>
-        <span class="sub" id="threeBadgeSub">CEM-100 Precision 3D Specimen</span>
-        <div class="metrics">
-          <span id="threeBadgePrice">$96,420.00</span>
-          <span id="threeBadgeChange" style="color:var(--good)">+3.4%</span>
-          <span id="threeBadgeScore">MC Score 88.5</span>
-        </div>
-      </div>
-      <div id="threeMount" style="width:100%;height:100%"></div>
-      <div class="three-tooltip" id="threeTooltip"></div>
-      
-      <!-- Ergonomic Collapsible Bottom Dock -->
-      <div class="three-dock" id="threeDock">
-        <div class="three-dock-header">
-          <div style="display:flex;align-items:center;gap:10px">
-            <span style="font-size:12px;font-weight:700;letter-spacing:0.05em;color:#e2e8f0;text-transform:uppercase">3D Vault Controller</span>
-            <span style="font-size:11px;color:#94a3b8" id="threeModeIndicator">Mode: Physical Specimen</span>
-          </div>
-          <button class="three-dock-toggle" id="threeDockToggle" type="button" aria-expanded="true">
-            <span id="threeDockToggleIcon">▾</span> <span id="threeDockToggleText">Hide Controls</span>
-          </button>
-        </div>
-        <div class="three-dock-body" id="threeDockBody">
-          <div class="three-ctrl-group">
-            <label>View Mode</label>
-            <div class="seg" id="threeModeSeg">
-              <button type="button" class="three-mode-btn" data-mode="specimen" aria-pressed="true">Coin Specimen</button>
-              <button type="button" class="three-mode-btn" data-mode="galaxy" aria-pressed="false">Market Galaxy</button>
-            </div>
-          </div>
-
-          <div class="three-ctrl-group" id="threeCoinSelectGroup">
-            <label for="threeCoinSelect">Asset</label>
-            <select id="threeCoinSelect">
-              <option value="bitcoin">Bitcoin (BTC)</option>
-              <option value="ethereum">Ethereum (ETH)</option>
-              <option value="solana">Solana (SOL)</option>
-              <option value="ripple">Ripple (XRP)</option>
-              <option value="cardano">Cardano (ADA)</option>
-            </select>
-          </div>
-
-          <div class="three-ctrl-group" id="threeFinishGroup">
-            <label>Specimen Finish</label>
-            <div class="seg" id="threeFinishSeg">
-              <button type="button" class="three-finish-btn" data-finish="gold" aria-pressed="true">Gold</button>
-              <button type="button" class="three-finish-btn" data-finish="titanium" aria-pressed="false">Titanium</button>
-              <button type="button" class="three-finish-btn" data-finish="cyber" aria-pressed="false">Cyber</button>
-              <button type="button" class="three-finish-btn" data-finish="platinum" aria-pressed="false">Platinum</button>
-            </div>
-          </div>
-
-          <div class="three-ctrl-group" id="threeExplodeGroup">
-            <label for="threeExplodeRange">Exploded: <span id="threeExplodeVal">0%</span></label>
-            <input type="range" id="threeExplodeRange" min="0" max="1" step="0.01" value="0" style="width:90px">
-          </div>
-
-          <div class="three-ctrl-group">
-            <label for="threeSpeedRange">Speed: <span id="threeSpeedVal">1.0×</span></label>
-            <input type="range" id="threeSpeedRange" min="0" max="3" step="0.1" value="1.0" style="width:80px">
-          </div>
-
-          <div class="three-ctrl-group">
-            <label>Camera Preset</label>
-            <div style="display:flex;gap:4px">
-              <button type="button" class="btn sm" id="threeCamFront">Front</button>
-              <button type="button" class="btn sm" id="threeCamIso">Isometric</button>
-              <button type="button" class="btn sm" id="threeCamTop">Top</button>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
   </section>
   <section id="viewTrending" hidden></section>
   <section id="viewDefi" hidden></section>
@@ -790,8 +711,8 @@ footer strong{color:var(--fg)}
     <div id="readBody" class="readbody"></div>
   </div>
 </div>
-<!-- 3D Vault Fullscreen Ambient Display / Screensaver -->
-<div id="threeScreensaver" class="three-screensaver" hidden aria-label="3D Vault Screen Display" role="dialog" aria-modal="true">
+<!-- 3D Fullscreen Ambient Display / Screensaver -->
+<div id="threeScreensaver" class="three-screensaver" hidden aria-label="3D Screensaver" role="dialog" aria-modal="true">
   <div id="screensaverMount" class="screensaver-mount"></div>
   <div class="screensaver-overlay" id="screensaverOverlay">
     <div class="screensaver-header">
@@ -799,10 +720,11 @@ footer strong{color:var(--fg)}
         <div class="screensaver-coin">
           <span class="sc-name" id="scName">Bitcoin</span>
           <span class="sc-sym" id="scSym">BTC</span>
+          <span class="sc-rating-pill" id="scRating">High Quality</span>
         </div>
         <div class="screensaver-metrics">
           <span class="sc-price" id="scPrice">$98,000.00</span>
-          <span class="sc-chg" id="scChg">+2.4%</span>
+          <span class="sc-chg" id="scChg">▲ +2.40%</span>
           <span class="sc-score" id="scScore">MC Score 88.5</span>
         </div>
       </div>
@@ -814,9 +736,9 @@ footer strong{color:var(--fg)}
           <button type="button" class="sc-chip" data-sc-coin="ripple">XRP</button>
           <button type="button" class="sc-chip" data-sc-coin="cardano">ADA</button>
         </div>
-        <button type="button" class="screensaver-exit-btn" id="screensaverExit" data-sc-act="exit" aria-label="Exit 3D Display">
+        <button type="button" class="screensaver-exit-btn" id="screensaverExit" data-sc-act="exit" aria-label="Exit 3D Screensaver">
           <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M18 6L6 18M6 6l12 12"/></svg>
-          <span>Exit Display</span>
+          <span>Exit Screensaver</span>
         </button>
       </div>
     </div>
@@ -1351,7 +1273,7 @@ function renderStatus(){
   $('#statusText').innerHTML=`${live?'Live':'Live Syncing'} · ${t||'Active'} · next update <span class="num">${mm}:${ss}</span>`;
 }
 function renderAll(){
-  renderNotice();renderTicker();renderFeature();renderKpis();renderFilters();renderTable();renderStatus();renderTrending();populateThreeCoins();
+  renderNotice();renderTicker();renderFeature();renderKpis();renderFilters();renderTable();renderStatus();renderTrending();
   if(S.sel)renderCoin(true);
 }
 
@@ -1363,7 +1285,7 @@ function renderCoin(keepChart){
   const issued=c.max?clamp(c.circ/c.max*100,0,100):null;
   $('#viewCoin').innerHTML=`
   <button class="back" data-act="back"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 6l-6 6 6 6"/></svg>Back</button>
-  <div class="card chead ${c.rating.cls}">${badge(c,true)}<div class="t"><h2>${esc(c.name)}</h2><div class="meta"><span class="num">${esc(c.sym)}</span>${tag(c)}<span>Market cap rank <b class="num">#${c.rank}</b></span>${rk?`<span>Score rank <b class="num">#${rk}</b></span>`:'<span>Outside the top 100 leaderboard</span>'}<span class="pill ${c.rating.cls}">${c.rating.label}</span></div><div style="margin-top:10px;display:flex;gap:8px;flex-wrap:wrap"><button class="btn sm primary" type="button" data-an="open" data-id="${esc(c.id)}">Analyze growth and profit scenarios</button><button class="btn sm" type="button" data-act="view-3d" data-id="${esc(c.id)}" style="display:inline-flex;align-items:center;gap:6px"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/></svg>3D Vault Specimen</button></div></div>${ring(c.mc,c.rating.cls,true)}</div>
+  <div class="card chead ${c.rating.cls}">${badge(c,true)}<div class="t"><h2>${esc(c.name)}</h2><div class="meta"><span class="num">${esc(c.sym)}</span>${tag(c)}<span>Market cap rank <b class="num">#${c.rank}</b></span>${rk?`<span>Score rank <b class="num">#${rk}</b></span>`:'<span>Outside the top 100 leaderboard</span>'}<span class="pill ${c.rating.cls}">${c.rating.label}</span></div><div style="margin-top:10px;display:flex;gap:8px;flex-wrap:wrap"><button class="btn sm primary" type="button" data-an="open" data-id="${esc(c.id)}">Analyze growth and profit scenarios</button><button class="btn sm" type="button" data-act="screensaver" data-id="${esc(c.id)}" style="display:inline-flex;align-items:center;gap:6px"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><polygon points="10 8 16 12 10 16 10 8" fill="currentColor"/></svg>3D Screensaver View</button></div></div>${ring(c.mc,c.rating.cls,true)}</div>
   ${isMicro(c)?`<div class="notice"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3 2 20h20z"/><path d="M12 10v4M12 17.5v.01"/></svg><div><b>Micro cap.</b> Market cap is ${compact(c.mcap)}, under $100M. Coins this small can swing sharply on little trading volume, and it can be hard to sell at the quoted price.</div></div>`:''}
   <div class="cgrid">
     <div class="card chart-card"><div class="chart-top"><span class="big num">${price(c.price)}</span>${chg(c.ch24)}<span class="eyebrow">24h</span></div><p class="chart-note" id="chartNote">Loading 6-month price history…</p><div class="chart" id="chart"></div></div>
@@ -1426,42 +1348,30 @@ function drawChart(el,pts){
   hit.addEventListener('pointermove',move);hit.addEventListener('pointerdown',move);hit.addEventListener('pointerleave',out);
 }
 
-/* ---------- Three.js 3D Vault Controller ---------- */
+/* ---------- Three.js 3D Screensaver & Ambient Display (1-min idle) ---------- */
 let threeEngine = null;
 let threeInitPromise = null;
 S.threeSelectedCoinId = 'bitcoin';
+let idleTimer = null;
+let screensaverActive = false;
+const IDLE_TIMEOUT_MS = 60000; // 1 minute
 
-function populateThreeCoins() {
-  const sel = $('#threeCoinSelect');
-  if (!sel) return;
-  const curVal = sel.value;
-  const coins = S.coins && S.coins.length ? S.coins.slice(0, 50) : [];
-  if (!coins.length) return;
-  sel.innerHTML = coins.map(c => `<option value="${esc(c.id)}">${esc(c.name)} (${esc(c.sym)})</option>`).join('');
-  if (curVal && coins.some(c => c.id === curVal)) {
-    sel.value = curVal;
-  } else if (S.threeSelectedCoinId && coins.some(c => c.id === S.threeSelectedCoinId)) {
-    sel.value = S.threeSelectedCoinId;
-  }
-}
-
-function updateThreeBadge(coin) {
+function updateScreensaverBadge(coin) {
   if (!coin) return;
-  const nameEl = $('#threeBadgeName');
-  const symEl = $('#threeBadgeSymbol');
-  const priceEl = $('#threeBadgePrice');
-  const chgEl = $('#threeBadgeChange');
-  const scoreEl = $('#threeBadgeScore');
-  if (nameEl) nameEl.textContent = coin.name || 'Specimen';
-  if (symEl) symEl.textContent = coin.sym || 'COIN';
+  const name = $('#scName'), sym = $('#scSym'), priceEl = $('#scPrice'), chg = $('#scChg'), score = $('#scScore'), ratingEl = $('#scRating');
+  if (name) name.textContent = coin.name || 'Bitcoin';
+  if (sym) sym.textContent = coin.sym || 'BTC';
   if (priceEl) priceEl.textContent = price(coin.price || 0);
-  if (chgEl) {
-    const d = dir(coin.ch24);
-    chgEl.style.color = d === 'up' ? 'var(--good)' : d === 'down' ? 'var(--bad)' : 'var(--muted)';
-    chgEl.textContent = ARROW[d] + pct(coin.ch24 || 0);
+  if (chg) {
+    const isUp = (coin.ch24 || 0) >= 0;
+    const arrow = isUp ? '▲' : '▼';
+    chg.style.color = isUp ? 'var(--good)' : 'var(--bad)';
+    chg.textContent = `${arrow} ${pct(coin.ch24 || 0)}`;
   }
-  if (scoreEl) {
-    scoreEl.textContent = `MC Score ${(coin.mc || 0).toFixed(1)}`;
+  if (score) score.textContent = `MC Score ${(coin.mc || 0).toFixed(1)}`;
+  if (ratingEl) {
+    const rLabel = (coin.rating && coin.rating.label) || 'Evaluated';
+    ratingEl.textContent = rLabel;
   }
 }
 
@@ -1472,136 +1382,19 @@ async function initThree() {
   threeInitPromise = (async () => {
     try {
       const mod = await import('/three-scene.js');
-      const mount = $('#threeMount');
+      const mount = $('#screensaverMount');
       if (!mount) return null;
       threeEngine = await mod.initThreeVault(mount, () => S.coins, (coin) => {
+        closeScreensaver();
         openCoin(coin.id);
       });
-      populateThreeCoins();
-      bindThreeUI();
       return threeEngine;
     } catch (err) {
-      console.error('Failed to initialize Three.js Vault:', err);
+      console.error('Failed to initialize Three.js Screensaver:', err);
       return null;
     }
   })();
   return threeInitPromise;
-}
-
-function bindThreeUI() {
-  if (!threeEngine) return;
-
-  // View Mode buttons
-  document.querySelectorAll('.three-mode-btn').forEach(btn => {
-    btn.addEventListener('click', () => {
-      const mode = btn.dataset.mode;
-      threeEngine.setMode(mode);
-      document.querySelectorAll('.three-mode-btn').forEach(b => b.setAttribute('aria-pressed', String(b === btn)));
-      const ind = $('#threeModeIndicator');
-      if (ind) ind.textContent = mode === 'galaxy' ? 'Mode: Market Constellation' : 'Mode: Physical Specimen';
-      const coinGrp = $('#threeCoinSelectGroup');
-      const finGrp = $('#threeFinishGroup');
-      const expGrp = $('#threeExplodeGroup');
-      if (coinGrp) coinGrp.style.display = mode === 'galaxy' ? 'none' : 'flex';
-      if (finGrp) finGrp.style.display = mode === 'galaxy' ? 'none' : 'flex';
-      if (expGrp) expGrp.style.display = mode === 'galaxy' ? 'none' : 'flex';
-    });
-  });
-
-  // Coin select
-  const coinSel = $('#threeCoinSelect');
-  if (coinSel) {
-    coinSel.addEventListener('change', (e) => {
-      const id = e.target.value;
-      S.threeSelectedCoinId = id;
-      threeEngine.selectCoin(id);
-      updateThreeBadge(threeEngine.getCurrentCoin());
-    });
-  }
-
-  // Finish buttons
-  document.querySelectorAll('.three-finish-btn').forEach(btn => {
-    btn.addEventListener('click', () => {
-      const finish = btn.dataset.finish;
-      threeEngine.setFinish(finish);
-      document.querySelectorAll('.three-finish-btn').forEach(b => b.setAttribute('aria-pressed', String(b === btn)));
-    });
-  });
-
-  // Exploded slider
-  const expRange = $('#threeExplodeRange');
-  const expVal = $('#threeExplodeVal');
-  if (expRange && expVal) {
-    expRange.addEventListener('input', (e) => {
-      const val = parseFloat(e.target.value);
-      threeEngine.setExplode(val);
-      expVal.textContent = Math.round(val * 100) + '%';
-    });
-  }
-
-  // Speed slider
-  const spdRange = $('#threeSpeedRange');
-  const spdVal = $('#threeSpeedVal');
-  if (spdRange && spdVal) {
-    spdRange.addEventListener('input', (e) => {
-      const val = parseFloat(e.target.value);
-      threeEngine.setRotationSpeed(val);
-      spdVal.textContent = val.toFixed(1) + '×';
-    });
-  }
-
-  // Camera presets
-  const btnFront = $('#threeCamFront');
-  const btnIso = $('#threeCamIso');
-  const btnTop = $('#threeCamTop');
-  if (btnFront) btnFront.addEventListener('click', () => threeEngine.setCameraPreset('front'));
-  if (btnIso) btnIso.addEventListener('click', () => threeEngine.setCameraPreset('iso'));
-  if (btnTop) btnTop.addEventListener('click', () => threeEngine.setCameraPreset('top'));
-
-  // Collapsible dock toggle
-  const dock = $('#threeDock');
-  const toggleBtn = $('#threeDockToggle');
-  const toggleIcon = $('#threeDockToggleIcon');
-  const toggleText = $('#threeDockToggleText');
-  if (toggleBtn && dock) {
-    toggleBtn.addEventListener('click', () => {
-      const isCollapsed = dock.classList.toggle('collapsed');
-      toggleBtn.setAttribute('aria-expanded', String(!isCollapsed));
-      if (toggleIcon) toggleIcon.textContent = isCollapsed ? '▴' : '▾';
-      if (toggleText) toggleText.textContent = isCollapsed ? 'Show Controls' : 'Hide Controls';
-    });
-  }
-}
-
-async function openThreeVault(coinId) {
-  const eng = await initThree();
-  if (!eng) return;
-  populateThreeCoins();
-  if (coinId) {
-    eng.selectCoin(coinId);
-    const sel = $('#threeCoinSelect');
-    if (sel) sel.value = coinId;
-  }
-  updateThreeBadge(eng.getCurrentCoin());
-}
-
-/* ---------- 3D Vault Screensaver & Ambient Display (1-min idle) ---------- */
-let idleTimer = null;
-let screensaverActive = false;
-const IDLE_TIMEOUT_MS = 60000; // 1 minute
-
-function updateScreensaverBadge(coin) {
-  if (!coin) return;
-  const name = $('#scName'), sym = $('#scSym'), priceEl = $('#scPrice'), chg = $('#scChg'), score = $('#scScore');
-  if (name) name.textContent = coin.name || 'Bitcoin';
-  if (sym) sym.textContent = coin.sym || 'BTC';
-  if (priceEl) priceEl.textContent = price(coin.price || 0);
-  if (chg) {
-    const d = dir(coin.ch24 || 0);
-    chg.style.color = d === 'up' ? 'var(--good)' : d === 'down' ? 'var(--bad)' : 'var(--muted)';
-    chg.textContent = ARROW[d] + pct(coin.ch24 || 0);
-  }
-  if (score) score.textContent = `MC Score ${(coin.mc || 0).toFixed(1)}`;
 }
 
 async function openScreensaver(coinId) {
@@ -1616,6 +1409,7 @@ async function openScreensaver(coinId) {
     const scMount = $('#screensaverMount');
     if (scMount) eng.setMount(scMount);
     const cid = coinId || S.threeSelectedCoinId || (S.coins[0] && S.coins[0].id) || 'bitcoin';
+    S.threeSelectedCoinId = cid;
     eng.selectCoin(cid);
     if (eng.setScreensaver) eng.setScreensaver(true);
     else {
@@ -1635,13 +1429,8 @@ function closeScreensaver() {
   const el = $('#threeScreensaver');
   if (el) el.hidden = true;
 
-  if (threeEngine) {
-    if (threeEngine.setScreensaver) threeEngine.setScreensaver(false);
-    const vaultMount = $('#threeMount');
-    if (vaultMount && !$('#viewThree').hidden) {
-      threeEngine.setMount(vaultMount);
-    }
-    threeEngine.setRotationSpeed(1.0);
+  if (threeEngine && threeEngine.setScreensaver) {
+    threeEngine.setScreensaver(false);
   }
   resetIdleTimer();
 }
@@ -1713,23 +1502,15 @@ document.addEventListener('keydown', (e) => {
 
 /* ---------- navigation ---------- */
 function go(v){
+  if(v==='three') return openScreensaver();
   S.view=v;if(v!=='coin')S.sel=null;
   $('#viewDash').hidden=v!=='dash';
   $('#viewTrending').hidden=v!=='trending';
-  $('#viewThree').hidden=v!=='three';
   $('#viewCoin').hidden=v!=='coin';
   $('#viewDefi').hidden=v!=='defi';
   $('#viewChain').hidden=v!=='chain';
   const cur=v==='coin'?S.from:v;
   document.querySelectorAll('.nav button').forEach(b=>b.setAttribute('aria-current',String(b.dataset.view===cur)));
-  if(v==='three'){
-    const vaultMount = $('#threeMount');
-    if (threeEngine && vaultMount) {
-      threeEngine.setMount(vaultMount);
-      if (threeEngine.setScreensaver) threeEngine.setScreensaver(false);
-    }
-    openThreeVault(S.threeSelectedCoinId || 'bitcoin');
-  }
   if(v==='trending'&&S.mode==='live'&&(!S.trend||Date.now()-S.trendAt>300000))loadTrending();
   if(v==='trending')renderTrending();
   if(v==='defi'){if(S.mode==='live'&&S.defiTab==='stocks'){if(!S.tstocks||Date.now()-S.tsAt>300000)loadStocks()}else if(S.mode==='live'&&(!S.defi||Date.now()-S.defiAt>300000))loadDefi();renderDefi()}
@@ -1738,7 +1519,7 @@ function go(v){
 }
 function openCoin(id){
   if(!byId(id))return;
-  if(S.view!=='coin')S.from=['trending','defi','chain','three'].includes(S.view)?S.view:'dash';
+  if(S.view!=='coin')S.from=['trending','defi','chain'].includes(S.view)?S.view:'dash';
   S.sel=id;closeSugg();renderCoin();go('coin');
 }
 
@@ -2456,7 +2237,7 @@ async function aiEnsure(){
       if(opts.onText&&data.text)opts.onText({text:data.text});
       return {text:data.text};
     }catch(err){
-      return {text:"Crypto Score AI CEM-100 analysis is active. Feel free to inspect factor breakdowns, ratings, and 3D vault specimens."};
+      return {text:"Crypto Score AI CEM-100 analysis is active. Feel free to inspect factor breakdowns, ratings, and 3D screensaver."};
     }
   };
 }
@@ -2973,12 +2754,7 @@ document.addEventListener('click',e=>{
   else if(a==='back')go(S.from||'dash');
   else if(a==='home')go('dash');
   else if(a==='trend')loadTrending();
-  else if(a==='view-3d'){
-    const cid=t.dataset.id||S.sel||'bitcoin';
-    S.threeSelectedCoinId=cid;
-    go('three');
-  }
-  else if(a==='screensaver'){
+  else if(a==='view-3d'||a==='screensaver'){
     openScreensaver(t.dataset.id||S.threeSelectedCoinId||'bitcoin');
   }
 });
