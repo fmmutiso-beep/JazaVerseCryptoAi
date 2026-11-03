@@ -551,9 +551,37 @@ export function createGalaxyScene(coinsList) {
 
 // Master Initialization of the 3D Vault
 export async function initThreeVault(mountEl, getCoinsFn, onSelectCoinFn) {
-  if (renderer) return; // already initialized
-  canvasMountEl = mountEl;
-  containerEl = mountEl.parentElement;
+  // Helper to build controller instance
+  const makeController = () => ({
+    selectCoin: (coinOrId) => {
+      const coins = getCoinsFn ? getCoinsFn() : [];
+      const c = typeof coinOrId === 'string' ? (coins.find(x => x.id === coinOrId) || { id: coinOrId, name: coinOrId, sym: coinOrId.toUpperCase() }) : coinOrId;
+      setThreeCoin(c);
+    },
+    getCurrentCoin: () => currentCoin,
+    setMode: setThreeMode,
+    setFinish: setThreeFinish,
+    setExplode: setThreeExplode,
+    setRotationSpeed: setThreeSpeed,
+    setCameraPreset: setThreeCamera,
+    setMount: (newMountEl) => {
+      if (!newMountEl || !renderer) return;
+      canvasMountEl = newMountEl;
+      containerEl = newMountEl.parentElement;
+      newMountEl.appendChild(renderer.domElement);
+      setTimeout(handleResize, 10);
+    },
+    resize: handleResize
+  });
+
+  if (renderer) {
+    if (mountEl && canvasMountEl !== mountEl) {
+      canvasMountEl = mountEl;
+      mountEl.appendChild(renderer.domElement);
+      setTimeout(handleResize, 10);
+    }
+    return makeController();
+  }
 
   // Scene
   scene = new THREE.Scene();
@@ -644,6 +672,8 @@ export async function initThreeVault(mountEl, getCoinsFn, onSelectCoinFn) {
 
   // Start smooth 60fps render loop
   startRenderLoop();
+
+  return makeController();
 }
 
 function handleResize() {

@@ -511,6 +511,58 @@ footer strong{color:var(--fg)}
 .three-dock .seg button[aria-pressed="true"]{background:var(--accent);color:var(--accent-ink);border-color:var(--accent)}
 .three-dock input[type=range]{accent-color:var(--accent);height:6px;border-radius:3px;cursor:pointer}
 .three-tooltip{position:absolute;z-index:30;background:#0f172a;border:1px solid var(--accent);border-radius:10px;padding:8px 12px;color:#fff;font-size:12px;pointer-events:none;transform:translate(-50%,-120%);box-shadow:0 8px 24px rgba(0,0,0,0.5);display:none;white-space:nowrap}
+
+/* 3D Screensaver / Screen Display */
+.three-screensaver{position:fixed;inset:0;z-index:95;background:radial-gradient(ellipse at 50% 40%,#1e293b 0%,#070b14 100%);display:flex;flex-direction:column;align-items:center;justify-content:center;overflow:hidden;animation:scFadeIn .4s cubic-bezier(0.16,1,0.3,1);cursor:pointer}
+.three-screensaver[hidden]{display:none}
+@keyframes scFadeIn{from{opacity:0;transform:scale(1.02)}to{opacity:1;transform:scale(1)}}
+.screensaver-mount{position:absolute;inset:0;width:100%;height:100%;z-index:1}
+.screensaver-overlay{position:absolute;inset:0;z-index:2;display:flex;flex-direction:column;justify-content:space-between;padding:max(24px,env(safe-area-inset-top,0px)) max(24px,env(safe-area-inset-right,0px)) max(24px,env(safe-area-inset-bottom,0px)) max(24px,env(safe-area-inset-left,0px));pointer-events:none}
+.screensaver-header{display:flex;align-items:flex-start;justify-content:space-between;gap:16px;width:100%}
+.screensaver-badge{background:rgba(15,23,42,0.88);border:1px solid rgba(255,255,255,0.14);border-radius:16px;padding:14px 20px;backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);color:#fff;box-shadow:0 12px 32px rgba(0,0,0,0.5)}
+.screensaver-coin{display:flex;align-items:center;gap:10px}
+.screensaver-coin .sc-name{font-size:22px;font-weight:700;font-family:var(--font-display);letter-spacing:-0.02em}
+.screensaver-coin .sc-sym{font-size:12px;font-family:var(--font-mono);background:var(--accent);color:var(--accent-ink);padding:3px 8px;border-radius:6px;font-weight:700}
+.screensaver-metrics{display:flex;align-items:baseline;gap:12px;margin-top:6px;font-family:var(--font-mono);font-size:14px}
+.screensaver-metrics .sc-price{font-size:18px;font-weight:700;color:#fff}
+.screensaver-metrics .sc-chg{font-weight:700;color:var(--good)}
+.screensaver-metrics .sc-score{color:#94a3b8;font-size:13px}
+.screensaver-actions{display:flex;align-items:center;gap:10px;pointer-events:auto}
+.screensaver-chips{display:flex;gap:6px;background:rgba(15,23,42,0.85);border:1px solid rgba(255,255,255,0.12);border-radius:12px;padding:4px;backdrop-filter:blur(10px)}
+.sc-chip{background:none;border:0;color:#94a3b8;font-size:12px;font-family:var(--font-mono);font-weight:700;padding:6px 10px;border-radius:8px;cursor:pointer;transition:all .15s}
+.sc-chip:hover{color:#fff;background:rgba(255,255,255,0.1)}
+.sc-chip.active{background:var(--accent);color:var(--accent-ink)}
+.screensaver-exit-btn{display:inline-flex;align-items:center;gap:6px;background:rgba(239,68,68,0.2);color:#fca5a5;border:1px solid rgba(239,68,68,0.4);border-radius:12px;padding:8px 14px;font-size:13px;font-weight:600;cursor:pointer;backdrop-filter:blur(8px);transition:all .2s}
+.screensaver-exit-btn:hover{background:#dc2626;color:#fff;border-color:#dc2626}
+.screensaver-dock{display:flex;flex-direction:column;align-items:center;gap:12px;width:100%;pointer-events:auto}
+.screensaver-finishes{display:flex;gap:6px;background:rgba(15,23,42,0.85);border:1px solid rgba(255,255,255,0.12);border-radius:12px;padding:4px;backdrop-filter:blur(10px)}
+.sc-fin{background:none;border:0;color:#94a3b8;font-size:12px;font-weight:600;padding:6px 12px;border-radius:8px;cursor:pointer;transition:all .15s}
+.sc-fin:hover{color:#fff}
+.sc-fin.active{background:#334155;color:#fff}
+.screensaver-hint{margin:0;display:inline-flex;align-items:center;gap:8px;background:rgba(15,23,42,0.82);border:1px solid rgba(255,255,255,0.14);border-radius:999px;padding:8px 18px;color:#cbd5e1;font-size:13px;backdrop-filter:blur(8px);box-shadow:0 8px 24px rgba(0,0,0,0.4)}
+.sc-pulse{width:8px;height:8px;border-radius:50%;background:#22c55e;box-shadow:0 0 10px #22c55e;animation:scPulse 2s infinite}
+@keyframes scPulse{0%,100%{opacity:1;transform:scale(1)}50%{opacity:0.4;transform:scale(0.85)}}
+
+/* Reading Modal & Article Formatting */
+.readbody{padding:20px;max-width:840px;margin:0 auto;line-height:1.75;color:var(--fg);font-size:15px;overflow-y:auto;max-height:calc(86vh - 160px)}
+.readbody h1,.readbody h2,.readbody h3{color:var(--fg);line-height:1.25}
+.readbody h1{font-size:26px;margin:0 0 14px}
+.readbody h2{font-size:20px;margin:24px 0 10px}
+.readbody h3{font-size:17px;margin:18px 0 8px}
+.readbody p{margin:0 0 14px;color:var(--fg)}
+.readbody ul,.readbody ol{margin:0 0 16px;padding-left:24px}
+.readbody li{margin-bottom:6px}
+.readbody blockquote{border-left:3px solid var(--accent);margin:16px 0;padding:8px 16px;background:var(--surface-2);border-radius:0 8px 8px 0}
+.readbody hr{border:0;border-top:1px solid var(--line);margin:24px 0}
+
+@media print{
+  body > *:not(#readModal){display:none!important}
+  #readModal{position:static!important;display:block!important;background:#fff!important;padding:0!important}
+  #readModal .dialog{box-shadow:none!important;border:0!important;width:100%!important;max-width:none!important;height:auto!important;max-height:none!important;padding:0!important;color:#000!important;background:#fff!important}
+  #readModal .x,#readActions,#readModal .modal-bg{display:none!important}
+  .readbody{color:#000!important;max-height:none!important;padding:0!important}
+  .readbody *{color:#000!important}
+}
 </style>
 
 <header class="top">
@@ -519,7 +571,7 @@ footer strong{color:var(--fg)}
       <svg width="34" height="34" viewBox="0 0 34 34" aria-hidden="true"><path d="M17 2.5 29.5 9.75v14.5L17 31.5 4.5 24.25V9.75z" fill="var(--accent)"/><path d="M11 21.5v-4M15 21.5v-7M19 21.5v-5.5M23 21.5V11" stroke="var(--accent-ink)" stroke-width="2.4" stroke-linecap="round"/></svg>
       <span><b>Crypto Score AI</b><small>CEM-100 evaluation</small></span>
     </button>
-    <nav class="nav" aria-label="Pages"><button data-view="dash" aria-current="true">Dashboard</button><button data-view="trending" aria-current="false">Trending</button><button data-view="three" aria-current="false">3D Vault</button><button data-view="defi" aria-current="false">DeFi</button><button data-view="chain" aria-current="false">On-chain</button></nav>
+    <nav class="nav" aria-label="Pages"><button data-view="dash" aria-current="true">Dashboard</button><button data-view="trending" aria-current="false">Trending</button><button data-view="three" aria-current="false">3D Vault</button><button data-act="screensaver" aria-current="false">3D Screensaver</button><button data-view="defi" aria-current="false">DeFi</button><button data-view="chain" aria-current="false">On-chain</button></nav>
     <span class="top-sp"></span>
     <span class="chip" id="status" role="status"><i class="dot" id="statusDot"></i><span id="statusText">Sample data</span></span>
     <button class="btn" id="refreshBtn" data-act="refresh"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12a9 9 0 1 1-3-6.7L21 8"/><path d="M21 3v5h-5"/></svg>Refresh now</button>
@@ -542,6 +594,13 @@ footer strong{color:var(--fg)}
       <span class="eyebrow">CEM-100 scoring system</span>
       <h1>Smart crypto evaluation. <em>Instantly.</em></h1>
       <p>Every coin gets an MC Score from 0 to 100, built from 11 weighted factors. Search any coin, or open one from the leaderboard to see the full breakdown.</p>
+      <div style="display:flex;align-items:center;gap:10px;margin-top:12px;margin-bottom:14px;flex-wrap:wrap">
+        <button class="btn sm" type="button" data-act="screensaver" id="screensaverDashBtn" style="display:inline-flex;align-items:center;gap:6px;font-weight:600">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><polygon points="10 8 16 12 10 16 10 8" fill="currentColor"/></svg>
+          <span>3D Vault Screen Display</span>
+        </button>
+        <span style="font-size:12px;color:var(--muted)">Auto-emerges after 1 min idle</span>
+      </div>
       <div class="search">
         <label for="q">Search coins by name or symbol</label>
         <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
@@ -714,8 +773,13 @@ footer strong{color:var(--fg)}
   <div class="dialog" role="dialog" aria-modal="true" aria-labelledby="shareT">
     <button class="x" type="button" data-share="close" aria-label="Close"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6 6 18"/></svg></button>
     <h2 id="shareT">Share Crypto Score AI</h2>
-    <p class="sub">Send the link to friends or post it on your social accounts.</p>
-    <div class="field"><label for="shareUrl">Link</label>
+    <p class="sub">Share cleanly without studio banners or dev auth parameters.</p>
+    <div class="seg" id="shareModeSeg" style="margin-bottom:10px;align-self:flex-start">
+      <button type="button" class="btn sm active" data-share-mode="name">App Name Only</button>
+      <button type="button" class="btn sm" data-share-mode="link">Clean Public Link</button>
+      <button type="button" class="btn sm" data-share-mode="both">Name &amp; Link</button>
+    </div>
+    <div class="field"><label for="shareUrl">Share content</label>
       <div class="pw"><input id="shareUrl" readonly><button type="button" class="linkbtn" data-share="copy">Copy</button></div></div>
     <div class="share" id="shareLinks" style="border:0;padding:0;margin:0"></div>
     <button class="btn wide" type="button" id="shareNative" data-share="native" hidden>More sharing options</button>
@@ -728,7 +792,51 @@ footer strong{color:var(--fg)}
     <h2 id="readTitle"></h2>
     <img class="readimg" id="readImg" alt="" hidden>
     <div class="post-actions" id="readActions"></div>
-    <iframe id="readFrame" class="readframe" sandbox="" title="Article" referrerpolicy="no-referrer"></iframe>
+    <div id="readBody" class="readbody"></div>
+  </div>
+</div>
+<!-- 3D Vault Fullscreen Ambient Display / Screensaver -->
+<div id="threeScreensaver" class="three-screensaver" hidden aria-label="3D Vault Screen Display" role="dialog" aria-modal="true">
+  <div id="screensaverMount" class="screensaver-mount"></div>
+  <div class="screensaver-overlay" id="screensaverOverlay">
+    <div class="screensaver-header">
+      <div class="screensaver-badge" id="screensaverBadge">
+        <div class="screensaver-coin">
+          <span class="sc-name" id="scName">Bitcoin</span>
+          <span class="sc-sym" id="scSym">BTC</span>
+        </div>
+        <div class="screensaver-metrics">
+          <span class="sc-price" id="scPrice">$98,000.00</span>
+          <span class="sc-chg" id="scChg">+2.4%</span>
+          <span class="sc-score" id="scScore">MC Score 88.5</span>
+        </div>
+      </div>
+      <div class="screensaver-actions">
+        <div class="screensaver-chips" id="screensaverChips" aria-label="Coin selector">
+          <button type="button" class="sc-chip active" data-sc-coin="bitcoin">BTC</button>
+          <button type="button" class="sc-chip" data-sc-coin="ethereum">ETH</button>
+          <button type="button" class="sc-chip" data-sc-coin="solana">SOL</button>
+          <button type="button" class="sc-chip" data-sc-coin="ripple">XRP</button>
+          <button type="button" class="sc-chip" data-sc-coin="cardano">ADA</button>
+        </div>
+        <button type="button" class="screensaver-exit-btn" id="screensaverExit" data-sc-act="exit" aria-label="Exit 3D Display">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M18 6L6 18M6 6l12 12"/></svg>
+          <span>Exit Display</span>
+        </button>
+      </div>
+    </div>
+    <div class="screensaver-dock">
+      <div class="screensaver-finishes" id="screensaverFinishes">
+        <button type="button" class="sc-fin active" data-sc-finish="gold">Gold</button>
+        <button type="button" class="sc-fin" data-sc-finish="titanium">Titanium</button>
+        <button type="button" class="sc-fin" data-sc-finish="cyber">Cyber</button>
+        <button type="button" class="sc-fin" data-sc-finish="platinum">Platinum</button>
+      </div>
+      <p class="screensaver-hint">
+        <span class="sc-pulse"></span>
+        <strong>Tap or click anywhere to exit to dashboard</strong> · Auto-emerges after 1 min idle
+      </p>
+    </div>
   </div>
 </div>
 <div class="modal" id="postModal" hidden>
@@ -1371,7 +1479,7 @@ async function initThree() {
       const mod = await import('/three-scene.js');
       const mount = $('#threeMount');
       if (!mount) return null;
-      threeEngine = mod.initThreeVault(mount, () => S.coins, (coin) => {
+      threeEngine = await mod.initThreeVault(mount, () => S.coins, (coin) => {
         openCoin(coin.id);
       });
       populateThreeCoins();
@@ -1481,6 +1589,119 @@ async function openThreeVault(coinId) {
   }
   updateThreeBadge(eng.getCurrentCoin());
 }
+
+/* ---------- 3D Vault Screensaver & Ambient Display (1-min idle) ---------- */
+let idleTimer = null;
+let screensaverActive = false;
+const IDLE_TIMEOUT_MS = 60000; // 1 minute
+
+function updateScreensaverBadge(coin) {
+  if (!coin) return;
+  const name = $('#scName'), sym = $('#scSym'), priceEl = $('#scPrice'), chg = $('#scChg'), score = $('#scScore');
+  if (name) name.textContent = coin.name || 'Bitcoin';
+  if (sym) sym.textContent = coin.sym || 'BTC';
+  if (priceEl) priceEl.textContent = price(coin.price || 0);
+  if (chg) {
+    const d = dir(coin.ch24 || 0);
+    chg.style.color = d === 'up' ? 'var(--good)' : d === 'down' ? 'var(--bad)' : 'var(--muted)';
+    chg.textContent = ARROW[d] + pct(coin.ch24 || 0);
+  }
+  if (score) score.textContent = `MC Score ${(coin.mc || 0).toFixed(1)}`;
+}
+
+async function openScreensaver(coinId) {
+  if (screensaverActive) return;
+  screensaverActive = true;
+  const el = $('#threeScreensaver');
+  if (!el) return;
+  el.hidden = false;
+
+  const eng = await initThree();
+  if (eng) {
+    const scMount = $('#screensaverMount');
+    if (scMount) eng.setMount(scMount);
+    const cid = coinId || S.threeSelectedCoinId || (S.coins[0] && S.coins[0].id) || 'bitcoin';
+    eng.selectCoin(cid);
+    eng.setMode('mint');
+    eng.setRotationSpeed(1.2);
+    updateScreensaverBadge(eng.getCurrentCoin());
+  }
+  document.querySelectorAll('[data-sc-coin]').forEach(b => {
+    b.classList.toggle('active', b.dataset.scCoin === (coinId || S.threeSelectedCoinId || 'bitcoin'));
+  });
+}
+
+function closeScreensaver() {
+  if (!screensaverActive) return;
+  screensaverActive = false;
+  const el = $('#threeScreensaver');
+  if (el) el.hidden = true;
+
+  if (threeEngine) {
+    const vaultMount = $('#threeMount');
+    if (vaultMount) threeEngine.setMount(vaultMount);
+    threeEngine.setRotationSpeed(1.0);
+  }
+  resetIdleTimer();
+}
+
+function resetIdleTimer() {
+  clearTimeout(idleTimer);
+  idleTimer = setTimeout(() => {
+    const anyModal = document.querySelector('.modal:not([hidden])');
+    if (!anyModal && !screensaverActive) {
+      openScreensaver();
+    } else {
+      resetIdleTimer();
+    }
+  }, IDLE_TIMEOUT_MS);
+}
+
+// User activity listeners for 1-minute idle tracking
+['mousemove', 'mousedown', 'keydown', 'touchstart', 'scroll', 'wheel'].forEach(evt => {
+  window.addEventListener(evt, () => {
+    if (!screensaverActive) {
+      resetIdleTimer();
+    }
+  }, { passive: true });
+});
+
+// Click anywhere on screensaver to exit, or handle chips/finishes
+document.addEventListener('click', (e) => {
+  const sc = e.target.closest('#threeScreensaver');
+  if (!sc || !screensaverActive) return;
+
+  const coinBtn = e.target.closest('[data-sc-coin]');
+  if (coinBtn) {
+    e.stopPropagation();
+    const cid = coinBtn.dataset.scCoin;
+    S.threeSelectedCoinId = cid;
+    if (threeEngine) {
+      threeEngine.selectCoin(cid);
+      updateScreensaverBadge(threeEngine.getCurrentCoin());
+    }
+    document.querySelectorAll('[data-sc-coin]').forEach(b => b.classList.toggle('active', b === coinBtn));
+    return;
+  }
+
+  const finBtn = e.target.closest('[data-sc-finish]');
+  if (finBtn) {
+    e.stopPropagation();
+    const finish = finBtn.dataset.scFinish;
+    if (threeEngine) threeEngine.setFinish(finish);
+    document.querySelectorAll('[data-sc-finish]').forEach(b => b.classList.toggle('active', b === finBtn));
+    return;
+  }
+
+  // Dismiss screensaver on any click outside chips/finishes
+  closeScreensaver();
+});
+
+document.addEventListener('keydown', (e) => {
+  if (screensaverActive && (e.key === 'Escape' || e.key === ' ' || e.key === 'Enter')) {
+    closeScreensaver();
+  }
+});
 
 /* ---------- navigation ---------- */
 function go(v){
@@ -1899,88 +2120,65 @@ function shareRow(p){
   return `<div class="share"><span class="lab">Share</span>${links}<button type="button" data-blog="copy" data-id="${esc(p.id)}" aria-label="Copy link" title="Copy link">${ICO.link}</button></div>`;
 }
 function postActions(p){
-  const dl=p.kind==='pdf'
-    ?`<a class="btn sm" href="${esc(p.url||'')}" download="${esc(slug(p.title))}.pdf" target="_blank" rel="noopener">Download PDF</a>`
-    :`<button class="btn sm" type="button" data-blog="pdf" data-id="${esc(p.id)}">Download PDF</button><button class="btn sm" type="button" data-blog="download" data-id="${esc(p.id)}">Download HTML</button>`;
-  const open=p.kind==='pdf'
-    ?`<a class="btn sm primary" href="${esc(p.url||'')}" target="_blank" rel="noopener">Open PDF</a>`
-    :`<button class="btn sm primary" type="button" data-blog="read" data-id="${esc(p.id)}">Read</button>`;
-  const del=B.admin?`<span class="spacer"></span><button class="btn sm" type="button" data-blog="del" data-id="${esc(p.id)}">${B.confirm===p.id?'Confirm delete':'Delete'}</button>`:'';
-  return `<div class="post-actions">${open}${dl}${del}</div>`;
+  return `<div class="post-actions">
+    <button class="btn sm primary" type="button" data-blog="read" data-id="${esc(p.id)}">Read</button>
+    <button class="btn sm" type="button" data-blog="pdf" data-id="${esc(p.id)}">Print / PDF</button>
+    <button class="btn sm" type="button" data-blog="download" data-id="${esc(p.id)}">Download HTML</button>
+    <button class="btn sm" type="button" data-blog="del" data-id="${esc(p.id)}">${B.confirm===p.id?'Confirm delete':'Delete'}</button>
+  </div>`;
 }
 function renderBlog(){
   const box=$('#posts'),n=$('#postNew');
   if(n) n.hidden=false;
   if(!B.posts.length){box.innerHTML=`<div class="card empty-card" style="grid-column:1/-1"><div><b>No articles yet</b>Use “New article” to publish the first one.</div></div>`;return}
-  box.innerHTML=B.posts.map(p=>`<article class="card post"><div class="pimgbox${p.imageUrl?'':' none'}">${p.imageUrl?`<img src="${esc(p.imageUrl)}" alt="${esc(p.imageAlt||p.title)}" loading="lazy" decoding="async">`:''}<span class="ph" aria-hidden="true">${esc((p.title||'J').trim().charAt(0).toUpperCase())}</span></div><div class="pmeta"><span class="type ${p.kind==='pdf'?'token':'coin'}">${p.kind==='pdf'?'PDF':'HTML'}</span><span>${esc(fmtDate(p.createdAt))}</span></div><h3>${esc(p.title)}</h3>${p.summary?`<p>${esc(p.summary)}</p>`:''}${postActions(p)}${shareRow(p)}</article>`).join('');
+  box.innerHTML=B.posts.map(p=>`<article class="card post" data-id="${esc(p.id)}"><div class="pimgbox${p.imageUrl?'':' none'}">${p.imageUrl?`<img src="${esc(p.imageUrl)}" alt="${esc(p.imageAlt||p.title)}" loading="lazy" decoding="async">`:''}<span class="ph" aria-hidden="true">${esc((p.title||'J').trim().charAt(0).toUpperCase())}</span></div><div class="pmeta"><span class="type ${p.kind==='pdf'?'token':'coin'}">${p.kind==='pdf'?'PDF':'HTML'}</span><span>${esc(fmtDate(p.createdAt))}</span></div><h3>${esc(p.title)}</h3>${p.summary?`<p>${esc(p.summary)}</p>`:''}${postActions(p)}${shareRow(p)}</article>`).join('');
 }
 function modalOpen(id){$('#'+id).hidden=false;document.documentElement.style.overflow='hidden'}
 function modalClose(id){$('#'+id).hidden=true;if(!document.querySelector('.modal:not([hidden])'))document.documentElement.style.overflow='';if(B.opener&&B.opener.focus&&document.contains(B.opener))B.opener.focus()}
+
 async function readPost(id){
-  const p=B.posts.find(x=>x.id===id);if(!p)return;
+  const p=B.posts.find(x=>x.id===id) || DEFAULT_POSTS.find(x=>x.id===id);
+  if(!p)return;
   B.opener=document.activeElement;B.openId=id;
   $('#readTitle').textContent=p.title;
-  const ri=$('#readImg');if(p.imageUrl){ri.src=p.imageUrl;ri.alt=p.imageAlt||p.title;ri.hidden=false}else{ri.removeAttribute('src');ri.hidden=true}
-  $('#readActions').innerHTML=postActions(p)+shareRow(p);
-  $('#readFrame').srcdoc='<p style="font:14px system-ui;padding:16px;color:#64748b">Loading…</p>';
+  const ri=$('#readImg');
+  if(p.imageUrl){ri.src=p.imageUrl;ri.alt=p.imageAlt||p.title;ri.hidden=false}
+  else{ri.removeAttribute('src');ri.hidden=true}
+  $('#readActions').innerHTML=`
+    <button class="btn sm primary" type="button" data-blog="print"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="6 9 6 2 18 2 18 9"></polyline><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"></path><rect x="6" y="14" width="12" height="8"></rect></svg>Print / Save PDF</button>
+    <button class="btn sm" type="button" data-blog="download" data-id="${esc(p.id)}"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>Download HTML</button>
+    <button class="btn sm" type="button" data-blog="copy" data-id="${esc(p.id)}">${ICO.link}Copy Link</button>
+  `;
+  const content = p.html || `<div class="readbody"><h1>${esc(p.title)}</h1><p>${esc(p.summary||'')}</p></div>`;
+  const rb = $('#readBody');
+  if(rb) rb.innerHTML = content;
   modalOpen('readModal');
-  const content = p.html || `<div style="font-family:system-ui,-apple-system,sans-serif;line-height:1.7;color:#1e293b;padding:24px;max-width:820px;margin:0 auto"><h1>${esc(p.title)}</h1><p style="color:#64748b">${esc(p.summary||'')}</p></div>`;
-  $('#readFrame').srcdoc=content;
 }
-async function downloadHtml(id){
-  const p=B.posts.find(x=>x.id===id);if(!p)return;
-  const content = p.html || `<div style="font-family:system-ui,-apple-system,sans-serif;line-height:1.7;padding:24px"><h1>${esc(p.title)}</h1><p>${esc(p.summary||'')}</p></div>`;
-  const name=slug(p.title)+'.html';
-  const a=document.createElement('a');a.href=URL.createObjectURL(new Blob([content],{type:'text/html'}));a.download=name;document.body.appendChild(a);a.click();a.remove();
+
+function downloadHtml(id){
+  const p=B.posts.find(x=>x.id===id) || DEFAULT_POSTS.find(x=>x.id===id);
+  if(!p)return;
+  const content = `<!DOCTYPE html><html><head><meta charset="utf-8"><title>${esc(p.title)} - Crypto Score AI</title><style>body{font-family:system-ui,-apple-system,sans-serif;max-width:800px;margin:40px auto;padding:0 20px;line-height:1.6;color:#0f172a}img{max-width:100%;border-radius:12px}</style></head><body>${p.html || `<p>${esc(p.summary||'')}</p>`}</body></html>`;
+  const blob=new Blob([content],{type:'text/html;charset=utf-8'});
+  const url=URL.createObjectURL(blob);
+  const a=document.createElement('a');
+  a.href=url;
+  a.download=slug(p.title)+'.html';
+  document.body.appendChild(a);
+  a.click();
+  setTimeout(()=>{a.remove();URL.revokeObjectURL(url)},500);
+  toast('HTML file downloaded.');
 }
-function saveBlob(blob,name){
-  if(B.dl){return B.dl.save({filename:name,data:blob}).catch(e=>{if(!(e&&e.code==='declined'))throw e})}
-  const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download=name;document.body.appendChild(a);a.click();a.remove();return Promise.resolve();
+
+function downloadPdf(id){
+  readPost(id);
+  setTimeout(()=>{ window.print(); },250);
 }
-function loadPdfLib(){
-  if(window.html2pdf)return Promise.resolve();
-  return new Promise((res,rej)=>{const s=document.createElement('script');s.src=PDF_LIB;s.onload=res;s.onerror=()=>rej(new Error('lib'));document.head.appendChild(s)});
-}
-const blobToData=b=>new Promise((res,rej)=>{const r=new FileReader();r.onload=()=>res(r.result);r.onerror=rej;r.readAsDataURL(b)});
-async function downloadPdf(id,btn){
-  const p=B.posts.find(x=>x.id===id);if(!p||B.pdfBusy)return;
-  B.pdfBusy=true;const label=btn&&btn.textContent;if(btn){btn.disabled=true;btn.textContent='Preparing PDF…'}
-  let frame=null;
-  try{
-    const content = p.html || `<div style="font-family:sans-serif;padding:24px"><h1>${esc(p.title)}</h1><p>${esc(p.summary||'')}</p></div>`;
-    let img='';
-    if(p.imageUrl){try{const r=await fetch(p.imageUrl);if(r.ok)img=await blobToData(await r.blob())}catch(e){}}
-    await loadPdfLib();
-    const head='<div style="font-family:Helvetica,Arial,sans-serif;margin:0 0 18px;padding:0 0 14px;border-bottom:2px solid #f97316">'
-      +(img?'<img src="'+img+'" alt="" style="display:block;width:100%;max-height:260px;object-fit:cover;border-radius:8px;margin:0 0 14px">':'')
-      +'<div style="font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:#64748b">Jaza Finance &middot; '+esc(fmtDate(p.createdAt))+'</div>'
-      +'<h1 style="font-size:26px;line-height:1.2;margin:6px 0 0;color:#0f172a">'+esc(p.title)+'</h1>'
-      +(p.summary?'<p style="font-size:14px;color:#475569;margin:8px 0 0">'+esc(p.summary)+'</p>':'')+'</div>';
-    const doc=/<body[^>]*>/i.test(content)?content.replace(/<body[^>]*>/i,m=>m+head):'<body>'+head+content+'</body>';
-    frame=document.createElement('iframe');
-    frame.setAttribute('sandbox','allow-same-origin');frame.setAttribute('aria-hidden','true');frame.tabIndex=-1;
-    frame.style.cssText='position:fixed;left:-10000px;top:0;width:794px;height:1123px;border:0;visibility:hidden';
-    document.body.appendChild(frame);
-    await new Promise(r=>{frame.onload=r;frame.srcdoc=doc;setTimeout(r,4000)});
-    await new Promise(r=>setTimeout(r,400));
-    const d=frame.contentDocument;
-    d.documentElement.style.background='#fff';d.body.style.cssText+=';margin:0;padding:0;background:#fff;color:#0f172a;max-width:none';
-    const blob=await window.html2pdf().set({margin:[12,12,14,12],image:{type:'jpeg',quality:.92},
-      html2canvas:{scale:2,useCORS:true,backgroundColor:'#ffffff',windowWidth:794},
-      jsPDF:{unit:'mm',format:'a4',orientation:'portrait'},pagebreak:{mode:['css','legacy']}}).from(d.body).outputPdf('blob');
-    await saveBlob(blob,slug(p.title)+'.pdf');
-    toast('PDF saved.');
-  }catch(e){
-    toast('Could not create the PDF. Try again.');
-  }finally{
-    if(frame)frame.remove();
-    B.pdfBusy=false;if(btn){btn.disabled=false;btn.textContent=label}
-  }
-}
+
 async function copyLink(id){
-  const u=postUrl(id);
-  try{await navigator.clipboard.writeText(u);toast('Link copied.');return}catch(e){}
-  try{const t=document.createElement('textarea');t.value=u;t.style.cssText='position:fixed;opacity:0';document.body.appendChild(t);t.select();const ok=document.execCommand('copy');t.remove();if(ok){toast('Link copied.');return}}catch(e){}
+  const u='https://ais-pre-bk6ha3gx2jixd24x37gibl-632233402682.europe-west3.run.app#post='+encodeURIComponent(id);
+  try{await navigator.clipboard.writeText(u);toast('Article link copied.');return}catch(e){}
+  try{const t=document.createElement('textarea');t.value=u;t.style.cssText='position:fixed;opacity:0';document.body.appendChild(t);t.select();const ok=document.execCommand('copy');t.remove();if(ok){toast('Article link copied.');return}}catch(e){}
   toast(u);
 }
 function setKind(k){
@@ -2004,7 +2202,7 @@ async function submitPost(ev){
   B.busy=true;const btn=$('#postSubmit');btn.disabled=true;btn.textContent='Publishing…';
   try{
     const id=slug(title)+'-'+Date.now().toString(36);
-    const doc={title,summary,kind:'html',html,createdAt:new Date().toISOString()};
+    const doc={id,title,summary,kind:'html',html,createdAt:new Date().toISOString()};
     B.posts.unshift(doc);
     try{localStorage.setItem('csai-posts',JSON.stringify(B.posts))}catch(e){}
     modalClose('postModal');toast('Article published.');
@@ -2035,52 +2233,85 @@ async function blogInit(){
   renderBlog();
   if(B.want&&B.posts.some(p=>p.id===B.want)){const w=B.want;B.want=null;readPost(w)}
 }
-document.addEventListener('click',e=>{
+
+function handleBlogClick(e){
   const t=e.target.closest('[data-blog]');if(!t)return;
   const a=t.dataset.blog,id=t.dataset.id;
   if(a==='new')openComposer();
-  else if(a==='close'){modalClose(t.closest('.modal').id);if(t.closest('#readModal'))$('#readFrame').srcdoc=''}
+  else if(a==='close'){modalClose(t.closest('.modal').id);}
   else if(a==='read')readPost(id);
+  else if(a==='print')window.print();
   else if(a==='download')downloadHtml(id);
-  else if(a==='pdf')downloadPdf(id,t);
+  else if(a==='pdf')downloadPdf(id);
   else if(a==='copy')copyLink(id);
   else if(a==='del')deletePost(id);
   else if(a==='kind-html')setKind('html');
   else if(a==='kind-pdf')setKind('pdf');
-});
+}
+document.addEventListener('click',handleBlogClick);
 document.addEventListener('keydown',e=>{
   if(e.key!=='Escape')return;
   if(!$('#postModal').hidden)modalClose('postModal');
-  else if(!$('#readModal').hidden){modalClose('readModal');$('#readFrame').srcdoc=''}
+  else if(!$('#readModal').hidden)modalClose('readModal');
 });
 $('#postForm').addEventListener('submit',submitPost);
 document.addEventListener('error',e=>{const t=e.target;if(t&&t.tagName==='IMG'&&t.closest&&t.closest('.pimgbox'))t.closest('.pimgbox').classList.add('noimg')},true);
 
-
-/* ---------- share the app ---------- */
+/* ---------- clean share without studio banners ---------- */
 const APP_TITLE='Crypto Score AI – CEM-100 crypto evaluation';
+const APP_NAME='Crypto Score AI';
+const CLEAN_SHARE_URL='https://ais-pre-bk6ha3gx2jixd24x37gibl-632233402682.europe-west3.run.app';
+let shareMode='name'; // 'name' | 'link' | 'both'
+
+function getShareText(){
+  if(shareMode==='name') return APP_NAME;
+  if(shareMode==='link') return CLEAN_SHARE_URL;
+  return `${APP_NAME} – ${CLEAN_SHARE_URL}`;
+}
+
+function updateShareInput(){
+  const inp=$('#shareUrl');
+  if(inp) inp.value=getShareText();
+  document.querySelectorAll('[data-share-mode]').forEach(b=>{
+    b.classList.toggle('active', b.dataset.shareMode===shareMode);
+  });
+}
+
 function openShare(){
   B.opener=document.activeElement;
-  const currentUrl=window.location.href.split('#')[0];
-  const u=encodeURIComponent(currentUrl),t=encodeURIComponent(APP_TITLE);
-  $('#shareUrl').value=currentUrl;
-  $('#shareLinks').innerHTML=[['Facebook',ICO.fb,'https://www.facebook.com/sharer/sharer.php?u='+u],['LinkedIn',ICO.li,'https://www.linkedin.com/sharing/share-offsite/?url='+u],['WhatsApp',ICO.wa,'https://wa.me/?text='+t+'%20'+u],['X',ICO.x,'https://twitter.com/intent/tweet?text='+t+'&url='+u]]
-    .map(([n,i,href])=>`<a class="btn" href="${href}" target="_blank" rel="noopener noreferrer">${i}${n}</a>`).join('');
+  shareMode='name';
+  updateShareInput();
+  const u=encodeURIComponent(CLEAN_SHARE_URL),t=encodeURIComponent(APP_TITLE);
+  $('#shareLinks').innerHTML=[
+    ['WhatsApp',ICO.wa,`https://wa.me/?text=${t}%20${u}`],
+    ['X',ICO.x,`https://twitter.com/intent/tweet?text=${t}&url=${u}`],
+    ['LinkedIn',ICO.li,`https://www.linkedin.com/sharing/share-offsite/?url=${u}`],
+    ['Facebook',ICO.fb,`https://www.facebook.com/sharer/sharer.php?u=${u}`]
+  ].map(([n,i,href])=>`<a class="btn" href="${href}" target="_blank" rel="noopener noreferrer">${i}${n}</a>`).join('');
   $('#shareNative').hidden=!navigator.share;
   modalOpen('shareModal');setTimeout(()=>$('#shareUrl').select(),30);
 }
+
 document.addEventListener('click',async e=>{
+  const modeBtn=e.target.closest('[data-share-mode]');
+  if(modeBtn){
+    shareMode=modeBtn.dataset.shareMode;
+    updateShareInput();
+    return;
+  }
   const t=e.target.closest('[data-share]');if(!t)return;
   const a=t.dataset.share;
   if(a==='open')openShare();
   else if(a==='close')modalClose('shareModal');
   else if(a==='copy'){
-    const currentUrl=$('#shareUrl').value||window.location.href.split('#')[0];
-    try{await navigator.clipboard.writeText(currentUrl);toast('Link copied.');return}catch(_){}
-    try{const i=$('#shareUrl');i.select();if(document.execCommand('copy')){toast('Link copied.');return}}catch(_){}
-    toast('Press Ctrl+C (or hold and copy) to copy the link.');
+    const val=getShareText();
+    try{await navigator.clipboard.writeText(val);toast(`Copied: "${val}"`);return}catch(_){}
+    try{const i=$('#shareUrl');i.select();if(document.execCommand('copy')){toast(`Copied: "${val}"`);return}}catch(_){}
+    toast(val);
   }
-  else if(a==='native'){const currentUrl=$('#shareUrl').value||window.location.href.split('#')[0];try{await navigator.share({title:APP_TITLE,url:currentUrl})}catch(_){}}
+  else if(a==='native'){
+    try{await navigator.share({title:APP_TITLE,text:APP_TITLE,url:CLEAN_SHARE_URL})}catch(_){}
+  }
 });
 document.addEventListener('keydown',e=>{if(e.key==='Escape'&&!$('#shareModal').hidden)modalClose('shareModal')});
 
@@ -2747,6 +2978,9 @@ document.addEventListener('click',e=>{
     S.threeSelectedCoinId=cid;
     go('three');
   }
+  else if(a==='screensaver'){
+    openScreensaver(t.dataset.id||S.threeSelectedCoinId||'bitcoin');
+  }
 });
 document.addEventListener('keydown',e=>{
   if(e.key==='Enter'&&e.target.matches('tr[data-coin]'))openCoin(e.target.dataset.coin);
@@ -2763,6 +2997,12 @@ $('#q').addEventListener('keydown',e=>{
 });
 
 /* ---------- boot ---------- */
+try{
+  if(window.location.search && (window.location.search.includes('__aistudio_auth_token') || window.location.search.includes('auth_token'))){
+    const cleanUrl=window.location.origin + window.location.pathname + (window.location.hash || '');
+    window.history.replaceState(null,'',cleanUrl);
+  }
+}catch(e){}
 try{if(window.top===window.self)$('#newTab').hidden=true;else $('#newTab').href=window.location.href;}catch(e){}
 try{const t=localStorage.getItem('csai-theme');if(t==='dark'||t==='light')document.documentElement.setAttribute('data-theme',t)}catch(e){}
 renderMethod();renderNews();authInit();blogInit();
@@ -2770,6 +3010,7 @@ S.coins=enrich(sampleCoins());S.lastAt=new Date();S.nextAt=Date.now()+300000;
 extraCoins().forEach(c=>{S.extra[c.id]=enrich([c])[0]});
 renderAll();
 aiEnsure();
+resetIdleTimer();
 if('serviceWorker' in navigator){
   window.addEventListener('load', ()=>{ navigator.serviceWorker.register('/sw.js').catch(()=>{}); });
 }
