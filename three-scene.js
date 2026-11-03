@@ -549,6 +549,8 @@ export function createGalaxyScene(coinsList) {
   return group;
 }
 
+let isScreensaverMode = false;
+
 // Master Initialization of the 3D Vault
 export async function initThreeVault(mountEl, getCoinsFn, onSelectCoinFn) {
   // Helper to build controller instance
@@ -564,12 +566,32 @@ export async function initThreeVault(mountEl, getCoinsFn, onSelectCoinFn) {
     setExplode: setThreeExplode,
     setRotationSpeed: setThreeSpeed,
     setCameraPreset: setThreeCamera,
+    setScreensaver: (active) => {
+      isScreensaverMode = !!active;
+      if (active) {
+        currentMode = 'mint';
+        if (mintGroup) mintGroup.visible = true;
+        if (galaxyGroup) galaxyGroup.visible = false;
+        cameraTargetPos.set(0, 0.25, 5.2);
+        cameraTargetLook.set(0, 0, 0);
+        camera.position.set(0, 0.25, 5.2);
+        controls.target.set(0, 0, 0);
+        controls.update();
+        isTransitioningCamera = false;
+      }
+      handleResize();
+      setTimeout(handleResize, 50);
+    },
+    isScreensaver: () => isScreensaverMode,
     setMount: (newMountEl) => {
       if (!newMountEl || !renderer) return;
       canvasMountEl = newMountEl;
       containerEl = newMountEl.parentElement;
       newMountEl.appendChild(renderer.domElement);
-      setTimeout(handleResize, 10);
+      handleResize();
+      requestAnimationFrame(handleResize);
+      setTimeout(handleResize, 30);
+      setTimeout(handleResize, 150);
     },
     resize: handleResize
   });
@@ -578,6 +600,7 @@ export async function initThreeVault(mountEl, getCoinsFn, onSelectCoinFn) {
     if (mountEl && canvasMountEl !== mountEl) {
       canvasMountEl = mountEl;
       mountEl.appendChild(renderer.domElement);
+      handleResize();
       setTimeout(handleResize, 10);
     }
     return makeController();
@@ -587,8 +610,11 @@ export async function initThreeVault(mountEl, getCoinsFn, onSelectCoinFn) {
   scene = new THREE.Scene();
   scene.fog = new THREE.FogExp2(0x0b1120, 0.022);
 
-  // Camera
-  const aspect = mountEl.clientWidth / mountEl.clientHeight;
+  // Camera - resilient dimension fallback so aspect is never NaN
+  canvasMountEl = mountEl;
+  const w = (mountEl && mountEl.clientWidth) || window.innerWidth || 800;
+  const h = (mountEl && mountEl.clientHeight) || window.innerHeight || 600;
+  const aspect = Math.max(0.1, w / (h || 1));
   camera = new THREE.PerspectiveCamera(45, aspect, 0.1, 100);
   camera.position.copy(cameraTargetPos);
 
@@ -598,7 +624,7 @@ export async function initThreeVault(mountEl, getCoinsFn, onSelectCoinFn) {
     powerPreference: 'high-performance',
     alpha: true
   });
-  renderer.setSize(mountEl.clientWidth, mountEl.clientHeight);
+  renderer.setSize(w, h);
   renderer.setPixelRatio(isSoftwareGl ? 1 : Math.min(window.devicePixelRatio, 2));
   renderer.outputColorSpace = THREE.SRGBColorSpace;
   renderer.toneMapping = THREE.ACESFilmicToneMapping;
@@ -618,8 +644,8 @@ export async function initThreeVault(mountEl, getCoinsFn, onSelectCoinFn) {
     console.warn('RoomEnvironment generation fallback:', e);
   }
 
-  // Balanced 3-Point Studio Lighting Rig
-  const keyLight = new THREE.DirectionalLight(0xfff5e6, 2.5);
+  // Balanced 3-Point Studio Lighting Rig with Specular Rim Accent
+  const keyLight = new THREE.DirectionalLight(0xfff5e6, 2.6);
   keyLight.position.set(5.5, 7.5, 6.0);
   if (!isSoftwareGl) {
     keyLight.castShadow = true;
@@ -634,11 +660,15 @@ export async function initThreeVault(mountEl, getCoinsFn, onSelectCoinFn) {
   }
   scene.add(keyLight);
 
-  const fillLight = new THREE.DirectionalLight(0x60a5fa, 1.2);
+  const fillLight = new THREE.DirectionalLight(0x60a5fa, 1.4);
   fillLight.position.set(-6.0, -2.0, -5.0);
   scene.add(fillLight);
 
-  const hemiLight = new THREE.HemisphereLight(0x38bdf8, 0x0b1120, 0.7);
+  const rimLight = new THREE.DirectionalLight(0xf59e0b, 1.8);
+  rimLight.position.set(0, 4.0, -5.0);
+  scene.add(rimLight);
+
+  const hemiLight = new THREE.HemisphereLight(0x38bdf8, 0x0b1120, 0.75);
   scene.add(hemiLight);
 
   // OrbitControls with exponential damping
@@ -677,9 +707,18 @@ export async function initThreeVault(mountEl, getCoinsFn, onSelectCoinFn) {
 }
 
 function handleResize() {
-  if (!renderer || !canvasMountEl) return;
-  const w = canvasMountEl.clientWidth;
-  const h = canvasMountEl.clientHeight;
+  if (!renderer) return;
+  let w = canvasMountEl ? canvasMountEl.clientWidth : 0;
+  let h = canvasMountEl ? canvasMountEl.clientHeight : 0;
+  if (!w || !h) {
+    if (canvasMountEl && (canvasMountEl.id === 'screensaverMount' || canvasMountEl.classList.contains('screensaver-mount'))) {
+      w = window.innerWidth;
+      h = window.innerHeight;
+    } else {
+      w = window.innerWidth || 800;
+      h = window.innerHeight || 600;
+    }
+  }
   if (!w || !h) return;
   camera.aspect = w / h;
   camera.updateProjectionMatrix();
@@ -740,7 +779,7 @@ function onPointerDown(e) {
   }
 }
 
-// Silky-Smooth 60fps Animation Loop with Exponential Damping
+// Silky-Smooth 60fps Animation Loop with Continuous Rotation & Specular Physics
 function startRenderLoop() {
   function tick() {
     animationFrameId = requestAnimationFrame(tick);
@@ -758,11 +797,21 @@ function startRenderLoop() {
 
     controls.update();
 
-    // Mode A: Token Mint Animations
-    if (currentMode === 'mint' && mintGroup) {
-      // Rotation
-      if (rotationSpeed > 0) {
-        mintGroup.rotation.y += 0.45 * rotationSpeed * delta;
+    // Mode A: Token Mint & Screensaver 3D Rotating Coin Animations
+    if ((currentMode === 'mint' || isScreensaverMode) && mintGroup) {
+      // Rotation: active, steady, and visible
+      const spinSpeed = isScreensaverMode ? 1.4 : (rotationSpeed > 0 ? 0.8 * rotationSpeed : 0);
+      if (spinSpeed > 0) {
+        mintGroup.rotation.y += spinSpeed * Math.min(delta, 0.1);
+      }
+
+      // Elegant levitation bob & precession angle in screensaver
+      if (isScreensaverMode) {
+        mintGroup.position.y = Math.sin(time * 1.5) * 0.14;
+        mintGroup.rotation.x = Math.sin(time * 0.8) * 0.08 + 0.04;
+        mintGroup.rotation.z = Math.cos(time * 0.6) * 0.03;
+      } else {
+        mintGroup.position.y = 0;
       }
 
       // Smooth Exploded-View Kinematics (Exponential Damping)
@@ -777,13 +826,14 @@ function startRenderLoop() {
         if (u.emblemGroup) u.emblemGroup.position.z = 0.20 + expDist * 1.4;
         if (u.haloMesh) {
           u.haloMesh.scale.setScalar(1.0 + explodeAmount * 0.35);
-          u.haloMesh.rotation.z += 0.5 * delta;
+          u.haloMesh.rotation.z += 0.8 * delta;
+          u.haloMesh.rotation.y += 0.35 * delta;
         }
 
         // Animate satellite nodes on the energy halo
         if (u.satNodes && u.satNodes.length) {
           u.satNodes.forEach((sat, idx) => {
-            const satAngle = time * 1.4 + (idx * Math.PI * 2) / u.satNodes.length;
+            const satAngle = time * 1.8 + (idx * Math.PI * 2) / u.satNodes.length;
             sat.position.set(Math.cos(satAngle) * 3.15, Math.sin(satAngle) * 3.15, 0);
           });
         }
@@ -791,7 +841,7 @@ function startRenderLoop() {
     }
 
     // Mode B: Galaxy Constellation Animations
-    if (currentMode === 'galaxy' && galaxyGroup) {
+    if (currentMode === 'galaxy' && !isScreensaverMode && galaxyGroup) {
       galaxyGroup.rotation.y += 0.06 * rotationSpeed * delta;
       // Gentle floating bob on nodes
       galaxyNodes.forEach((node, i) => {
