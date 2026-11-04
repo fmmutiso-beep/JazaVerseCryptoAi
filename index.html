@@ -330,15 +330,16 @@ td.co{text-align:left;min-width:190px}
 .posts{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px}
 @media (max-width:1000px){.posts{grid-template-columns:repeat(2,minmax(0,1fr))}}
 @media (max-width:620px){.posts{grid-template-columns:minmax(0,1fr)}}
-.post{padding:18px;display:flex;flex-direction:column;gap:10px;min-width:0}
+.post{padding:18px;display:flex;flex-direction:column;gap:10px;min-width:0;overflow:hidden}
 .post h3{font-size:17px;line-height:1.3;font-weight:600;letter-spacing:-.01em}
 .post p{margin:0;color:var(--muted);font-size:13.5px}
 .post .pmeta{display:flex;gap:8px;align-items:center;font-size:12px;color:var(--muted);flex-wrap:wrap}
-.pimgbox{position:relative;margin:-18px -18px 2px;aspect-ratio:16/9;overflow:hidden;border-radius:var(--radius,16px) var(--radius,16px) 0 0;background:linear-gradient(135deg,var(--accent-soft),var(--surface));border-bottom:1px solid var(--line)}
-.pimgbox img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block}
+.pimgbox{position:relative;margin:-18px -18px 2px;aspect-ratio:16/9;overflow:hidden;border-radius:16px 16px 0 0;background:linear-gradient(135deg,var(--accent-soft),var(--surface));border-bottom:1px solid var(--line)}
+.pimgbox img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block;transition:transform .3s ease}
+.post:hover .pimgbox img{transform:scale(1.04)}
 .pimgbox .ph{position:absolute;inset:0;display:none;align-items:center;justify-content:center;font-size:34px;font-weight:700;color:var(--accent-text);opacity:.55}
 .pimgbox.noimg img{display:none}.pimgbox.noimg .ph,.pimgbox.none .ph{display:flex}
-.readimg{display:block;width:100%;max-height:200px;object-fit:cover;border-radius:12px;border:1px solid var(--line)}
+.readimg{display:block;width:100%;max-height:280px;object-fit:cover;border-radius:14px;border:1px solid var(--line);margin:6px 0 16px;background:var(--surface-2)}
 .readimg[hidden]{display:none}
 .post-actions{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
 .post .spacer{flex:1}
@@ -2104,11 +2105,37 @@ document.addEventListener('keydown',e=>{
 $('#authForm').addEventListener('submit',submitAuth);
 
 /* ---------- research & articles ---------- */
+const ARTICLE_COVERS = {
+  'cem100-methodology': 'https://images.unsplash.com/photo-1642543492481-44e81e3914a7?auto=format&fit=crop&w=1200&q=80',
+  'tokenized-stocks-primer': 'https://images.unsplash.com/photo-1611974789855-9c2a0a7236a3?auto=format&fit=crop&w=1200&q=80',
+  'defi-liquidity-models': 'https://images.unsplash.com/photo-1639762681485-074b7f938ba0?auto=format&fit=crop&w=1200&q=80'
+};
+const FALLBACK_COVERS = [
+  'https://images.unsplash.com/photo-1642543492481-44e81e3914a7?auto=format&fit=crop&w=1200&q=80',
+  'https://images.unsplash.com/photo-1611974789855-9c2a0a7236a3?auto=format&fit=crop&w=1200&q=80',
+  'https://images.unsplash.com/photo-1639762681485-074b7f938ba0?auto=format&fit=crop&w=1200&q=80',
+  'https://images.unsplash.com/photo-1621416894569-0f39ed31d247?auto=format&fit=crop&w=1200&q=80',
+  'https://images.unsplash.com/photo-1518770660439-4636190af475?auto=format&fit=crop&w=1200&q=80',
+  'https://images.unsplash.com/photo-1622979135225-d2ba269bc1df?auto=format&fit=crop&w=1200&q=80'
+];
+function getPostImage(p){
+  if(!p) return FALLBACK_COVERS[0];
+  if(p.imageUrl && typeof p.imageUrl==='string' && p.imageUrl.trim()) return p.imageUrl.trim();
+  const sId = String(p.id||'').toLowerCase();
+  for(const [k, url] of Object.entries(ARTICLE_COVERS)){
+    if(sId.includes(k)) return url;
+  }
+  const h = Math.abs(hash(p.title || p.id || 'article'));
+  return FALLBACK_COVERS[h % FALLBACK_COVERS.length];
+}
+
 const DEFAULT_POSTS = [
   {
     id: 'cem100-methodology',
     title: 'The CEM-100 Evaluation Methodology: Systematic Screening of Crypto Assets',
     summary: 'How the 11-factor CEM-100 quantitative scoring framework evaluates blockchain architecture, tokenomics, liquidity, and momentum without speculation.',
+    imageUrl: 'https://images.unsplash.com/photo-1642543492481-44e81e3914a7?auto=format&fit=crop&w=1200&q=80',
+    imageAlt: 'Quantitative CEM-100 crypto evaluation and blockchain analytics',
     kind: 'html',
     createdAt: '2026-10-15T12:00:00Z',
     html: `<div>
@@ -2133,6 +2160,8 @@ const DEFAULT_POSTS = [
     id: 'tokenized-stocks-primer',
     title: 'Tokenized Stocks: Structural Mechanics and Counterparty Analysis',
     summary: 'An institutional overview of fractional xStocks, legal custody models, secondary market spreads, and retail trading accessibility.',
+    imageUrl: 'https://images.unsplash.com/photo-1611974789855-9c2a0a7236a3?auto=format&fit=crop&w=1200&q=80',
+    imageAlt: 'Tokenized stock trading and financial market analytics',
     kind: 'html',
     createdAt: '2026-10-22T14:30:00Z',
     html: `<div>
@@ -2150,6 +2179,8 @@ const DEFAULT_POSTS = [
     id: 'defi-liquidity-models',
     title: 'DeFi Liquidity Scenarios and Solvency Risk Models',
     summary: 'Assessing decentralized money market utilization rates, collateral haircut parameters, and extreme liquidation cascades.',
+    imageUrl: 'https://images.unsplash.com/photo-1639762681485-074b7f938ba0?auto=format&fit=crop&w=1200&q=80',
+    imageAlt: 'Decentralized liquidity topology and automated market makers',
     kind: 'html',
     createdAt: '2026-10-28T09:15:00Z',
     html: `<div>
