@@ -1280,9 +1280,19 @@ function renderTable(){
 }
 function renderNews(){
   const el=$('#news');
+  if(!el) return;
   if(!S.news.length){
-    el.style.display='block';
-    el.innerHTML='<div class="card empty-card"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 5h13v14H6a2 2 0 0 1-2-2z"/><path d="M17 9h3v8a2 2 0 0 1-2 2M8 9h5M8 13h5"/></svg><div><b>News is not loaded</b>Headlines come from a live feed. When the app can reach it, the latest stories appear here with images, source and date.</div></div>';
+    el.style.display='';
+    el.innerHTML=[1,2,3,4].map(()=>`
+      <div class="card ncard" style="opacity:0.85;pointer-events:none">
+        <div class="nimg" style="background:var(--surface-2);animation:pulse 1.4s ease-in-out infinite"><span style="opacity:0.4">📰</span></div>
+        <div class="nbody">
+          <div class="nmeta"><span style="display:inline-block;width:70px;height:12px;border-radius:4px;background:var(--line);animation:pulse 1.4s ease-in-out infinite"></span></div>
+          <h3 style="height:18px;border-radius:4px;background:var(--line);animation:pulse 1.4s ease-in-out infinite;margin:4px 0"></h3>
+          <p style="height:32px;border-radius:4px;background:var(--surface-2);animation:pulse 1.4s ease-in-out infinite"></p>
+        </div>
+      </div>
+    `).join('');
     return;
   }
   el.style.display='';
@@ -1890,13 +1900,18 @@ async function loadCoins(manual){
   S.lastAt=new Date();S.nextAt=Date.now()+300000;
   S.busy=false;$('#refreshBtn').disabled=false;
   renderAll();
-  if(manual) loadNews();
+  loadNews();
   if(S.mode==='live'&&(S.view==='trending'||S.trendAt))loadTrending();
 }
 async function loadNews(){
-  const n=await liveNews();
-  if(n){S.news=n}
-  renderNews();
+  try{
+    const n=await liveNews(8);
+    if(n&&n.length){
+      S.news=n;
+      try{localStorage.setItem('csai-cached-news',JSON.stringify(n))}catch(e){}
+      renderNews();
+    }
+  }catch(e){console.warn('Live news error:',e)}
 }
 function toggleTheme(){
   const root=document.documentElement,cur=root.getAttribute('data-theme')||'dark';
@@ -3342,7 +3357,13 @@ try{
   }
 }catch(e){}
 try{const t=localStorage.getItem('csai-theme');if(t==='dark'||t==='light')document.documentElement.setAttribute('data-theme',t)}catch(e){}
-renderMethod();renderNews();authInit();blogInit();
+renderMethod();
+// Instant news restoration from cache so news renders immediately on initial open
+try{
+  const cachedNews=JSON.parse(localStorage.getItem('csai-cached-news')||'null');
+  if(Array.isArray(cachedNews)&&cachedNews.length) S.news=cachedNews;
+}catch(e){}
+renderNews();authInit();blogInit();
 S.coins=enrich(sampleCoins());S.lastAt=new Date();S.nextAt=Date.now()+300000;
 extraCoins().forEach(c=>{S.extra[c.id]=enrich([c])[0]});
 renderAll();
@@ -3351,9 +3372,12 @@ resetIdleTimer();
 if('serviceWorker' in navigator){
   window.addEventListener('load', ()=>{ navigator.serviceWorker.register('/sw.js').catch(()=>{}); });
 }
+
+// Automatically load live news insights immediately when the app is opened
+loadNews();
+
 (async()=>{
   await loadCoins(false);
-  loadNews();
 })();
 setInterval(()=>{renderStatus();if(Date.now()>=S.nextAt&&!S.busy)loadCoins(false)},1000);
 setInterval(loadNews,5*60*1000);

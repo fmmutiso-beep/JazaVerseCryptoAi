@@ -227,6 +227,23 @@ async function fetchLiveNews() {
     }
   });
 
+  // Also include CryptoCompare live news as additional feed source
+  try {
+    const cc = await fetchWithTimeout(CRYPTOCOMPARE_NEWS, {}, 5000);
+    if (cc && Array.isArray(cc.Data) && cc.Data.length > 0) {
+      const ccItems = cc.Data.slice(0, 8).map(x => ({
+        title: x.title,
+        url: x.url,
+        body: x.body ? x.body.slice(0, 180) : '',
+        published_on: x.published_on || Math.floor(Date.now() / 1000),
+        source: (x.source_info && x.source_info.name) || x.source || 'CryptoCompare',
+        source_info: { name: (x.source_info && x.source_info.name) || x.source || 'CryptoCompare' },
+        imageurl: x.imageurl || ''
+      }));
+      all.push(...ccItems);
+    }
+  } catch (err) {}
+
   if (all.length > 0) {
     all.sort((a, b) => b.published_on - a.published_on);
     return all.slice(0, 20);
@@ -362,6 +379,23 @@ app.get('*', (req, res) => {
 
 // Warm cache immediately on startup so users never wait
 (async () => {
+  // Pre-warm live news cache
+  try {
+    const liveItems = await fetchLiveNews();
+    if (liveItems && liveItems.length > 0) {
+      cache.news = { Data: liveItems };
+      cache.newsAt = Date.now();
+      console.log(`Pre-warmed live news cache with ${liveItems.length} articles`);
+    } else {
+      cache.news = { Data: BACKUP_NEWS };
+      cache.newsAt = Date.now();
+    }
+  } catch (e) {
+    cache.news = { Data: BACKUP_NEWS };
+    cache.newsAt = Date.now();
+  }
+
+  // Pre-warm market cache
   try {
     const url = `${COINGECKO_BASE}/coins/markets?vs_currency=usd&order=market_cap_desc&per_page=100&page=1&price_change_percentage=24h,7d&sparkline=true`;
     const fresh = await fetchWithTimeout(url, {}, 5000);
@@ -371,7 +405,7 @@ app.get('*', (req, res) => {
       console.log(`Pre-warmed market cache with ${fresh.length} live crypto assets`);
     }
   } catch (e) {
-    console.log('Background cache warm deferred to first user request');
+    console.log('Background market cache warm deferred to first user request');
   }
 })();
 
