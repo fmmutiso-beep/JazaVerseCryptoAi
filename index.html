@@ -561,6 +561,29 @@ footer strong{color:var(--fg)}
 .readbody [style*="color: #64748b"],.readbody [style*="color:#64748b"]{color:var(--muted)!important}
 .readbody [style*="background: #f8fafc"],.readbody [style*="background:#f8fafc"]{background:var(--surface-2)!important;color:var(--accent-text)!important}
 
+.danger-btn{background:rgba(239,68,68,0.14)!important;color:#ef4444!important;border:1px solid rgba(239,68,68,0.35)!important}
+.danger-btn:hover{background:#dc2626!important;color:#fff!important;border-color:#dc2626!important}
+.del-confirm-box{display:inline-flex;align-items:center;gap:6px}
+.post{cursor:pointer;transition:transform .15s,border-color .15s}
+.post:hover{border-color:var(--accent)}
+.post h3{cursor:pointer;transition:color .15s}
+.post h3:hover{color:var(--accent-text)}
+.pimgbox{cursor:pointer}
+.pdf-viewer-wrap{display:flex;flex-direction:column;gap:12px;margin:16px 0}
+.pdf-embed-box{width:100%;height:520px;border-radius:12px;border:1px solid var(--line);background:var(--surface-2)}
+
+/* Clickable direct access links for crypto analysis sections */
+.service-links-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:10px;margin-top:10px}
+.service-link-card{display:flex;align-items:center;gap:12px;padding:12px 14px;background:var(--surface-2);border:1px solid var(--line);border-radius:12px;color:var(--fg);text-decoration:none;transition:border-color .2s,background .2s,transform .15s}
+.service-link-card:hover{border-color:var(--accent);color:var(--accent-text);background:var(--surface);transform:translateY(-1.5px)}
+.service-link-icon{width:36px;height:36px;border-radius:10px;display:flex;align-items:center;justify-content:center;background:var(--surface);border:1px solid var(--line);color:var(--accent-text);flex:none}
+.service-link-icon svg{width:18px;height:18px;stroke:currentColor}
+.service-link-info{display:flex;flex-direction:column;min-width:0}
+.service-link-label{font-size:10.5px;font-weight:700;letter-spacing:0.06em;text-transform:uppercase;color:var(--muted);line-height:1.2}
+.service-link-name{font-size:13px;font-weight:600;color:var(--fg);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;line-height:1.4}
+.service-link-arrow{margin-left:auto;color:var(--muted);flex:none;opacity:.7}
+.service-link-card:hover .service-link-arrow{color:var(--accent-text);opacity:1}
+
 @media print{
   body > *:not(#readModal){display:none!important}
   #readModal{position:static!important;display:block!important;background:#fff!important;padding:0!important}
@@ -634,7 +657,7 @@ footer strong{color:var(--fg)}
       <div class="more" id="more"></div>
     </section>
     <section aria-labelledby="nwT">
-      <div class="sec-head"><div><h2 id="nwT">Crypto news insights</h2><p>Headlines refresh every 30 minutes.</p></div></div>
+      <div class="sec-head"><div><h2 id="nwT">Crypto news insights</h2><p>Live headlines updated regularly every 5 minutes.</p></div></div>
       <div class="news" id="news"></div>
     </section>
     <section class="card method" aria-labelledby="mT">
@@ -1285,8 +1308,218 @@ function renderAll(){
   if(S.sel)renderCoin(true);
 }
 
-/* ---------- coin detail ---------- */
+/* ---------- coin detail & service links ---------- */
 const FCOL=v=>v>=8?'var(--good)':v>=6?'var(--accent)':v>=4?'var(--warn)':'var(--bad)';
+
+const SVC_ICONS={
+  web:'<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M2 12h20M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>',
+  explorer:'<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/><path d="M10 6.5h4M6.5 10v4M17.5 10v4M10 17.5h4"/></svg>',
+  trade:'<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="2" x2="12" y2="6"/><line x1="12" y1="18" x2="12" y2="22"/><rect x="8" y="6" width="8" height="12" rx="1"/><line x1="18" y1="9" x2="18" y2="12"/><line x1="18" y1="16" x2="18" y2="19"/><rect x="15" y="12" width="6" height="4" rx="1"/><line x1="6" y1="5" x2="6" y2="8"/><line x1="6" y1="14" x2="6" y2="17"/><rect x="3" y="8" width="6" height="6" rx="1"/></svg>',
+  swap:'<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m16 3 4 4-4 4"/><path d="M20 7H4"/><path d="m8 21-4-4 4-4"/><path d="M4 17h16"/></svg>',
+  analytics:'<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/><path d="M3 20h18"/></svg>',
+  doc:'<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>',
+  sec:'<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>',
+  arrow:'<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17l9.2-9.2M17 17V7H7"/></svg>'
+};
+
+const CRYPTO_CURATED={
+  bitcoin:{
+    web:{name:'Bitcoin.org',url:'https://bitcoin.org'},
+    explorer:{name:'Mempool Space',url:'https://mempool.space'},
+    trade:{name:'Kraken BTC/USD',url:'https://www.kraken.com/prices/btc-bitcoin-price-chart/usd-us-dollar'},
+    swap:{name:'ThorChain Cross-Chain',url:'https://app.thorswap.finance/swap'},
+    analytics:{name:'DefiLlama Bitcoin',url:'https://defillama.com/chain/Bitcoin'},
+    doc:{name:'Satoshi Whitepaper',url:'https://bitcoin.org/bitcoin.pdf'}
+  },
+  ethereum:{
+    web:{name:'Ethereum.org',url:'https://ethereum.org'},
+    explorer:{name:'Etherscan',url:'https://etherscan.io'},
+    trade:{name:'Kraken ETH/USD',url:'https://www.kraken.com/prices/eth-ethereum-price-chart/usd-us-dollar'},
+    swap:{name:'Uniswap DEX',url:'https://app.uniswap.org/swap?chain=ethereum'},
+    analytics:{name:'DefiLlama Ethereum',url:'https://defillama.com/chain/Ethereum'},
+    doc:{name:'Ethereum Whitepaper',url:'https://ethereum.org/en/whitepaper/'}
+  },
+  solana:{
+    web:{name:'Solana.com',url:'https://solana.com'},
+    explorer:{name:'Solscan',url:'https://solscan.io'},
+    trade:{name:'Kraken SOL/USD',url:'https://www.kraken.com/prices/sol-solana-price-chart/usd-us-dollar'},
+    swap:{name:'Jupiter DEX',url:'https://jup.ag/swap/USDC-SOL'},
+    analytics:{name:'DefiLlama Solana',url:'https://defillama.com/chain/Solana'},
+    doc:{name:'Solana Docs & Spec',url:'https://docs.solana.com'}
+  },
+  ripple:{
+    web:{name:'Ripple.com',url:'https://ripple.com'},
+    explorer:{name:'XRPScan',url:'https://xrpscan.com'},
+    trade:{name:'Kraken XRP/USD',url:'https://www.kraken.com/prices/xrp-ripple-price-chart/usd-us-dollar'},
+    swap:{name:'XRPL DEX Portal',url:'https://xumm.app'},
+    analytics:{name:'DefiLlama XRP Ledger',url:'https://defillama.com/chain/Ripple'},
+    doc:{name:'XRPL Consensus Paper',url:'https://xrpl.org/intro-to-consensus.html'}
+  },
+  binancecoin:{
+    web:{name:'BNB Chain',url:'https://www.bnbchain.org'},
+    explorer:{name:'BscScan',url:'https://bscscan.com'},
+    trade:{name:'Binance BNB/USDT',url:'https://www.binance.com/en/trade/BNB_USDT'},
+    swap:{name:'PancakeSwap',url:'https://pancakeswap.finance/swap'},
+    analytics:{name:'DefiLlama BSC',url:'https://defillama.com/chain/BSC'},
+    doc:{name:'BNB Chain Whitepaper',url:'https://github.com/bnb-chain/whitepaper'}
+  },
+  cardano:{
+    web:{name:'Cardano.org',url:'https://cardano.org'},
+    explorer:{name:'Cardanoscan',url:'https://cardanoscan.io'},
+    trade:{name:'Kraken ADA/USD',url:'https://www.kraken.com/prices/ada-cardano-price-chart/usd-us-dollar'},
+    swap:{name:'Minswap DEX',url:'https://app.minswap.org'},
+    analytics:{name:'DefiLlama Cardano',url:'https://defillama.com/chain/Cardano'},
+    doc:{name:'Cardano Research & Papers',url:'https://cardano.org/research/'}
+  },
+  'avalanche-2':{
+    web:{name:'Avalanche Network',url:'https://www.avax.network'},
+    explorer:{name:'Snowtrace',url:'https://snowtrace.io'},
+    trade:{name:'Kraken AVAX/USD',url:'https://www.kraken.com/prices/avax-avalanche-price-chart/usd-us-dollar'},
+    swap:{name:'Trader Joe DEX',url:'https://traderjoexyz.com'},
+    analytics:{name:'DefiLlama Avalanche',url:'https://defillama.com/chain/Avalanche'},
+    doc:{name:'Avalanche Whitepapers',url:'https://www.avalabs.org/whitepapers'}
+  },
+  dogecoin:{
+    web:{name:'Dogecoin.com',url:'https://dogecoin.com'},
+    explorer:{name:'Dogechain Explorer',url:'https://dogechain.info'},
+    trade:{name:'Kraken DOGE/USD',url:'https://www.kraken.com/prices/doge-dogecoin-price-chart/usd-us-dollar'},
+    swap:{name:'Uniswap / Wrapped DOGE',url:'https://app.uniswap.org'},
+    analytics:{name:'CoinGecko Dogecoin',url:'https://www.coingecko.com/en/coins/dogecoin'},
+    doc:{name:'Dogecoin Foundation',url:'https://foundation.dogecoin.com'}
+  },
+  tron:{
+    web:{name:'Tron Network',url:'https://tron.network'},
+    explorer:{name:'TRONSCAN',url:'https://tronscan.org'},
+    trade:{name:'Kraken TRX/USD',url:'https://www.kraken.com/prices/trx-tron-price-chart/usd-us-dollar'},
+    swap:{name:'SunSwap DEX',url:'https://sunswap.com'},
+    analytics:{name:'DefiLlama Tron',url:'https://defillama.com/chain/Tron'},
+    doc:{name:'Tron Documentation',url:'https://developers.tron.network'}
+  },
+  polkadot:{
+    web:{name:'Polkadot Network',url:'https://polkadot.network'},
+    explorer:{name:'Subscan Polkadot',url:'https://polkadot.subscan.io'},
+    trade:{name:'Kraken DOT/USD',url:'https://www.kraken.com/prices/dot-polkadot-price-chart/usd-us-dollar'},
+    swap:{name:'Hydration DEX',url:'https://app.hydration.net'},
+    analytics:{name:'DefiLlama Polkadot',url:'https://defillama.com/chain/Polkadot'},
+    doc:{name:'Polkadot Spec & Wiki',url:'https://wiki.polkadot.network'}
+  },
+  chainlink:{
+    web:{name:'Chainlink Network',url:'https://chain.link'},
+    explorer:{name:'Etherscan (LINK)',url:'https://etherscan.io/token/0x514910771af9ca656af840dff83e8264ecf986ca'},
+    trade:{name:'Kraken LINK/USD',url:'https://www.kraken.com/prices/link-chainlink-price-chart/usd-us-dollar'},
+    swap:{name:'Uniswap (LINK/ETH)',url:'https://app.uniswap.org'},
+    analytics:{name:'DefiLlama Oracles',url:'https://defillama.com/oracles/Chainlink'},
+    doc:{name:'Chainlink 2.0 Whitepaper',url:'https://chain.link/whitepaper'}
+  },
+  sui:{
+    web:{name:'Sui Foundation',url:'https://sui.io'},
+    explorer:{name:'Suiscan Explorer',url:'https://suiscan.xyz'},
+    trade:{name:'Kraken SUI/USD',url:'https://www.kraken.com/prices/sui-price-chart/usd-us-dollar'},
+    swap:{name:'Cetus Protocol DEX',url:'https://app.cetus.zone'},
+    analytics:{name:'DefiLlama Sui',url:'https://defillama.com/chain/Sui'},
+    doc:{name:'Sui Documentation',url:'https://docs.sui.io'}
+  },
+  near:{
+    web:{name:'NEAR Protocol',url:'https://near.org'},
+    explorer:{name:'NearBlocks',url:'https://nearblocks.io'},
+    trade:{name:'Kraken NEAR/USD',url:'https://www.kraken.com/prices/near-price-chart/usd-us-dollar'},
+    swap:{name:'Ref Finance DEX',url:'https://app.ref.finance'},
+    analytics:{name:'DefiLlama NEAR',url:'https://defillama.com/chain/Near'},
+    doc:{name:'NEAR Whitepaper & Docs',url:'https://docs.near.org'}
+  },
+  uniswap:{
+    web:{name:'Uniswap Protocol',url:'https://uniswap.org'},
+    explorer:{name:'Etherscan (UNI)',url:'https://etherscan.io/token/0x1f9840a85d5af5bf1d1762f925bdaddc4201f984'},
+    trade:{name:'Kraken UNI/USD',url:'https://www.kraken.com/prices/uni-uniswap-price-chart/usd-us-dollar'},
+    swap:{name:'Uniswap App',url:'https://app.uniswap.org'},
+    analytics:{name:'DefiLlama Uniswap',url:'https://defillama.com/protocol/uniswap'},
+    doc:{name:'Uniswap V4 Docs',url:'https://docs.uniswap.org'}
+  },
+  aave:{
+    web:{name:'Aave Protocol',url:'https://aave.com'},
+    explorer:{name:'Etherscan (AAVE)',url:'https://etherscan.io/token/0x7fc66500c84a76ad7e9c93437bfc5ac33e2ddae9'},
+    trade:{name:'Kraken AAVE/USD',url:'https://www.kraken.com/prices/aave-price-chart/usd-us-dollar'},
+    swap:{name:'Aave Markets & App',url:'https://app.aave.com'},
+    analytics:{name:'DefiLlama Aave',url:'https://defillama.com/protocol/aave'},
+    doc:{name:'Aave Documentation',url:'https://docs.aave.com'}
+  }
+};
+
+function getCryptoServiceLinks(c){
+  const id=(c.id||'').toLowerCase();
+  const sym=(c.sym||'').toUpperCase();
+  const symL=(c.sym||'').toLowerCase();
+  const cur=CRYPTO_CURATED[id];
+  if(cur){
+    return [
+      {type:'web',label:'Official Website',name:cur.web.name,url:cur.web.url},
+      {type:'explorer',label:'Blockchain Explorer',name:cur.explorer.name,url:cur.explorer.url},
+      {type:'trade',label:'Spot Trading',name:cur.trade.name,url:cur.trade.url},
+      {type:'swap',label:'DEX / Instant Swap',name:cur.swap.name,url:cur.swap.url},
+      {type:'analytics',label:'On-chain Analytics',name:cur.analytics.name,url:cur.analytics.url},
+      {type:'doc',label:'Docs & Whitepaper',name:cur.doc.name,url:cur.doc.url}
+    ];
+  }
+  return [
+    {type:'web',label:'Token Portal',name:`${c.name} on CoinGecko`,url:`https://www.coingecko.com/en/coins/${encodeURIComponent(c.id)}`},
+    {type:'explorer',label:'Multi-Chain Explorer',name:`Blockchair (${sym})`,url:`https://blockchair.com/search?q=${encodeURIComponent(sym||c.name)}`},
+    {type:'trade',label:'Spot Exchange',name:`Kraken (${sym})`,url:`https://www.kraken.com/prices/${encodeURIComponent(symL)}`},
+    {type:'swap',label:'Decentralized Swap',name:`Uniswap (${sym})`,url:`https://app.uniswap.org/explore/tokens/ethereum`},
+    {type:'analytics',label:'DeFi & TVL Data',name:`DefiLlama (${sym})`,url:`https://defillama.com/search?q=${encodeURIComponent(c.name)}`},
+    {type:'doc',label:'Coin Profile & Tech',name:`${sym} Technical Info`,url:`https://www.coingecko.com/en/coins/${encodeURIComponent(c.id)}`}
+  ];
+}
+
+function renderCryptoServicesHtml(c){
+  const links=getCryptoServiceLinks(c);
+  return `
+  <section class="an-sec">
+    <h3>Direct service &amp; ecosystem access</h3>
+    <p class="an-sub" style="margin-bottom:8px">Verified clickable links to trade, inspect on-chain ledger, swap, and research ${esc(c.name)} across external services.</p>
+    <div class="service-links-grid">
+      ${links.map(l=>`
+        <a class="service-link-card" href="${esc(l.url)}" target="_blank" rel="noopener noreferrer" title="Open ${esc(l.name)} in new tab">
+          <div class="service-link-icon">${SVC_ICONS[l.type]||SVC_ICONS.web}</div>
+          <div class="service-link-info">
+            <span class="service-link-label">${esc(l.label)}</span>
+            <span class="service-link-name">${esc(l.name)}</span>
+          </div>
+          <div class="service-link-arrow">${SVC_ICONS.arrow}</div>
+        </a>
+      `).join('')}
+    </div>
+  </section>`;
+}
+
+function renderTsServicesHtml(c,m){
+  const ticker=(m.t||c.sym||'').toUpperCase();
+  const links=[
+    {type:'trade',label:'Fractional Trading',name:`Kraken xStock (${ticker})`,url:`https://www.kraken.com/prices/${encodeURIComponent((c.sym||'').toLowerCase())}`},
+    {type:'sec',label:'Token Issuer & Reserves',name:`${esc(m.iss||'Backed')} Proof of Reserves`,url:'https://backed.fi/'},
+    {type:'doc',label:'Regulatory Filings',name:`SEC EDGAR (${ticker})`,url:`https://www.sec.gov/edgar/searchedgar/companysearch?companyName=${encodeURIComponent(ticker)}`},
+    {type:'analytics',label:'Market Valuation',name:`Yahoo Finance (${ticker})`,url:`https://finance.yahoo.com/quote/${encodeURIComponent(ticker)}`},
+    {type:'web',label:'Token Metrics',name:`CoinGecko (${ticker})`,url:`https://www.coingecko.com/en/coins/${encodeURIComponent(c.id)}`},
+    {type:'explorer',label:'On-chain Contract',name:`Etherscan / Solscan`,url:`https://blockchair.com/search?q=${encodeURIComponent(c.sym)}`}
+  ];
+  return `
+  <section class="an-sec">
+    <h3>Direct service &amp; market access</h3>
+    <p class="an-sub" style="margin-bottom:8px">Access issuer collateral, regulatory SEC 10-K filings, equity quotes, and token trading directly.</p>
+    <div class="service-links-grid">
+      ${links.map(l=>`
+        <a class="service-link-card" href="${esc(l.url)}" target="_blank" rel="noopener noreferrer" title="Open ${esc(l.name)} in new tab">
+          <div class="service-link-icon">${SVC_ICONS[l.type]||SVC_ICONS.web}</div>
+          <div class="service-link-info">
+            <span class="service-link-label">${esc(l.label)}</span>
+            <span class="service-link-name">${esc(l.name)}</span>
+          </div>
+          <div class="service-link-arrow">${SVC_ICONS.arrow}</div>
+        </a>
+      `).join('')}
+    </div>
+  </section>`;
+}
+
 function renderCoin(keepChart){
   const c=byId(S.sel);if(!c)return;
   const rk=S.coins.slice().sort((a,b)=>b.mc-a.mc).findIndex(x=>x.id===c.id)+1;
@@ -1311,7 +1544,23 @@ function renderCoin(keepChart){
     <div><small>Circulating supply</small><b class="num">${compactN(c.circ)} ${esc(c.sym)}</b></div>
     <div><small>Maximum supply</small><b class="num">${c.max?compactN(c.max)+' '+esc(c.sym):'No fixed cap'}</b></div>
     <div><small>Share issued</small><b class="num">${issued==null?'–':issued.toFixed(1)+'%'}</b></div>
-    <div><small>Scarcity score</small><b class="num">${c.f.tokenomics.toFixed(1)} / 10</b></div></div></div>`;
+    <div><small>Scarcity score</small><b class="num">${c.f.tokenomics.toFixed(1)} / 10</b></div></div></div>
+  <div class="card fcard">
+    <h3>Direct service &amp; ecosystem access</h3>
+    <p class="chart-note" style="margin:4px 0 10px">Verified links to trade, inspect on-chain ledger, swap, and research ${esc(c.name)} across external services.</p>
+    <div class="service-links-grid">
+      ${getCryptoServiceLinks(c).map(l=>`
+        <a class="service-link-card" href="${esc(l.url)}" target="_blank" rel="noopener noreferrer" title="Open ${esc(l.name)} in new tab">
+          <div class="service-link-icon">${SVC_ICONS[l.type]||SVC_ICONS.web}</div>
+          <div class="service-link-info">
+            <span class="service-link-label">${esc(l.label)}</span>
+            <span class="service-link-name">${esc(l.name)}</span>
+          </div>
+          <div class="service-link-arrow">${SVC_ICONS.arrow}</div>
+        </a>
+      `).join('')}
+    </div>
+  </div>`;
   loadChart(c);
 }
 async function loadChart(c){
@@ -1641,6 +1890,7 @@ async function loadCoins(manual){
   S.lastAt=new Date();S.nextAt=Date.now()+300000;
   S.busy=false;$('#refreshBtn').disabled=false;
   renderAll();
+  if(manual) loadNews();
   if(S.mode==='live'&&(S.view==='trending'||S.trendAt))loadTrending();
 }
 async function loadNews(){
@@ -1846,16 +2096,16 @@ const DEFAULT_POSTS = [
     summary: 'How the 11-factor CEM-100 quantitative scoring framework evaluates blockchain architecture, tokenomics, liquidity, and momentum without speculation.',
     kind: 'html',
     createdAt: '2026-10-15T12:00:00Z',
-    html: `<div style="font-family:system-ui,-apple-system,sans-serif;line-height:1.7;color:#1e293b;padding:24px;max-width:820px;margin:0 auto">
-      <h1 style="color:#0f172a;margin-bottom:12px">The CEM-100 Evaluation Methodology</h1>
-      <p style="color:#64748b;font-size:14px">Published by Jaza Finance Research · Technical Whitepaper</p>
-      <hr style="border:0;border-top:1px solid #e2e8f0;margin:20px 0"/>
+    html: `<div>
+      <h1>The CEM-100 Evaluation Methodology</h1>
+      <p style="color:var(--muted);font-size:14px">Published by Jaza Finance Research · Technical Whitepaper</p>
+      <hr/>
       <p>Cryptocurrency evaluation has long been plagued by speculative hype, social sentiment volatility, and lack of standard valuation metrics. The <strong>CEM-100</strong> scoring methodology establishes an 11-factor quantitative rubric that computes an objective score from 0 to 100.</p>
-      <h3 style="color:#0f172a;margin-top:24px">Core Scoring Formula</h3>
-      <p style="background:#f8fafc;padding:14px;border:1px solid #e2e8f0;border-radius:10px;font-family:monospace">
+      <h3>Core Scoring Formula</h3>
+      <div class="formula-box">
         MC Score = Σ (Factor_Score_i × Weight_i) ÷ Σ (Weight_i) × 10
-      </p>
-      <h3 style="color:#0f172a;margin-top:24px">Quality Categorization Bands</h3>
+      </div>
+      <h3>Quality Categorization Bands</h3>
       <ul>
         <li><strong>High Quality (80–100):</strong> Established market leader, provable decentralization, disciplined emission schedule, and deep institutional liquidity.</li>
         <li><strong>Moderate Opportunity (60–79):</strong> Sound economic design with minor liquidity friction or ongoing network transitions.</li>
@@ -1870,14 +2120,14 @@ const DEFAULT_POSTS = [
     summary: 'An institutional overview of fractional xStocks, legal custody models, secondary market spreads, and retail trading accessibility.',
     kind: 'html',
     createdAt: '2026-10-22T14:30:00Z',
-    html: `<div style="font-family:system-ui,-apple-system,sans-serif;line-height:1.7;color:#1e293b;padding:24px;max-width:820px;margin:0 auto">
-      <h1 style="color:#0f172a;margin-bottom:12px">Tokenized Stocks: Structural Mechanics and Counterparty Analysis</h1>
-      <p style="color:#64748b;font-size:14px">Published by Jaza Finance Research · Equities & On-Chain Assets</p>
-      <hr style="border:0;border-top:1px solid #e2e8f0;margin:20px 0"/>
-      <p>Tokenized stocks represent financial derivatives or custodial tracker tokens that mirror the economic performance of traditional equities such as Apple (AAPL), Microsoft (MSFT), or index funds like the S&P 500 (SPY). Unlike physical common shares, holders possess a tokenized contractual claim against the issuing legal entity.</p>
-      <h3 style="color:#0f172a;margin-top:24px">Key Liquidity & Spread Considerations</h3>
+    html: `<div>
+      <h1>Tokenized Stocks: Structural Mechanics and Counterparty Analysis</h1>
+      <p style="color:var(--muted);font-size:14px">Published by Jaza Finance Research · Equities &amp; On-Chain Assets</p>
+      <hr/>
+      <p>Tokenized stocks represent financial derivatives or custodial tracker tokens that mirror the economic performance of traditional equities such as Apple (AAPL), Microsoft (MSFT), or index funds like the S&amp;P 500 (SPY). Unlike physical common shares, holders possess a tokenized contractual claim against the issuing legal entity.</p>
+      <h3>Key Liquidity &amp; Spread Considerations</h3>
       <p>Because tokenized equities trade 24/7 on decentralized order books while underlying equity markets operate during standard market hours (9:30 AM – 4:00 PM EST), off-market pricing spreads and weekend volatility discounts can occur.</p>
-      <h3 style="color:#0f172a;margin-top:24px">Due Diligence Rubric</h3>
+      <h3>Due Diligence Rubric</h3>
       <p>Investors must systematically check token circulating supply, daily turnover ratio, custodian audit reports, and jurisdictional regulatory compliance prior to allocation.</p>
     </div>`
   },
@@ -1887,20 +2137,19 @@ const DEFAULT_POSTS = [
     summary: 'Assessing decentralized money market utilization rates, collateral haircut parameters, and extreme liquidation cascades.',
     kind: 'html',
     createdAt: '2026-10-28T09:15:00Z',
-    html: `<div style="font-family:system-ui,-apple-system,sans-serif;line-height:1.7;color:#1e293b;padding:24px;max-width:820px;margin:0 auto">
-      <h1 style="color:#0f172a;margin-bottom:12px">DeFi Liquidity Scenarios and Solvency Risk Models</h1>
-      <p style="color:#64748b;font-size:14px">Published by Jaza Finance Research · DeFi Intelligence</p>
-      <hr style="border:0;border-top:1px solid #e2e8f0;margin:20px 0"/>
+    html: `<div>
+      <h1>DeFi Liquidity Scenarios and Solvency Risk Models</h1>
+      <p style="color:var(--muted);font-size:14px">Published by Jaza Finance Research · DeFi Intelligence</p>
+      <hr/>
       <p>Decentralized lending protocols rely on automated liquidation engines and oracle price feeds. When collateral asset prices drop rapidly, liquidation margins trigger automated market sales, which can strain secondary automated market makers (AMMs).</p>
-      <h3 style="color:#0f172a;margin-top:24px">Solvency Stress Testing</h3>
+      <h3>Solvency Stress Testing</h3>
       <p>By simulating 30%, 50%, and 70% flash crash scenarios against protocol liquidity, analysts can determine the threshold at which bad debt accumulates in lending pools.</p>
     </div>`
   }
 ];
 
-const B={admin:true,posts:[],state:'loading',kind:'html',busy:false,confirm:null,opener:null,want:null,openId:null};
+const B={admin:true,posts:[],deletedIds:new Set(),state:'loading',kind:'html',busy:false,confirm:null,opener:null,want:null,openId:null};
 const MAX_HTML=700000,MAX_PDF=20*1024*1024,MAX_IMG=3*1024*1024;
-const PDF_LIB='https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js';
 const ICO={
  fb:'<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M13.5 21v-7.5h2.6l.4-3h-3V8.6c0-.9.3-1.5 1.5-1.5h1.6V4.4c-.3 0-1.2-.1-2.3-.1-2.3 0-3.9 1.4-3.9 4v2.2H7.8v3h2.6V21h3.1z"/></svg>',
  li:'<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5.4 8.9h3V19h-3V8.9zM6.9 4a1.75 1.75 0 1 1 0 3.5 1.75 1.75 0 0 1 0-3.5zM10.3 8.9h2.9v1.4c.4-.8 1.4-1.6 2.9-1.6 3.100 0 3.700 2 3.700 4.700V19h-3v-5c0-1.200 0-2.700-1.700-2.700s-1.900 1.300-1.900 2.600V19h-3V8.900z"/></svg>',
@@ -1910,7 +2159,38 @@ const ICO={
 };
 const slug=s=>String(s||'article').toLowerCase().replace(/[^a-z0-9]+/g,'-').replace(/^-+|-+$/g,'').slice(0,60)||'article';
 const fmtDate=iso=>{try{return new Date(iso).toLocaleDateString(undefined,{year:'numeric',month:'short',day:'numeric'})}catch(e){return ''}};
-const postUrl=id=>SHARE_BASE+'#post='+encodeURIComponent(id);
+
+function savePostsSafe(posts){
+  try{
+    localStorage.setItem('csai-posts', JSON.stringify(posts));
+  }catch(e){
+    console.warn('localStorage storage limit reached, optimizing store', e);
+    try{
+      const trimmed = posts.map((p, idx)=>{
+        if(idx > 1 && p.imageUrl && p.imageUrl.length > 50000){
+          const copy = Object.assign({}, p);
+          delete copy.imageUrl;
+          return copy;
+        }
+        return p;
+      });
+      localStorage.setItem('csai-posts', JSON.stringify(trimmed));
+    }catch(err){
+      console.error('Failed to store posts in localStorage', err);
+    }
+  }
+}
+
+function findPost(id){
+  if(!id) return null;
+  const sId = String(id).trim();
+  const sLower = sId.toLowerCase();
+  return B.posts.find(x => String(x.id).trim() === sId || String(x.id).toLowerCase() === sLower)
+      || (!B.deletedIds.has(sId) && DEFAULT_POSTS.find(x => String(x.id).trim() === sId || String(x.id).toLowerCase() === sLower))
+      || B.posts.find(x => slug(x.title) === sLower)
+      || (!B.deletedIds.has(sId) && DEFAULT_POSTS.find(x => slug(x.title) === sLower));
+}
+
 function shareRow(p){
   const t=encodeURIComponent(p.title+' – Crypto Score AI');
   const links=[
@@ -1921,46 +2201,127 @@ function shareRow(p){
   ].map(([n,i,href])=>`<a href="${href}" target="_blank" rel="noopener noreferrer" aria-label="Share on ${n}" title="Share on ${n}">${i}</a>`).join('');
   return `<div class="share"><span class="lab">Share</span>${links}<button type="button" data-blog="copy" data-id="${esc(p.id)}" aria-label="Copy title" title="Copy article info">${ICO.link}</button></div>`;
 }
+
 function postActions(p){
+  const isConfirming = B.confirm === p.id;
+  const deleteBtn = isConfirming
+    ? `<span class="del-confirm-box"><button class="btn sm danger-btn" type="button" data-blog="del-confirm" data-id="${esc(p.id)}">Yes, delete</button><button class="btn sm" type="button" data-blog="del-cancel" data-id="${esc(p.id)}">Cancel</button></span>`
+    : `<button class="btn sm" type="button" data-blog="del-req" data-id="${esc(p.id)}" title="Delete article">Delete</button>`;
+
   return `<div class="post-actions">
     <button class="btn sm primary" type="button" data-blog="read" data-id="${esc(p.id)}">Read</button>
     <button class="btn sm" type="button" data-blog="pdf" data-id="${esc(p.id)}">Print / PDF</button>
     <button class="btn sm" type="button" data-blog="download" data-id="${esc(p.id)}">Download HTML</button>
-    <button class="btn sm" type="button" data-blog="del" data-id="${esc(p.id)}">${B.confirm===p.id?'Confirm delete':'Delete'}</button>
+    ${deleteBtn}
   </div>`;
 }
+
 function renderBlog(){
   const box=$('#posts'),n=$('#postNew');
   if(n) n.hidden=false;
-  if(!B.posts.length){box.innerHTML=`<div class="card empty-card" style="grid-column:1/-1"><div><b>No articles yet</b>Use “New article” to publish the first one.</div></div>`;return}
-  box.innerHTML=B.posts.map(p=>`<article class="card post" data-id="${esc(p.id)}"><div class="pimgbox${p.imageUrl?'':' none'}">${p.imageUrl?`<img src="${esc(p.imageUrl)}" alt="${esc(p.imageAlt||p.title)}" loading="lazy" decoding="async">`:''}<span class="ph" aria-hidden="true">${esc((p.title||'J').trim().charAt(0).toUpperCase())}</span></div><div class="pmeta"><span class="type ${p.kind==='pdf'?'token':'coin'}">${p.kind==='pdf'?'PDF':'HTML'}</span><span>${esc(fmtDate(p.createdAt))}</span></div><h3>${esc(p.title)}</h3>${p.summary?`<p>${esc(p.summary)}</p>`:''}${postActions(p)}${shareRow(p)}</article>`).join('');
+  if(!B.posts.length){
+    box.innerHTML=`<div class="card empty-card" style="grid-column:1/-1"><div><b>No articles available</b>Click “New article” above to write or upload an article.</div></div>`;
+    return;
+  }
+  box.innerHTML=B.posts.map(p=>{
+    const pId = esc(p.id);
+    return `<article class="card post" data-id="${pId}">
+      <div class="pimgbox${p.imageUrl?'':' none'}" data-blog="read" data-id="${pId}" title="Click to read article">
+        ${p.imageUrl?`<img src="${esc(p.imageUrl)}" alt="${esc(p.imageAlt||p.title)}" loading="lazy" decoding="async">`:''}
+        <span class="ph" aria-hidden="true">${esc((p.title||'J').trim().charAt(0).toUpperCase())}</span>
+      </div>
+      <div class="pmeta">
+        <span class="type ${p.kind==='pdf'?'token':'coin'}">${p.kind==='pdf'?'PDF':'HTML'}</span>
+        <span>${esc(fmtDate(p.createdAt))}</span>
+      </div>
+      <h3 data-blog="read" data-id="${pId}" title="Click to read article">${esc(p.title)}</h3>
+      ${p.summary?`<p data-blog="read" data-id="${pId}">${esc(p.summary)}</p>`:''}
+      ${postActions(p)}
+      ${shareRow(p)}
+    </article>`;
+  }).join('');
 }
-function modalOpen(id){$('#'+id).hidden=false;document.documentElement.style.overflow='hidden'}
-function modalClose(id){$('#'+id).hidden=true;if(!document.querySelector('.modal:not([hidden])'))document.documentElement.style.overflow='';if(B.opener&&B.opener.focus&&document.contains(B.opener))B.opener.focus()}
+
+function modalOpen(id){
+  const el=$('#'+id);
+  if(!el) return;
+  el.hidden=false;
+  el.scrollTop=0;
+  document.documentElement.style.overflow='hidden';
+}
+
+function modalClose(id){
+  const el=$('#'+id);
+  if(!el) return;
+  el.hidden=true;
+  if(!document.querySelector('.modal:not([hidden])'))document.documentElement.style.overflow='';
+  if(B.opener&&B.opener.focus&&document.contains(B.opener))B.opener.focus();
+}
 
 async function readPost(id){
-  const p=B.posts.find(x=>x.id===id) || DEFAULT_POSTS.find(x=>x.id===id);
-  if(!p)return;
-  B.opener=document.activeElement;B.openId=id;
-  $('#readTitle').textContent=p.title;
-  const ri=$('#readImg');
-  if(p.imageUrl){ri.src=p.imageUrl;ri.alt=p.imageAlt||p.title;ri.hidden=false}
-  else{ri.removeAttribute('src');ri.hidden=true}
-  $('#readActions').innerHTML=`
+  const p = findPost(id);
+  if(!p){
+    toast('Article not found.');
+    return;
+  }
+  B.opener = document.activeElement;
+  B.openId = p.id;
+  $('#readTitle').textContent = p.title;
+
+  const ri = $('#readImg');
+  if(ri){
+    if(p.imageUrl){
+      ri.src = p.imageUrl;
+      ri.alt = p.imageAlt || p.title;
+      ri.hidden = false;
+    } else {
+      ri.removeAttribute('src');
+      ri.hidden = true;
+    }
+  }
+
+  $('#readActions').innerHTML = `
     <button class="btn sm primary" type="button" data-blog="print"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="6 9 6 2 18 2 18 9"></polyline><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"></path><rect x="6" y="14" width="12" height="8"></rect></svg>Print / Save PDF</button>
     <button class="btn sm" type="button" data-blog="download" data-id="${esc(p.id)}"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>Download HTML</button>
     <button class="btn sm" type="button" data-blog="copy" data-id="${esc(p.id)}">${ICO.link}Copy Link</button>
+    <button class="btn sm danger-btn" type="button" data-blog="del-modal" data-id="${esc(p.id)}" title="Delete article"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path></svg>Delete article</button>
   `;
-  const content = p.html || `<div class="readbody"><h1>${esc(p.title)}</h1><p>${esc(p.summary||'')}</p></div>`;
+
+  let content = p.html || '';
+  if(!content && p.pdfData){
+    content = `<div class="pdf-viewer-wrap">
+      <p style="font-size:15px;color:var(--muted)">${esc(p.summary || p.title)}</p>
+      <iframe class="pdf-embed-box" src="${p.pdfData}" title="${esc(p.title)}"></iframe>
+      <div style="margin-top:14px"><a class="btn primary" href="${p.pdfData}" download="${slug(p.title)}.pdf" target="_blank" rel="noopener noreferrer">Download PDF</a></div>
+    </div>`;
+  } else if(!content){
+    content = `<p style="font-size:16px;line-height:1.7">${esc(p.summary || 'No text content provided for this article.')}</p>`;
+  } else {
+    // If full HTML document, extract body content
+    const bodyMatch = content.match(/<body[^>]*>([\s\S]*?)<\/body>/i);
+    if(bodyMatch) content = bodyMatch[1];
+    // Strip scripts for clean rendering
+    content = content.replace(/<script\b[^<]*(?:(?!<\/script>)<[^<]*)*<\/script>/gi, '');
+    // Sanitize any hardcoded dark hex colors so contrast is crystal clear in both light and dark themes
+    content = content
+      .replace(/color:\s*(#1e293b|#0f172a|#000000|#000|#111111|#111|#334155|#333333|#333|#222222|#222|#1a202c)/gi, 'color:var(--fg)')
+      .replace(/color:\s*(#64748b|#475569|#94a3b8|#666666|#666|#555555|#555)/gi, 'color:var(--muted)')
+      .replace(/background(-color)?:\s*(#f8fafc|#ffffff|#fff|#f1f5f9|#f7fafc|white)/gi, 'background:var(--surface-2)')
+      .replace(/border(-color)?:\s*1px solid (#e2e8f0|#cbd5e1|#ccc|#ddd)/gi, 'border:1px solid var(--line)');
+  }
+
   const rb = $('#readBody');
-  if(rb) rb.innerHTML = content;
+  if(rb){
+    rb.innerHTML = content;
+    rb.scrollTop = 0;
+  }
   modalOpen('readModal');
 }
 
 function downloadHtml(id){
-  const p=B.posts.find(x=>x.id===id) || DEFAULT_POSTS.find(x=>x.id===id);
-  if(!p)return;
-  const content = `<!DOCTYPE html><html><head><meta charset="utf-8"><title>${esc(p.title)} - Crypto Score AI</title><style>body{font-family:system-ui,-apple-system,sans-serif;max-width:800px;margin:40px auto;padding:0 20px;line-height:1.6;color:#0f172a}img{max-width:100%;border-radius:12px}</style></head><body>${p.html || `<p>${esc(p.summary||'')}</p>`}</body></html>`;
+  const p = findPost(id);
+  if(!p) return;
+  const content = `<!DOCTYPE html><html><head><meta charset="utf-8"><title>${esc(p.title)} - Crypto Score AI</title><style>body{font-family:system-ui,-apple-system,sans-serif;max-width:820px;margin:40px auto;padding:0 24px;line-height:1.7;color:#0f172a}img{max-width:100%;border-radius:12px}</style></head><body>${p.html || `<p>${esc(p.summary||'')}</p>`}</body></html>`;
   const blob=new Blob([content],{type:'text/html;charset=utf-8'});
   const url=URL.createObjectURL(blob);
   const a=document.createElement('a');
@@ -1974,83 +2335,200 @@ function downloadHtml(id){
 
 function downloadPdf(id){
   readPost(id);
-  setTimeout(()=>{ window.print(); },250);
+  setTimeout(()=>{
+    try{ window.print(); }catch(e){}
+  }, 250);
 }
 
 async function copyLink(id){
-  const p=B.posts.find(x=>x.id===id) || DEFAULT_POSTS.find(x=>x.id===id);
-  const text=p ? `${p.title} – Crypto Score AI` : 'Crypto Score AI';
-  try{await navigator.clipboard.writeText(text);toast(`Copied: "${text}"`);return}catch(e){}
-  try{const t=document.createElement('textarea');t.value=text;t.style.cssText='position:fixed;opacity:0';document.body.appendChild(t);t.select();const ok=document.execCommand('copy');t.remove();if(ok){toast(`Copied: "${text}"`);return}}catch(e){}
+  const p = findPost(id);
+  const text = p ? `${p.title} – Crypto Score AI (${window.location.origin}${window.location.pathname}#post=${encodeURIComponent(p.id)})` : 'Crypto Score AI';
+  try{await navigator.clipboard.writeText(text);toast('Link copied to clipboard.');return}catch(e){}
+  try{const t=document.createElement('textarea');t.value=text;t.style.cssText='position:fixed;opacity:0';document.body.appendChild(t);t.select();const ok=document.execCommand('copy');t.remove();if(ok){toast('Link copied to clipboard.');return}}catch(e){}
   toast(text);
 }
+
 function setKind(k){
   B.kind=k;
   $('#pKind').querySelectorAll('button').forEach(b=>b.setAttribute('aria-selected',String(b.dataset.blog==='kind-'+k)));
   $('#pHtmlBox').hidden=k!=='html';$('#pPdfBox').hidden=k!=='pdf';
 }
+
 function openComposer(){
   $('#postForm').reset();setKind('html');$('#postErr').textContent='';
   B.opener=document.activeElement;modalOpen('postModal');setTimeout(()=>$('#pTitle').focus(),30);
 }
+
 async function submitPost(ev){
-  ev.preventDefault();if(B.busy)return;
-  const err=m=>{$('#postErr').textContent=m};err('');
-  const title=$('#pTitle').value.trim(),summary=$('#pSummary').value.trim();
-  if(!title)return err('Add a title.');
-  let html='';
-  const f=$('#pHtmlFile').files[0];
-  html=f?await f.text():$('#pHtml').value.trim();
-  if(!html)html=`<p>${esc(summary)}</p>`;
-  B.busy=true;const btn=$('#postSubmit');btn.disabled=true;btn.textContent='Publishing…';
+  ev.preventDefault();
+  if(B.busy) return;
+  const err=m=>{$('#postErr').textContent=m};
+  err('');
+  const title=$('#pTitle').value.trim();
+  const summary=$('#pSummary').value.trim();
+  if(!title) return err('Add a title.');
+
+  B.busy=true;
+  const btn=$('#postSubmit');
+  btn.disabled=true;
+  btn.textContent='Publishing…';
+
   try{
-    const id=slug(title)+'-'+Date.now().toString(36);
-    const doc={id,title,summary,kind:'html',html,createdAt:new Date().toISOString()};
+    let html='';
+    let pdfData='';
+    let imageUrl='';
+    const imgFile = $('#pImage') && $('#pImage').files && $('#pImage').files[0];
+    if(imgFile){
+      try{
+        imageUrl = await new Promise((res, rej)=>{
+          const reader = new FileReader();
+          reader.onload = () => res(reader.result);
+          reader.onerror = rej;
+          reader.readAsDataURL(imgFile);
+        });
+      }catch(e){console.warn('Image read error', e);}
+    }
+
+    if(B.kind === 'pdf'){
+      const pdfFile = $('#pPdfFile') && $('#pPdfFile').files && $('#pPdfFile').files[0];
+      if(pdfFile){
+        try{
+          pdfData = await new Promise((res, rej)=>{
+            const reader = new FileReader();
+            reader.onload = () => res(reader.result);
+            reader.onerror = rej;
+            reader.readAsDataURL(pdfFile);
+          });
+        }catch(e){console.warn('PDF read error', e);}
+      }
+      html = `<div class="pdf-viewer-wrap">
+        <p>${esc(summary || 'PDF Document: ' + title)}</p>
+        ${pdfData ? `<iframe class="pdf-embed-box" src="${pdfData}" title="${esc(title)}"></iframe>
+        <div style="margin-top:12px"><a class="btn primary" href="${pdfData}" download="${slug(title)}.pdf" target="_blank" rel="noopener noreferrer">Download PDF File</a></div>` : '<p>PDF uploaded.</p>'}
+      </div>`;
+    } else {
+      const f = $('#pHtmlFile') && $('#pHtmlFile').files && $('#pHtmlFile').files[0];
+      if(f){
+        html = await f.text();
+      } else {
+        html = $('#pHtml').value.trim();
+      }
+      if(!html){
+        html = `<p>${esc(summary || title)}</p>`;
+      } else if (!/<[a-z][\s\S]*>/i.test(html)) {
+        // Plain text: format lines into paragraphs
+        html = html.split(/\n\s*\n/).map(para => `<p>${esc(para.trim())}</p>`).join('\n');
+      }
+    }
+
+    const id = slug(title) + '-' + Date.now().toString(36);
+    const doc = {
+      id,
+      title,
+      summary,
+      kind: B.kind || 'html',
+      html,
+      pdfData,
+      imageUrl,
+      createdAt: new Date().toISOString()
+    };
+
     B.posts.unshift(doc);
-    try{localStorage.setItem('csai-posts',JSON.stringify(B.posts))}catch(e){}
-    modalClose('postModal');toast('Article published.');
+    savePostsSafe(B.posts);
+    modalClose('postModal');
+    toast('Article published successfully.');
     renderBlog();
   }catch(e){
-    err('Could not publish. Try again.');
+    err('Could not publish article. Try again.');
+  }finally{
+    B.busy=false;
+    btn.disabled=false;
+    btn.textContent='Publish article';
   }
-  B.busy=false;btn.disabled=false;btn.textContent='Publish article';
 }
-async function deletePost(id){
-  if(B.confirm!==id){B.confirm=id;renderBlog();setTimeout(()=>{if(B.confirm===id){B.confirm=null;renderBlog()}},3500);return}
-  B.confirm=null;
-  B.posts=B.posts.filter(x=>x.id!==id);
-  try{localStorage.setItem('csai-posts',JSON.stringify(B.posts))}catch(e){}
-  toast('Article deleted.');
+
+function deletePost(id){
+  const p = findPost(id);
+  if(!p){
+    toast('Article not found.');
+    return;
+  }
+  const sId = String(p.id).trim();
+  B.deletedIds.add(sId);
+  try{
+    const deletedArr = Array.from(B.deletedIds);
+    localStorage.setItem('csai-deleted-posts', JSON.stringify(deletedArr));
+  }catch(e){}
+
+  B.posts = B.posts.filter(x => String(x.id).trim() !== sId);
+  savePostsSafe(B.posts);
+  B.confirm = null;
+  toast(`Article "${p.title.slice(0, 28)}${p.title.length > 28 ? '…' : ''}" deleted.`);
   renderBlog();
 }
+
 async function blogInit(){
-  const m=/#post=([^&]+)/.exec(location.hash||'');if(m)B.want=decodeURIComponent(m[1]);
+  const m=/#post=([^&]+)/.exec(location.hash||'');
+  if(m) B.want=decodeURIComponent(m[1]);
+
+  try{
+    const delStored = JSON.parse(localStorage.getItem('csai-deleted-posts') || '[]');
+    if(Array.isArray(delStored)) B.deletedIds = new Set(delStored);
+  }catch(e){}
+
   try{
     const stored=JSON.parse(localStorage.getItem('csai-posts')||'null');
-    B.posts=(Array.isArray(stored)&&stored.length)?stored:DEFAULT_POSTS.slice();
+    if(Array.isArray(stored) && stored.length){
+      stored.forEach((p, idx)=>{
+        if(!p.id) p.id = slug(p.title || 'article') + '-' + idx;
+      });
+      // Filter out explicitly deleted articles
+      B.posts = stored.filter(p => !B.deletedIds.has(String(p.id).trim()));
+    } else {
+      B.posts = DEFAULT_POSTS.filter(p => !B.deletedIds.has(String(p.id).trim()));
+    }
   }catch(e){
-    B.posts=DEFAULT_POSTS.slice();
+    B.posts = DEFAULT_POSTS.filter(p => !B.deletedIds.has(String(p.id).trim()));
   }
   B.admin=true;
   B.state='ready';
   renderBlog();
-  if(B.want&&B.posts.some(p=>p.id===B.want)){const w=B.want;B.want=null;readPost(w)}
+  if(B.want){
+    const w = B.want;
+    B.want = null;
+    readPost(w);
+  }
 }
 
 function handleBlogClick(e){
-  const t=e.target.closest('[data-blog]');if(!t)return;
-  const a=t.dataset.blog,id=t.dataset.id;
-  if(a==='new')openComposer();
-  else if(a==='close'){modalClose(t.closest('.modal').id);}
-  else if(a==='read')readPost(id);
-  else if(a==='print')window.print();
-  else if(a==='download')downloadHtml(id);
-  else if(a==='pdf')downloadPdf(id);
-  else if(a==='copy')copyLink(id);
-  else if(a==='del')deletePost(id);
-  else if(a==='kind-html')setKind('html');
-  else if(a==='kind-pdf')setKind('pdf');
+  const t = e.target.closest('[data-blog]');
+  if(t){
+    const a = t.dataset.blog, id = t.dataset.id;
+    if(a === 'new'){ e.preventDefault(); openComposer(); }
+    else if(a === 'close'){ e.preventDefault(); const m = t.closest('.modal'); if(m) modalClose(m.id); }
+    else if(a === 'read'){ e.preventDefault(); readPost(id); }
+    else if(a === 'print'){ e.preventDefault(); try{ window.print(); }catch(err){} }
+    else if(a === 'download'){ e.preventDefault(); downloadHtml(id); }
+    else if(a === 'pdf'){ e.preventDefault(); downloadPdf(id); }
+    else if(a === 'copy'){ e.preventDefault(); copyLink(id); }
+    else if(a === 'del-req'){ e.preventDefault(); B.confirm = id; renderBlog(); }
+    else if(a === 'del-confirm'){ e.preventDefault(); deletePost(id); }
+    else if(a === 'del-cancel'){ e.preventDefault(); B.confirm = null; renderBlog(); }
+    else if(a === 'del-modal'){ e.preventDefault(); deletePost(id); modalClose('readModal'); }
+    else if(a === 'del'){ e.preventDefault(); deletePost(id); }
+    else if(a === 'kind-html'){ e.preventDefault(); setKind('html'); }
+    else if(a === 'kind-pdf'){ e.preventDefault(); setKind('pdf'); }
+    return;
+  }
+
+  // Card delegation: clicking anywhere on the article card outside action buttons/links opens the reader
+  const card = e.target.closest('article.post');
+  if(card && !e.target.closest('button, a, input, textarea')){
+    e.preventDefault();
+    if(card.dataset.id) readPost(card.dataset.id);
+  }
 }
+
 document.addEventListener('click',handleBlogClick);
 document.addEventListener('keydown',e=>{
   if(e.key!=='Escape')return;
@@ -2537,6 +3015,7 @@ function renderAnTS(c,body,a){
   <li><b>Access:</b> xStocks are offered to non-US residents in selected countries and not to US persons. Each app has its own country list and checks. Read the terms first.</li>
   <li><b>Dividends and voting:</b> treatment differs by issuer, and tokens usually carry no voting rights.</li>
   <li><b>Trading hours:</b> the token trades around the clock, the share only in market hours. Prices can gap, and weekend liquidity can be thin.</li></ul></section>
+  ${renderTsServicesHtml(c,m)}
   <section class="an-sec"><h3>AI outlook</h3><p>A plain-English write-up covering the company, the screen results and the risks.</p><button class="btn sm primary" type="button" data-an="ai" id="anAiBtn">${a.aiText?'Write it again':'Write AI outlook'}</button><div id="anAI" class="an-ai" style="margin-top:10px" ${a.aiText?'':'hidden'}>${a.aiText?aiMd(a.aiText):''}</div></section>
   <p class="an-sub" style="margin-top:16px">Educational information only. Not investment advice. Past price swings do not predict future returns.</p>`;
   renderAnScen();
@@ -2700,6 +3179,7 @@ function renderAn(){
   <p class="an-sub" style="margin-top:8px">${tiers.length?`Room to grow: at ${compact(c.mcap)}, reaching ${tiers.map(t=>compact(t)+' ('+mult(t/c.mcap)+')').join(', ')} would be needed for those multiples at today’s supply. Bigger multiples need far more demand.`:`Already a large asset at ${compact(c.mcap)}, so very large multiples are unlikely.`}${d.vol?` Over the last ${d.vol.days} days its worst peak-to-trough fall was ${(d.vol.maxDD*100).toFixed(0)}%.`:''}</p></section>
   <section class="an-sec"><h3>Profit scenarios</h3><p>What an investment could look like over the next few months. Illustrative ranges, not predictions.</p>
   <div class="an-ctl"><div class="seg" role="group" aria-label="Time horizon">${AN_HORIZONS.map(([t,l])=>`<button data-an="T" data-t="${t}" aria-pressed="${a.T===t}">${l}</button>`).join('')}</div><label for="anAmt">If I invest (USD)</label><input id="anAmt" type="number" min="1" max="1000000" step="10" value="${a.amt}" inputmode="decimal"></div><div id="anScen"></div></section>
+  ${renderCryptoServicesHtml(c)}
   <section class="an-sec"><h3>Risks to keep in mind</h3><ul class="why"><li>Being on a trending list means people are looking at it, not that it is a good investment. Attention can fade as fast as it arrives.</li><li>Small assets can be hard to sell without moving the price.</li><li>Anyone can lose all the money they put in. Only use money you can afford to lose.</li></ul></section>
   <section class="an-sec"><h3>AI outlook</h3><p>A plain-English write-up of the causes, growth drivers and what would have to happen for each scenario.</p><button class="btn sm primary" type="button" data-an="ai" id="anAiBtn">${a.aiText?'Write it again':'Write AI outlook'}</button><div id="anAI" class="an-ai" style="margin-top:10px" ${a.aiText?'':'hidden'}>${a.aiText?aiMd(a.aiText):''}</div></section>
   <p class="an-sub" style="margin-top:16px">Educational information only. Not investment advice. Past price swings do not predict future returns.</p>`;
@@ -2787,7 +3267,13 @@ try{
     window.history.replaceState(null,'',cleanUrl);
   }
 }catch(e){}
-try{if($('#newTab'))$('#newTab').hidden=true;}catch(e){}
+try{
+  const nt=$('#newTab');
+  if(nt){
+    nt.hidden=false;
+    nt.href=window.location.origin + window.location.pathname;
+  }
+}catch(e){}
 try{const t=localStorage.getItem('csai-theme');if(t==='dark'||t==='light')document.documentElement.setAttribute('data-theme',t)}catch(e){}
 renderMethod();renderNews();authInit();blogInit();
 S.coins=enrich(sampleCoins());S.lastAt=new Date();S.nextAt=Date.now()+300000;
@@ -2803,7 +3289,7 @@ if('serviceWorker' in navigator){
   loadNews();
 })();
 setInterval(()=>{renderStatus();if(Date.now()>=S.nextAt&&!S.busy)loadCoins(false)},1000);
-setInterval(loadNews,30*60*1000);
+setInterval(loadNews,5*60*1000);
 })();
 </script>
 

@@ -551,7 +551,7 @@ export function createGalaxyScene(coinsList) {
 
 let isScreensaverMode = false;
 
-// Master Initialization of the 3D Vault
+// Master Initialization of the 3D Screensaver
 export async function initThreeVault(mountEl, getCoinsFn, onSelectCoinFn) {
   // Helper to build controller instance
   const makeController = () => ({
