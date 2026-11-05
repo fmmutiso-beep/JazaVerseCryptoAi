@@ -171,33 +171,41 @@ main{padding-block:28px 56px;display:flex;flex-direction:column;gap:36px}
 
 
 /* leaderboard */
-.sec-head{display:flex;align-items:flex-end;justify-content:space-between;gap:16px;flex-wrap:wrap;margin-bottom:14px}
-.sec-head h2{font-size:22px;font-weight:700}
-.sec-head p{margin:4px 0 0;color:var(--muted);font-size:13.5px}
-.controls{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
-.seg{display:inline-flex;flex-wrap:wrap;gap:6px}
-.seg button{border:1px solid var(--line);background:var(--surface);border-radius:999px;padding:6px 12px;font-size:12.5px;font-weight:600;color:var(--muted)}
+.sec-head{display:flex;align-items:flex-end;justify-content:space-between;gap:12px;flex-wrap:wrap;margin-bottom:12px}
+.sec-head h2{font-size:21px;font-weight:700}
+.sec-head p{margin:3px 0 0;color:var(--muted);font-size:13px}
+.controls{display:flex;gap:6px;flex-wrap:wrap;align-items:center}
+.seg{display:inline-flex;flex-wrap:wrap;gap:4px}
+.seg button{border:1px solid var(--line);background:var(--surface);border-radius:999px;padding:5px 10px;font-size:12px;font-weight:600;color:var(--muted)}
 .seg button[aria-pressed="true"]{background:var(--fg);color:var(--bg);border-color:var(--fg)}
-select{border:1px solid var(--line);background:var(--surface);color:var(--fg);border-radius:10px;padding:7px 10px;font-size:13px;font-weight:500}
-.table-wrap{overflow-x:auto;border-radius:16px}
-table{width:100%;min-width:900px;border-collapse:separate;border-spacing:0}
-thead th{position:sticky;top:0;text-align:right;font-size:11.5px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);padding:12px 14px;background:var(--surface-2);border-bottom:1px solid var(--line)}
+select{border:1px solid var(--line);background:var(--surface);color:var(--fg);border-radius:8px;padding:6px 9px;font-size:12.5px;font-weight:500}
+.table-wrap{width:100%;overflow-x:auto;border-radius:14px;border:1px solid var(--line);background:var(--surface);-webkit-overflow-scrolling:touch}
+table{width:100%;min-width:0;border-collapse:separate;border-spacing:0}
+thead th{position:sticky;top:0;text-align:right;font-size:11px;font-weight:700;letter-spacing:.04em;text-transform:uppercase;color:var(--muted);padding:9px 10px;background:var(--surface-2);border-bottom:1px solid var(--line);white-space:nowrap}
 thead th:nth-child(-n+2){text-align:left}
-thead th:first-child{border-top-left-radius:16px}thead th:last-child{border-top-right-radius:16px}
-tbody td{padding:12px 14px;border-bottom:1px solid var(--line);text-align:right;white-space:nowrap}
+thead th:first-child{border-top-left-radius:14px}thead th:last-child{border-top-right-radius:14px}
+tbody td{padding:9px 10px;border-bottom:1px solid var(--line);text-align:right;white-space:nowrap;font-size:13.5px}
 tbody tr{cursor:pointer;transition:background .15s}
 tbody tr:hover{background:var(--surface-2)}
 tbody tr:last-child td{border-bottom:0}
-td.rk{text-align:left;color:var(--muted);width:48px;font-weight:600}
-td.co{text-align:left;min-width:190px}
-.co-in{display:flex;align-items:center;gap:12px}
-.co-in b{display:block;font-weight:600;line-height:1.2}
-.co-in small{color:var(--muted);font-size:12px;font-weight:500}
-.scorecell{display:flex;align-items:center;gap:10px;justify-content:flex-end}
-.bar{width:80px;height:7px;border-radius:99px;background:var(--surface-2);border:1px solid var(--line);overflow:hidden}
+td.rk{text-align:left;color:var(--muted);width:36px;font-weight:600;padding-left:12px}
+td.co{text-align:left;min-width:140px}
+.co-in{display:flex;align-items:center;gap:8px}
+.co-in b{display:inline-block;font-weight:600;line-height:1.2;font-size:13.5px}
+.co-in small{color:var(--muted);font-size:11.5px;font-weight:500;margin-left:4px}
+.co-in .badge{width:28px;height:28px;font-size:10px}
+.scorecell{display:flex;align-items:center;gap:7px;justify-content:flex-end}
+.bar{width:56px;height:6px;border-radius:99px;background:var(--surface-2);border:1px solid var(--line);overflow:hidden}
 .bar i{display:block;height:100%;border-radius:99px;background:var(--rc)}
-.scorecell b{width:44px;text-align:right;font-weight:700}
-.more{display:flex;justify-content:center;padding-top:16px}
+.scorecell b{width:34px;text-align:right;font-weight:700;font-size:12.5px}
+.pill{padding:2px 8px;font-size:11px;gap:5px}
+.pill::before{width:5px;height:5px}
+.btn.an-btn{padding:5px 9px;font-size:11.5px;white-space:nowrap;border-radius:7px}
+@media (max-width:1120px){.col-7d{display:none}}
+@media (max-width:890px){.col-vol{display:none}}
+@media (max-width:690px){.col-mcap{display:none}}
+@media (max-width:540px){.col-rating{display:none}}
+.more{display:flex;justify-content:center;padding-top:14px}
 
 /* news */
 .news{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:14px}
@@ -332,21 +340,52 @@ td.co{text-align:left;min-width:190px}
 .roi-calc input[type=search]{font-family:inherit}
 /* blog */
 .blog{margin-top:40px}
-.posts{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px}
-@media (max-width:1000px){.posts{grid-template-columns:repeat(2,minmax(0,1fr))}}
-@media (max-width:620px){.posts{grid-template-columns:minmax(0,1fr)}}
-.post{padding:18px;display:flex;flex-direction:column;gap:10px;min-width:0;overflow:hidden;transition:border-color .2s,box-shadow .2s}
-.post:hover{border-color:var(--accent);box-shadow:0 8px 24px rgba(0,0,0,.1)}
-.post h3{font-size:17px;line-height:1.3;font-weight:600;letter-spacing:-.01em}
+.posts{display:grid;grid-template-columns:repeat(auto-fit,minmax(460px,1fr));gap:24px}
+@media (max-width:760px){.posts{grid-template-columns:minmax(0,1fr);gap:18px}}
+.post{padding:22px;display:flex;flex-direction:column;gap:12px;min-width:0;overflow:hidden;transition:border-color .2s,box-shadow .2s;border-radius:18px}
+.post:hover{border-color:var(--accent);box-shadow:0 8px 24px rgba(0,0,0,.12)}
+.post h3{font-size:18.5px;line-height:1.35;font-weight:700;letter-spacing:-.015em}
 .post h3 a{color:inherit;text-decoration:none;transition:color .18s}
 .post h3 a:hover{color:var(--accent-text)}
 .post p{margin:0;color:var(--muted);font-size:13.5px}
 .post .pmeta{display:flex;gap:8px;align-items:center;font-size:12px;color:var(--muted);flex-wrap:wrap}
-.pimgbox{display:block;text-decoration:none;cursor:pointer;position:relative;margin:-18px -18px 2px;aspect-ratio:16/9;overflow:hidden;border-radius:16px 16px 0 0;background:linear-gradient(135deg,var(--accent-soft),var(--surface));border-bottom:1px solid var(--line)}
+.post-summary{margin:2px 0 6px;color:var(--fg);font-size:14.5px;line-height:1.65;font-weight:500}
+.read-time-pill{background:var(--surface-2);border:1px solid var(--line);border-radius:999px;padding:2px 8px;font-size:11px;color:var(--muted);font-weight:600}
+.pimgbox{display:block;text-decoration:none;cursor:pointer;position:relative;margin:-22px -22px 2px;aspect-ratio:21/9;max-height:220px;overflow:hidden;border-radius:18px 18px 0 0;background:linear-gradient(135deg,var(--accent-soft),var(--surface));border-bottom:1px solid var(--line)}
 .pimgbox img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block;transition:transform .3s ease}
-.post:hover .pimgbox img{transform:scale(1.05)}
+.post:hover .pimgbox img{transform:scale(1.04)}
 .pimgbox .ph{position:absolute;inset:0;display:none;align-items:center;justify-content:center;font-size:34px;font-weight:700;color:var(--accent-text);opacity:.55}
 .pimgbox.noimg img{display:none}.pimgbox.noimg .ph,.pimgbox.none .ph{display:flex}
+
+/* Substantive Research Text Space on the Page */
+.post-text-space{background:var(--surface-2);border:1px solid var(--line);border-radius:14px;padding:18px 20px;margin:4px 0 8px;display:flex;flex-direction:column;gap:12px}
+.post-preview-body{font-size:14px;line-height:1.75;color:var(--fg)}
+.post-preview-body p{margin:0 0 10px;color:var(--fg)}
+.post-preview-body p:last-child{margin-bottom:0}
+.post-preview-body h3{font-size:15px;margin:14px 0 6px;color:var(--fg);font-weight:700}
+.post-preview-body ul{margin:6px 0 10px 18px;padding:0;color:var(--fg)}
+.post-preview-body li{margin-bottom:4px;color:var(--fg)}
+.post-preview-body strong{color:var(--fg);font-weight:700}
+.post-preview-body .formula-box{background:var(--surface);border:1px solid var(--line);border-radius:8px;padding:10px 14px;font-family:var(--font-mono);font-size:12.5px;color:var(--accent-text);margin:8px 0;overflow-x:auto}
+
+.post-full-content{border-top:1px dashed var(--line);padding-top:16px;margin-top:4px;font-size:14.5px;line-height:1.8;color:var(--fg)}
+.post-full-content[hidden]{display:none}
+.post-full-content h1{font-size:20px;margin:16px 0 8px;font-weight:700;color:var(--fg)}
+.post-full-content h2{font-size:17px;margin:14px 0 6px;font-weight:700;color:var(--fg)}
+.post-full-content h3{font-size:15px;margin:12px 0 6px;font-weight:700;color:var(--fg)}
+.post-full-content p{margin:0 0 10px;color:var(--fg)}
+.post-full-content ul,.post-full-content ol{margin:6px 0 12px 20px;padding:0;color:var(--fg)}
+.post-full-content li{margin-bottom:5px;color:var(--fg)}
+.post-full-content blockquote{border-left:4px solid var(--accent);background:var(--surface);padding:10px 14px;margin:10px 0;border-radius:0 8px 8px 0;color:var(--fg)}
+.post-full-content .formula-box, .post-full-content pre{background:var(--surface);border:1px solid var(--line);border-radius:8px;padding:10px 14px;font-family:var(--font-mono);font-size:12.5px;color:var(--accent-text);overflow-x:auto;margin:10px 0}
+
+.post-expand-bar{display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap;padding-top:10px;border-top:1px solid var(--line)}
+.post-toggle-btn{display:inline-flex;align-items:center;gap:6px;background:var(--surface);border:1px solid var(--line);border-radius:8px;padding:6px 12px;font-size:12.5px;font-weight:600;color:var(--fg);cursor:pointer;transition:all .18s}
+.post-toggle-btn:hover{border-color:var(--accent);color:var(--accent-text);background:var(--surface-2)}
+.post-toggle-btn.expanded{background:var(--accent-soft);color:var(--accent-text);border-color:color-mix(in srgb,var(--accent) 40%,transparent)}
+.post-toggle-btn.expanded .toggle-icon-down{transform:rotate(180deg)}
+.toggle-icon-down{transition:transform .2s ease;flex:none}
+
 .readimg{display:block;width:100%;max-height:360px;object-fit:cover;border-radius:14px;border:1px solid var(--line);margin:10px 0 20px;background:var(--surface-2);box-shadow:0 8px 20px rgba(0,0,0,.12)}
 .readimg[hidden]{display:none}
 .post-actions{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
@@ -357,7 +396,7 @@ td.co{text-align:left;min-width:190px}
 .share a,.share button{display:inline-flex;align-items:center;justify-content:center;height:32px;min-width:32px;padding:0 10px;border-radius:9px;border:1px solid var(--line);background:var(--surface);color:var(--fg);font-size:12px;font-weight:600;text-decoration:none;gap:6px}
 .share a:hover,.share button:hover{border-color:var(--accent);color:var(--accent-text)}
 .share svg{width:15px;height:15px;fill:currentColor;flex:none}
-.dialog.wide{width:min(960px,100%);height:min(88vh,100%)}
+.dialog.wide{width:min(1040px,98%);max-height:94vh;height:auto;overflow-y:auto;padding:26px 30px}
 .dialog.wide h2{margin-right:40px}
 /* Dedicated Full-Tab Reader Mode */
 body.reader-full-mode{overflow-y:auto!important}
@@ -560,7 +599,7 @@ footer strong{color:var(--fg)}
 @keyframes scPulse{0%,100%{opacity:1;transform:scale(1)}50%{opacity:0.4;transform:scale(0.85)}}
 
 /* Reading Modal & Article Formatting with High Contrast */
-.readbody{padding:22px 24px;max-width:860px;margin:0 auto;line-height:1.8;color:var(--fg)!important;font-size:15.5px;overflow-y:auto;max-height:calc(86vh - 150px)}
+.readbody{padding:22px 20px;max-width:960px;width:100%;margin:0 auto;line-height:1.85;color:var(--fg)!important;font-size:16.5px;overflow:visible!important;max-height:none!important}
 .readbody h1,.readbody h2,.readbody h3,.readbody h4{color:var(--fg)!important;line-height:1.3;font-weight:700}
 .readbody h1{font-size:26px;margin:0 0 12px;letter-spacing:-0.02em}
 .readbody h2{font-size:21px;margin:26px 0 10px}
@@ -669,7 +708,7 @@ footer strong{color:var(--fg)}
         </div>
       </div>
       <div class="card"><div class="table-wrap"><table>
-        <thead><tr><th>#</th><th>Coin</th><th>Price</th><th>24h</th><th>7d</th><th>Market cap</th><th>Volume 24h</th><th>MC Score</th><th>Rating</th><th>Analysis</th></tr></thead>
+        <thead><tr><th>#</th><th>Asset</th><th>Price</th><th>24h</th><th class="col-7d">7d</th><th class="col-mcap">Mkt Cap</th><th class="col-vol">24h Vol</th><th>CEM-100</th><th class="col-rating">Rating</th><th>Action</th></tr></thead>
         <tbody id="tbody"></tbody>
       </table></div></div>
       <div class="more" id="more"></div>
@@ -1515,7 +1554,7 @@ function renderTable(){
   const list=ranked(),rankMap={};
   S.coins.slice().sort((a,b)=>b.mc-a.mc).forEach((c,i)=>rankMap[c.id]=i+1);
   const show=list.slice(0,S.shown);
-  $('#tbody').innerHTML=show.map(c=>`<tr data-coin="${esc(c.id)}" tabindex="0"><td class="rk num">${rankMap[c.id]}</td><td class="co"><div class="co-in">${badge(c)}<span><b>${esc(c.name)}</b><small class="num">${esc(c.sym)}</small>${tag(c)}</span></div></td><td class="num">${price(c.price)}</td><td>${chg(c.ch24)}</td><td>${chg(c.ch7)}</td><td class="num">${compact(c.mcap)}</td><td class="num">${compact(c.vol)}</td><td><div class="scorecell ${c.rating.cls}"><span class="bar"><i style="width:${c.mc}%"></i></span><b class="num">${c.mc.toFixed(1)}</b></div></td><td><span class="pill ${c.rating.cls}">${c.rating.label}</span></td><td><button class="btn an-btn" type="button" data-an="open" data-id="${esc(c.id)}">Analyze</button></td></tr>`).join('')||'<tr><td colspan="10" style="text-align:center;color:var(--muted);padding:32px">No coins match this filter.</td></tr>';
+  $('#tbody').innerHTML=show.map(c=>`<tr data-coin="${esc(c.id)}" tabindex="0"><td class="rk num">${rankMap[c.id]}</td><td class="co"><div class="co-in">${badge(c)}<span><b>${esc(c.name)}</b><small class="num">${esc(c.sym)}</small>${tag(c)}</span></div></td><td class="num">${price(c.price)}</td><td>${chg(c.ch24)}</td><td class="col-7d">${chg(c.ch7)}</td><td class="num col-mcap">${compact(c.mcap)}</td><td class="num col-vol">${compact(c.vol)}</td><td><div class="scorecell ${c.rating.cls}"><span class="bar"><i style="width:${c.mc}%"></i></span><b class="num">${c.mc.toFixed(1)}</b></div></td><td class="col-rating"><span class="pill ${c.rating.cls}">${c.rating.label}</span></td><td><button class="btn an-btn" type="button" data-an="open" data-id="${esc(c.id)}">Analyze</button></td></tr>`).join('')||'<tr><td colspan="10" style="text-align:center;color:var(--muted);padding:32px">No coins match this filter.</td></tr>';
   $('#more').innerHTML=list.length>S.shown?`<button class="btn" data-act="more">Show ${Math.min(25,list.length-S.shown)} more (${S.shown} of ${list.length})</button>`:'';
   $('#lbSub').textContent=`Ranked by ${({score:'MC Score',mcap:'market cap',ch24:'24h change',ch7:'7d change'})[S.sort]}. ${list.length} coins.${S.mode==='live'&&S.filter==='all'&&S.coins.length<100?' Some assets could not be loaded right now. Press Refresh now to retry.':''}`;
 }
@@ -2380,20 +2419,39 @@ const DEFAULT_POSTS = [
     createdAt: '2026-10-15T12:00:00Z',
     html: `<div>
       <h1>The CEM-100 Evaluation Methodology</h1>
-      <p style="color:var(--muted);font-size:14px">Published by Jaza Finance Research · Technical Whitepaper</p>
+      <p style="color:var(--muted);font-size:14px">Published by Jaza Finance Research · Technical Whitepaper · CEM-100 Quantitative Standard</p>
       <hr/>
-      <p>Cryptocurrency evaluation has long been plagued by speculative hype, social sentiment volatility, and lack of standard valuation metrics. The <strong>CEM-100</strong> scoring methodology establishes an 11-factor quantitative rubric that computes an objective score from 0 to 100.</p>
-      <h3>Core Scoring Formula</h3>
-      <div class="formula-box">
-        MC Score = Σ (Factor_Score_i × Weight_i) ÷ Σ (Weight_i) × 10
-      </div>
+      <p>Cryptocurrency evaluation has long been plagued by speculative hype, social sentiment volatility, and lack of standard valuation metrics. The <strong>CEM-100 (Crypto Evaluation Matrix)</strong> scoring methodology establishes an 11-factor quantitative rubric that computes an objective score from 0 to 100.</p>
+      
+      <h3>Core Quantitative Scoring Formula</h3>
+      <div class="formula-box">MC Score = Σ (Factor_Score_i × Weight_i) ÷ Σ (Weight_i) × 10</div>
+      <p>Every asset is evaluated across 11 normalized dimensions (0 to 10 scale). The weighted aggregate is then scaled linearly to yield a composite score between 0 and 100.</p>
+
       <h3>Quality Categorization Bands</h3>
       <ul>
-        <li><strong>High Quality (80–100):</strong> Established market leader, provable decentralization, disciplined emission schedule, and deep institutional liquidity.</li>
-        <li><strong>Moderate Opportunity (60–79):</strong> Sound economic design with minor liquidity friction or ongoing network transitions.</li>
-        <li><strong>Speculative (40–59):</strong> High volatility, inflationary vesting schedules, or emerging infrastructure.</li>
-        <li><strong>High Risk (&lt;40):</strong> Micro-cap illiquidity, extreme supply unlock overhang, or opaque governance.</li>
+        <li><strong>High Quality (80–100):</strong> Established market leaders, audited smart contracts, disciplined emission schedules, decentralized validator sets, and deep institutional liquidity.</li>
+        <li><strong>Moderate Opportunity (60–79):</strong> Sound economic design with minor liquidity friction, growing developer mindshare, or ongoing network transitions.</li>
+        <li><strong>Speculative (40–59):</strong> Higher volatility, inflationary vesting schedules, emerging infrastructure, or unproven governance models.</li>
+        <li><strong>High Risk (&lt;40):</strong> Micro-cap illiquidity, heavy token unlock overhang, single-entity centralization, or opaque codebases.</li>
       </ul>
+
+      <h3>The 11 Factor Architecture</h3>
+      <ol>
+        <li><strong>Market Capitalization &amp; Liquidity Resilience (Weight 1.5×):</strong> Assesses order book depth across top-tier spot and derivatives exchanges, evaluating 2% bid/ask depth against tail-risk volatility.</li>
+        <li><strong>24-Hour Volume-to-Cap Turnover (Weight 1.2×):</strong> Analyzes trading velocity to separate genuine organic liquidity from artificial wash trading patterns.</li>
+        <li><strong>7-Day &amp; 30-Day Momentum Stability (Weight 1.0×):</strong> Normalized rate-of-change indicators measuring trend resilience without rewarding unsustainable parabolic spikes.</li>
+        <li><strong>Token Emission &amp; Circulating Ratio (Weight 1.3×):</strong> Quantitative audit of circulating vs. fully diluted valuation (FDV), analyzing investor vesting cliffs and scheduled emissions.</li>
+        <li><strong>Validator &amp; Node Decentralization (Weight 1.4×):</strong> Nakamoto coefficient calculation measuring the minimum number of independent entities required to compromise consensus.</li>
+        <li><strong>Smart Contract Formal Audits (Weight 1.2×):</strong> Verification of public bug bounty programs, formal verification proofs, and security track records.</li>
+        <li><strong>Developer Activity &amp; Commit Cadence (Weight 1.1×):</strong> Rolling 90-day GitHub activity, unique core contributors, and release consistency.</li>
+        <li><strong>Whale Concentration &amp; Gini Index (Weight 1.2×):</strong> On-chain distribution metrics quantifying top 100 address balances and exchange reserve flows.</li>
+        <li><strong>Protocol Fee Yield &amp; Capital Efficiency (Weight 1.0×):</strong> Real yield analysis comparing gross protocol revenue generated against token incentives emitted.</li>
+        <li><strong>Cross-Chain Bridge Exposure Risk (Weight 1.0×):</strong> Stress-testing multi-sig trust assumptions and wrapped asset collateral integrity.</li>
+        <li><strong>Regulatory &amp; Jurisdictional Clarity (Weight 1.1×):</strong> Assessment of legal classification, staking legal precedents, and jurisdictional compliance.</li>
+      </ol>
+
+      <h3>Practical Application for Institutional Portfolios</h3>
+      <p>The CEM-100 framework is recalculated in real time. Rather than relying on static quarterly reviews, the algorithmic pipeline updates continuously as market prices, on-chain volumes, and blockchain consensus metrics evolve.</p>
     </div>`
   },
   {
@@ -2406,13 +2464,32 @@ const DEFAULT_POSTS = [
     createdAt: '2026-10-22T14:30:00Z',
     html: `<div>
       <h1>Tokenized Stocks: Structural Mechanics and Counterparty Analysis</h1>
-      <p style="color:var(--muted);font-size:14px">Published by Jaza Finance Research · Equities &amp; On-Chain Assets</p>
+      <p style="color:var(--muted);font-size:14px">Published by Jaza Finance Research · Equities &amp; On-Chain Assets · Institutional Primer</p>
       <hr/>
-      <p>Tokenized stocks represent financial derivatives or custodial tracker tokens that mirror the economic performance of traditional equities such as Apple (AAPL), Microsoft (MSFT), or index funds like the S&amp;P 500 (SPY). Unlike physical common shares, holders possess a tokenized contractual claim against the issuing legal entity.</p>
-      <h3>Key Liquidity &amp; Spread Considerations</h3>
-      <p>Because tokenized equities trade 24/7 on decentralized order books while underlying equity markets operate during standard market hours (9:30 AM – 4:00 PM EST), off-market pricing spreads and weekend volatility discounts can occur.</p>
-      <h3>Due Diligence Rubric</h3>
-      <p>Investors must systematically check token circulating supply, daily turnover ratio, custodian audit reports, and jurisdictional regulatory compliance prior to allocation.</p>
+      <p>Tokenized stocks represent financial derivatives or custodial tracker tokens that mirror the economic performance of traditional equities such as Apple (AAPL), Nvidia (NVDA), Tesla (TSLA), or index funds like the S&amp;P 500 (SPY). Unlike physical common shares held via Depository Trust Company (DTC) participants, token holders possess a tokenized contractual claim against the issuing legal structure.</p>
+
+      <h3>Custodial &amp; Legal Architecture</h3>
+      <p>The institutional tokenization workflow typically relies on a Special Purpose Vehicle (SPV) bankruptcy-remote trust structure:</p>
+      <ul>
+        <li><strong>Underlying Asset Custody:</strong> Common shares are acquired through licensed prime brokerages and held in segregated escrow accounts with regulated custodians.</li>
+        <li><strong>1:1 Collateral Ratio:</strong> Smart contract minting mechanisms ensure every token circulating on-chain is backed by a verifiable depository share.</li>
+        <li><strong>Independent Proof of Reserves:</strong> Automated oracle attestations publish cryptographically verifiable balance proofs on a daily or hourly cadence.</li>
+      </ul>
+
+      <h3>Liquidity, Spread &amp; Weekend Arbitrage</h3>
+      <p>Because tokenized equities trade 24/7 on decentralized order books while underlying equity markets operate during standard market hours (9:30 AM – 4:00 PM EST), distinct market behavior emerges:</p>
+      <ul>
+        <li><strong>Off-Market Spreads:</strong> During weekend trading or overnight hours, market makers widen bid-ask spreads to reflect inventory risk and lack of underlying hedging venues.</li>
+        <li><strong>Earnings Release Volatility:</strong> Tokenized equities price after-hours earnings reports immediately on-chain, providing price discovery before traditional pre-market opening bells.</li>
+        <li><strong>Corporate Actions &amp; Dividends:</strong> Distribution mechanics must automatically account for dividend withholding taxes and stock splits via smart contract balance rebasement.</li>
+      </ul>
+
+      <h3>Investor Due Diligence Rubric</h3>
+      <ol>
+        <li>Verify whether the issuer provides atomic redemption rights for physical underlying shares or USD cash equivalents.</li>
+        <li>Audit the smart contract wrapper for blacklist, freeze, or upgrade keys held by centralized administrator multi-sigs.</li>
+        <li>Review custodian bankruptcy remoteness and insurance coverage ceilings under SIPC or equivalent jurisdictional regimes.</li>
+      </ol>
     </div>`
   },
   {
@@ -2425,11 +2502,28 @@ const DEFAULT_POSTS = [
     createdAt: '2026-10-28T09:15:00Z',
     html: `<div>
       <h1>DeFi Liquidity Scenarios and Solvency Risk Models</h1>
-      <p style="color:var(--muted);font-size:14px">Published by Jaza Finance Research · DeFi Intelligence</p>
+      <p style="color:var(--muted);font-size:14px">Published by Jaza Finance Research · DeFi Intelligence · Risk Management Division</p>
       <hr/>
-      <p>Decentralized lending protocols rely on automated liquidation engines and oracle price feeds. When collateral asset prices drop rapidly, liquidation margins trigger automated market sales, which can strain secondary automated market makers (AMMs).</p>
-      <h3>Solvency Stress Testing</h3>
-      <p>By simulating 30%, 50%, and 70% flash crash scenarios against protocol liquidity, analysts can determine the threshold at which bad debt accumulates in lending pools.</p>
+      <p>Decentralized lending protocols rely on automated liquidation engines and oracle price feeds to maintain solvency. When collateral asset prices drop rapidly, liquidation margins trigger automated market sales, which can strain secondary automated market makers (AMMs) and order books.</p>
+
+      <h3>The Mechanics of Liquidation Cascades</h3>
+      <p>In high-leverage decentralized protocols, the sequence of insolvency follows an identifiable feedback loop:</p>
+      <div class="formula-box">Health Factor (HF) = Σ (Collateral_i × Liquidation_Threshold_i) ÷ Total_Borrowed_USD</div>
+      <p>When the Health Factor falls below 1.0, third-party liquidators are incentivized to repay the borrowed liability in exchange for discounted collateral (typically a 5% to 10% liquidation bonus). If secondary DEX liquidity is insufficient to absorb the liquidation volume without severe price impact, collateral prices are pushed further down, triggering secondary waves of margin calls.</p>
+
+      <h3>Solvency Stress Testing &amp; Simulation Results</h3>
+      <ul>
+        <li><strong>30% Instantaneous Drawdown:</strong> Over 96% of primary collateral pools remain solvent; average liquidator slippage stays below 1.8%.</li>
+        <li><strong>50% Flash Crash Event:</strong> Protocol utilization reaches 98%; secondary DEX pools experience significant pool imbalances; bad debt accumulation requires protocol reserve backstops.</li>
+        <li><strong>70% Extreme Black Swan:</strong> Oracles experience network congestion and transaction latency; liquidators encounter gas priority auctions, causing bad debt to exceed initial protocol safety cushions.</li>
+      </ul>
+
+      <h3>Risk Mitigation Recommendations for Protocols</h3>
+      <ol>
+        <li>Implement dynamic loan-to-value (LTV) ratios that auto-tighten during periods of elevated 30-day realized volatility.</li>
+        <li>Introduce Dutch auction liquidation models instead of instant fixed-discount sales to prevent toxic MEV sandwich attacks.</li>
+        <li>Establish isolated lending markets for long-tail, volatile tokens to protect core blue-chip liquidity pools.</li>
+      </ol>
     </div>`
   }
 ];
@@ -2503,6 +2597,71 @@ function postActions(p){
   </div>`;
 }
 
+function estimateReadTime(p){
+  const text = (p.summary || '') + ' ' + (p.html ? p.html.replace(/<[^>]+>/g, ' ') : '');
+  const words = text.trim().split(/\s+/).filter(Boolean).length;
+  return Math.max(2, Math.round(words / 170));
+}
+
+function getCardPreviewHtml(p){
+  if(p.kind === 'pdf'){
+    return `<div>
+      <p style="margin:0 0 8px;font-weight:600;color:var(--accent-text)">Technical PDF Whitepaper &amp; Institutional Analysis</p>
+      <p>This peer-reviewed research document includes complete empirical equations, stress-testing matrices, sensitivity heatmaps, and institutional risk parameters.</p>
+      <div class="formula-box">Format: Institutional PDF Document · Vector Graphs &amp; Mathematical Frameworks</div>
+    </div>`;
+  }
+  if(p.id === 'cem100-methodology' || (p.title && p.title.toLowerCase().includes('cem-100'))){
+    return `<div>
+      <p>The <strong>CEM-100 scoring methodology</strong> establishes an 11-factor quantitative rubric that computes an objective asset score from 0 to 100, removing speculative distortion and social sentiment bias.</p>
+      <h3>Core Quantitative Scoring Formula</h3>
+      <div class="formula-box">MC Score = Σ (Factor_Score_i × Weight_i) ÷ Σ (Weight_i) × 10</div>
+      <h3>Quality Categorization Tiers</h3>
+      <ul>
+        <li><strong>High Quality (80–100):</strong> Established market leaders, audited smart contracts, disciplined emission schedules, and deep institutional liquidity.</li>
+        <li><strong>Moderate Opportunity (60–79):</strong> Sound economic design with minor liquidity friction or ongoing network transitions.</li>
+        <li><strong>Speculative (40–59):</strong> High volatility, inflationary vesting schedules, or emerging infrastructure.</li>
+        <li><strong>High Risk (&lt;40):</strong> Micro-cap illiquidity, extreme supply unlock overhang, or opaque governance.</li>
+      </ul>
+    </div>`;
+  }
+  if(p.id === 'tokenized-stocks-primer' || (p.title && p.title.toLowerCase().includes('tokenized'))){
+    return `<div>
+      <p>Tokenized equities represent legal custodial tracker tokens mirroring traditional stock market instruments (e.g., AAPL, NVDA, SPY) on distributed ledgers with 24/7 continuous settlement.</p>
+      <h3>Key Due Diligence &amp; Liquidity Mechanics</h3>
+      <ul>
+        <li><strong>Custodial Collateralization:</strong> Bankruptcy-remote legal trusts holding 1:1 underlying shares with independent monthly custodian attestations.</li>
+        <li><strong>Off-Market Hours Arbitrage:</strong> Managing spread widening and weekend volatility premiums when traditional NYSE/NASDAQ markets are closed.</li>
+        <li><strong>Counterparty Risk Factor:</strong> Quantifying smart contract wrapper vulnerabilities and regulatory jurisdictional boundaries.</li>
+      </ul>
+    </div>`;
+  }
+  if(p.id === 'defi-liquidity-models' || (p.title && p.title.toLowerCase().includes('defi'))){
+    return `<div>
+      <p>Decentralized money markets rely on automated liquidation engines and oracle price feeds to maintain solvency during extreme market drawdowns.</p>
+      <h3>Stress-Testing &amp; Liquidation Cascades</h3>
+      <ul>
+        <li><strong>Flash Crash Simulations:</strong> Modeling bad-debt accumulation across 30%, 50%, and 70% collateral drawdowns within single-block execution limits.</li>
+        <li><strong>DEX Slippage Absorption:</strong> Evaluating secondary automated market maker (AMM) depth against automated liquidation volume bursts.</li>
+        <li><strong>Collateral Haircut Calibration:</strong> Dynamic loan-to-value (LTV) thresholds based on 30-day realized volatility and circulating liquidity.</li>
+      </ul>
+    </div>`;
+  }
+  if(p.html){
+    try{
+      const d = document.createElement('div');
+      d.innerHTML = p.html;
+      const h1 = d.querySelector('h1'); if(h1) h1.remove();
+      const pIntro = d.querySelector('p');
+      const box = d.querySelector('.formula-box') || d.querySelector('ul');
+      if(pIntro){
+        return `<div><p>${pIntro.innerHTML}</p>${box?box.outerHTML:''}</div>`;
+      }
+    }catch(err){}
+  }
+  return `<p>${esc(p.summary || 'Click below to expand the complete research paper.')}</p>`;
+}
+
 function renderBlog(){
   const box=$('#posts'),n=$('#postNew');
   if(n) n.hidden=false;
@@ -2513,6 +2672,10 @@ function renderBlog(){
   box.innerHTML=B.posts.map(p=>{
     const pId = esc(p.id);
     const coverUrl = getPostImage(p);
+    const readMins = estimateReadTime(p);
+    const previewHtml = getCardPreviewHtml(p);
+    const fullContentHtml = p.html ? p.html : `<p>${esc(p.summary||'')}</p>`;
+
     return `<article class="card post" data-id="${pId}">
       <a class="pimgbox" href="?article=${encodeURIComponent(p.id)}#post=${encodeURIComponent(p.id)}" target="_blank" rel="noopener noreferrer" title="Read ${esc(p.title)} in a new tab">
         <img src="${esc(coverUrl)}" alt="${esc(p.imageAlt||p.title)}" loading="lazy" decoding="async" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
@@ -2521,9 +2684,30 @@ function renderBlog(){
       <div class="pmeta">
         <span class="type ${p.kind==='pdf'?'token':'coin'}">${p.kind==='pdf'?'PDF Research Paper':'Methodology Article'}</span>
         <span>${esc(fmtDate(p.createdAt))}</span>
+        <span class="read-time-pill">${readMins} min read</span>
       </div>
       <h3 class="post-title"><a href="?article=${encodeURIComponent(p.id)}#post=${encodeURIComponent(p.id)}" target="_blank" rel="noopener noreferrer" title="Read ${esc(p.title)} in a new tab">${esc(p.title)}</a></h3>
-      ${p.summary?`<p>${esc(p.summary)}</p>`:''}
+      ${p.summary?`<p class="post-summary">${esc(p.summary)}</p>`:''}
+
+      <div class="post-text-space">
+        <div class="post-preview-body">
+          ${previewHtml}
+        </div>
+        <div class="post-full-content" id="fullPost_${pId}" hidden>
+          ${fullContentHtml}
+        </div>
+        <div class="post-expand-bar">
+          <button class="btn sm post-toggle-btn" type="button" data-blog="toggle-expand" data-id="${pId}">
+            <svg class="toggle-icon-down" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="6 9 12 15 18 9"></polyline></svg>
+            <span class="toggle-lbl">Expand full whitepaper on page</span>
+          </button>
+          <a class="btn sm primary" href="?article=${encodeURIComponent(p.id)}#post=${encodeURIComponent(p.id)}" target="_blank" rel="noopener noreferrer" data-blog="read-tab" data-id="${pId}" title="Open complete whitepaper in a new tab">
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+            Read in new tab
+          </a>
+        </div>
+      </div>
+
       ${postActions(p)}
       ${shareRow(p)}
     </article>`;
@@ -2898,6 +3082,20 @@ function handleBlogClick(e){
   const t = e.target.closest('[data-blog]');
   if(t){
     const a = t.dataset.blog, id = t.dataset.id;
+    if(a === 'toggle-expand'){
+      e.preventDefault();
+      const fullBox = $('#fullPost_' + id);
+      if(fullBox){
+        const isHidden = fullBox.hidden;
+        fullBox.hidden = !isHidden;
+        t.classList.toggle('expanded', isHidden);
+        const lbl = t.querySelector('.toggle-lbl');
+        if(lbl){
+          lbl.textContent = isHidden ? 'Collapse whitepaper' : 'Expand full whitepaper on page';
+        }
+      }
+      return;
+    }
     if(a === 'read-tab'){
       // Allow browser to follow link target="_blank" naturally without preventDefault
       return;
@@ -2926,9 +3124,9 @@ function handleBlogClick(e){
     return;
   }
 
-  // Card delegation: clicking anywhere on the article card outside action buttons/links opens the reader
+  // Card delegation: clicking anywhere on the article card outside action buttons/links/text space opens the reader
   const card = e.target.closest('article.post');
-  if(card && !e.target.closest('button, a, input, textarea')){
+  if(card && !e.target.closest('button, a, input, textarea, .post-text-space, .share, .post-actions')){
     const readTabLink = card.querySelector('a[data-blog="read-tab"]') || card.querySelector('a');
     if(readTabLink){
       readTabLink.click();
