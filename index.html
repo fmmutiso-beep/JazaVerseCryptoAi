@@ -159,11 +159,16 @@ main{padding-block:28px 56px;display:flex;flex-direction:column;gap:36px}
 .type{display:inline-block;font-family:var(--font-body);font-size:10.5px;font-weight:700;letter-spacing:.07em;text-transform:uppercase;line-height:1.5;border:1px solid var(--line);border-radius:6px;padding:0 6px;margin-left:6px;color:var(--muted);vertical-align:1px}
 .type.token{color:var(--accent-text);background:var(--accent-soft);border-color:color-mix(in srgb,var(--accent) 30%,transparent)}
 .type.warn{color:var(--warn-text);background:var(--warn-soft);border-color:color-mix(in srgb,var(--warn) 30%,transparent)}
-.badge{flex:none;width:30px;height:30px;border-radius:50%;display:inline-flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;color:#fff;overflow:hidden;position:relative}
-.badge img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;background:var(--surface)}
-.badge .mo{position:absolute;inset:0;width:100%;height:100%;opacity:.22}
-.badge .tk{position:relative;text-shadow:0 1px 2px rgba(0,0,0,.35);letter-spacing:.02em}
-.badge.lg{width:52px;height:52px;font-size:16px}
+.badge{flex:none;width:32px;height:32px;border-radius:50%;display:inline-flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;color:#fff;position:relative;overflow:visible;vertical-align:middle;perspective:400px;transform-style:preserve-3d;user-select:none;transition:transform .22s cubic-bezier(0.2,0.8,0.2,1),filter .22s ease}
+.badge:hover{transform:translateY(-2px) scale(1.1) rotateY(12deg) rotateX(6deg);filter:brightness(1.08)}
+.badge.lg{width:56px;height:56px;font-size:16px}
+.badge.lg:hover{transform:translateY(-3px) scale(1.08) rotateY(14deg) rotateX(8deg);filter:brightness(1.1)}
+.badge .coin-wrap{width:100%;height:100%;border-radius:50%;position:relative;display:flex;align-items:center;justify-content:center;box-shadow:0 4px 10px rgba(0,0,0,.38),0 1px 2px rgba(0,0,0,.25);border-radius:50%}
+.badge.lg .coin-wrap{box-shadow:0 8px 22px rgba(0,0,0,.45),0 2px 4px rgba(0,0,0,.25)}
+.badge svg.coin-svg{display:block;width:100%;height:100%;border-radius:50%;filter:drop-shadow(0 2px 3px rgba(0,0,0,.25))}
+.badge .coin-img-inner{position:absolute;inset:15%;width:70%;height:70%;border-radius:50%;object-fit:cover;z-index:2;box-shadow:inset 0 2px 4px rgba(0,0,0,.6),0 1px 1px rgba(255,255,255,.15);background:var(--surface)}
+.badge .coin-gloss{position:absolute;inset:0;border-radius:50%;pointer-events:none;background:radial-gradient(circle at 35% 25%,rgba(255,255,255,.55) 0%,rgba(255,255,255,.15) 35%,transparent 65%);z-index:3}
+
 
 /* leaderboard */
 .sec-head{display:flex;align-items:flex-end;justify-content:space-between;gap:16px;flex-wrap:wrap;margin-bottom:14px}
@@ -330,16 +335,19 @@ td.co{text-align:left;min-width:190px}
 .posts{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px}
 @media (max-width:1000px){.posts{grid-template-columns:repeat(2,minmax(0,1fr))}}
 @media (max-width:620px){.posts{grid-template-columns:minmax(0,1fr)}}
-.post{padding:18px;display:flex;flex-direction:column;gap:10px;min-width:0;overflow:hidden}
+.post{padding:18px;display:flex;flex-direction:column;gap:10px;min-width:0;overflow:hidden;transition:border-color .2s,box-shadow .2s}
+.post:hover{border-color:var(--accent);box-shadow:0 8px 24px rgba(0,0,0,.1)}
 .post h3{font-size:17px;line-height:1.3;font-weight:600;letter-spacing:-.01em}
+.post h3 a{color:inherit;text-decoration:none;transition:color .18s}
+.post h3 a:hover{color:var(--accent-text)}
 .post p{margin:0;color:var(--muted);font-size:13.5px}
 .post .pmeta{display:flex;gap:8px;align-items:center;font-size:12px;color:var(--muted);flex-wrap:wrap}
-.pimgbox{position:relative;margin:-18px -18px 2px;aspect-ratio:16/9;overflow:hidden;border-radius:16px 16px 0 0;background:linear-gradient(135deg,var(--accent-soft),var(--surface));border-bottom:1px solid var(--line)}
+.pimgbox{display:block;text-decoration:none;cursor:pointer;position:relative;margin:-18px -18px 2px;aspect-ratio:16/9;overflow:hidden;border-radius:16px 16px 0 0;background:linear-gradient(135deg,var(--accent-soft),var(--surface));border-bottom:1px solid var(--line)}
 .pimgbox img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block;transition:transform .3s ease}
-.post:hover .pimgbox img{transform:scale(1.04)}
+.post:hover .pimgbox img{transform:scale(1.05)}
 .pimgbox .ph{position:absolute;inset:0;display:none;align-items:center;justify-content:center;font-size:34px;font-weight:700;color:var(--accent-text);opacity:.55}
 .pimgbox.noimg img{display:none}.pimgbox.noimg .ph,.pimgbox.none .ph{display:flex}
-.readimg{display:block;width:100%;max-height:280px;object-fit:cover;border-radius:14px;border:1px solid var(--line);margin:6px 0 16px;background:var(--surface-2)}
+.readimg{display:block;width:100%;max-height:360px;object-fit:cover;border-radius:14px;border:1px solid var(--line);margin:10px 0 20px;background:var(--surface-2);box-shadow:0 8px 20px rgba(0,0,0,.12)}
 .readimg[hidden]{display:none}
 .post-actions{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
 .post .spacer{flex:1}
@@ -349,8 +357,17 @@ td.co{text-align:left;min-width:190px}
 .share a,.share button{display:inline-flex;align-items:center;justify-content:center;height:32px;min-width:32px;padding:0 10px;border-radius:9px;border:1px solid var(--line);background:var(--surface);color:var(--fg);font-size:12px;font-weight:600;text-decoration:none;gap:6px}
 .share a:hover,.share button:hover{border-color:var(--accent);color:var(--accent-text)}
 .share svg{width:15px;height:15px;fill:currentColor;flex:none}
-.dialog.wide{width:min(940px,100%);height:min(86vh,100%)}
+.dialog.wide{width:min(960px,100%);height:min(88vh,100%)}
 .dialog.wide h2{margin-right:40px}
+/* Dedicated Full-Tab Reader Mode */
+body.reader-full-mode{overflow-y:auto!important}
+#readModal.reader-full-mode{position:fixed;inset:0;z-index:9999;background:var(--bg);display:flex;flex-direction:column;padding:0;overflow-y:auto}
+#readModal.reader-full-mode .modal-bg{display:none}
+#readModal.reader-full-mode .dialog{width:100%;max-width:960px;margin:0 auto;height:auto;max-height:none;border-radius:0;border:0;box-shadow:none;background:transparent;padding:24px 20px 80px}
+.read-top-bar{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;padding-bottom:16px;border-bottom:1px solid var(--line);margin-bottom:20px}
+.read-back-link{display:inline-flex;align-items:center;gap:8px;font-size:13.5px;font-weight:600;color:var(--accent-text);text-decoration:none;background:var(--surface);border:1px solid var(--line);border-radius:999px;padding:7px 16px;transition:all .18s}
+.read-back-link:hover{border-color:var(--accent);transform:translateX(-2px);background:var(--accent-soft)}
+.read-meta-tags{display:flex;align-items:center;gap:8px;font-size:12.5px;color:var(--muted);flex-wrap:wrap}
 .readframe{flex:1;min-height:320px;width:100%;border:1px solid var(--line);border-radius:12px;background:#fff}
 .field textarea{width:100%;border-radius:12px;border:1px solid var(--line);background:var(--bg);padding:12px 14px;font:12.5px/1.5 var(--font-mono);resize:vertical}
 .field textarea:focus{outline:none;border-color:var(--accent);box-shadow:0 0 0 4px var(--accent-soft)}
@@ -737,6 +754,10 @@ footer strong{color:var(--fg)}
   <div class="modal-bg" data-blog="close"></div>
   <div class="dialog wide" role="dialog" aria-modal="true" aria-labelledby="readTitle">
     <button class="x" type="button" data-blog="close" aria-label="Close"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6 6 18"/></svg></button>
+    <div id="readTopBar" class="read-top-bar" hidden>
+      <a href="/" class="read-back-link" data-blog="back-dash"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>Back to Market Dashboard</a>
+      <div class="read-meta-tags" id="readMetaTags"></div>
+    </div>
     <h2 id="readTitle"></h2>
     <img class="readimg" id="readImg" alt="" hidden>
     <div class="post-actions" id="readActions"></div>
@@ -1097,23 +1118,242 @@ const ARROW={
 const chg=v=>{const d=dir(v);return`<span class="chg num ${d}">${ARROW[d]}${pct(v)}</span>`};
 /* Embedded icon first. Remote icon addresses are blocked inside Claude, so they are only tried when hosted elsewhere. */
 const iconSrc=c=>ICONS[c.id]||(MCP?'':(c.img||''));
-/* Original generated emblems: each coin gets its own colours and pattern, derived from its id. They imitate no real logo. */
-const MOTIFS=[
-  '<circle cx="16" cy="16" r="12" fill="none" stroke="#fff" stroke-width="2"/><circle cx="16" cy="16" r="7" fill="none" stroke="#fff" stroke-width="2"/>',
-  '<g stroke="#fff" stroke-width="2" stroke-linecap="round"><path d="M16 16 16 2M16 16 28 9M16 16 28 23M16 16 16 30M16 16 4 23M16 16 4 9"/></g>',
-  '<path d="M-2 22 22 -2h6L-2 28zM6 34 34 6v6L12 34z" fill="#fff"/>',
-  '<path d="M16 2 30 16 16 30 2 16z M16 9 23 16 16 23 9 16z" fill="#fff" fill-rule="evenodd"/>',
-  '<g fill="#fff"><circle cx="6" cy="6" r="2"/><circle cx="16" cy="6" r="2"/><circle cx="26" cy="6" r="2"/><circle cx="6" cy="16" r="2"/><circle cx="26" cy="16" r="2"/><circle cx="6" cy="26" r="2"/><circle cx="16" cy="26" r="2"/><circle cx="26" cy="26" r="2"/></g>',
-  '<g fill="none" stroke="#fff" stroke-width="2"><ellipse cx="16" cy="16" rx="13" ry="5.500" transform="rotate(35 16 16)"/><ellipse cx="16" cy="16" rx="13" ry="5.500" transform="rotate(-35 16 16)"/></g>',
-  '<path d="M16 2.500 28 9.250v13.500L16 29.500 4 22.750V9.250z" fill="none" stroke="#fff" stroke-width="2"/><path d="M16 2.500v27M4 9.250l24 13.500M28 9.250 4 22.750" stroke="#fff" stroke-width="1.200" opacity=".7"/>',
-  '<g fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round"><path d="M2 10q7-6 14 0t14 0M2 17q7-6 14 0t14 0M2 24q7-6 14 0t14 0"/></g>',
-  '<g fill="#fff"><rect x="5" y="17" width="5" height="10" rx="1"/><rect x="13.500" y="10" width="5" height="17" rx="1"/><rect x="22" y="4" width="5" height="23" rx="1"/></g>',
-  '<path d="M16 3 29 26H3z" fill="none" stroke="#fff" stroke-width="2" stroke-linejoin="round"/><path d="M16 11 22 22H10z" fill="#fff"/>'
+/* ---------- 3D Sleek Coins & Tokens Engine ---------- */
+const COIN_3D_METALS = [
+  { name: 'gold', rim1: '#FFF59D', rim2: '#F59E0B', rim3: '#78350F', bg1: '#3A2003', bg2: '#160B00', fg: '#FEF3C7', acc: '#FBBF24' },
+  { name: 'platinum', rim1: '#FFFFFF', rim2: '#94A3B8', rim3: '#334155', bg1: '#1E293B', bg2: '#0A0F1D', fg: '#F8FAFC', acc: '#E2E8F0' },
+  { name: 'titanium', rim1: '#CBD5E1', rim2: '#64748B', rim3: '#1E293B', bg1: '#0F172A', bg2: '#020617', fg: '#F1F5F9', acc: '#38BDF8' },
+  { name: 'sapphire', rim1: '#BFDBFE', rim2: '#2563EB', rim3: '#1E3A8A', bg1: '#0F172A', bg2: '#020A1E', fg: '#EFF6FF', acc: '#60A5FA' },
+  { name: 'emerald', rim1: '#A7F3D0', rim2: '#10B981', rim3: '#064E3B', bg1: '#064E3B', bg2: '#011F17', fg: '#ECFDF5', acc: '#34D399' },
+  { name: 'rose', rim1: '#FECDD3', rim2: '#E11D48', rim3: '#881337', bg1: '#3B0718', bg2: '#170107', fg: '#FFF1F2', acc: '#FB7185' }
 ];
-function badge(c,lg){
-  const k=hash(c.id),h1=k%360,h2=(h1+28+(k>>3)%40)%360,m=MOTIFS[(k>>5)%MOTIFS.length];
-  const t=c.sym.slice(0,4),fs=t.length>3?(lg?'13px':'8.500px'):'';
-  return`<span class="badge${lg?' lg':''}" style="background:linear-gradient(140deg,hsl(${h1} 68% 52%),hsl(${h2} 70% 32%))${fs?';font-size:'+fs:''}"><svg class="mo" viewBox="0 0 32 32" aria-hidden="true">${m}</svg><span class="tk">${esc(t)}</span>${iconSrc(c)?`<img src="${esc(iconSrc(c))}" alt="" loading="lazy">`:''}</span>`;
+
+function get3DCoinSvg(c, uid) {
+  const s = String(c.sym || '').toUpperCase();
+  const id = String(c.id || '').toLowerCase();
+  
+  if (id === 'bitcoin' || s === 'BTC') {
+    return `<svg class="coin-svg" viewBox="0 0 48 48" aria-hidden="true">
+      <defs>
+        <radialGradient id="bg-${uid}" cx="35%" cy="30%" r="70%"><stop offset="0%" stop-color="#FFE082"/><stop offset="50%" stop-color="#F59E0B"/><stop offset="100%" stop-color="#78350F"/></radialGradient>
+        <linearGradient id="rim-${uid}" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#FFF9C4"/><stop offset="30%" stop-color="#F59E0B"/><stop offset="70%" stop-color="#78350F"/><stop offset="100%" stop-color="#FDE68A"/></linearGradient>
+      </defs>
+      <circle cx="24" cy="24" r="23" fill="url(#rim-${uid})"/>
+      <circle cx="24" cy="24" r="21.2" fill="none" stroke="#451A03" stroke-width="0.8" stroke-dasharray="1.4 2" opacity="0.6"/>
+      <circle cx="24" cy="24" r="19.5" fill="url(#bg-${uid})"/>
+      <circle cx="24" cy="24" r="18" fill="none" stroke="#FEF08A" stroke-width="0.8" opacity="0.7"/>
+      <g filter="drop-shadow(0 2px 2px rgba(69,26,3,0.85))">
+        <path d="M22 10v3m4-3v3m-5 0h6.5a4 4 0 0 1 0 8H21m0 0h7.5a4.5 4.5 0 0 1 0 9H21m0 0v3m4-3v3m-7-15h11a3.5 3.5 0 0 1 0 7H21m0 0h11.5a4 4 0 0 1 0 8H21" fill="none" stroke="#FFFBEB" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/>
+        <path d="M22 10v3m4-3v3m-5 0h6.5a4 4 0 0 1 0 8H21m0 0h7.5a4.5 4.5 0 0 1 0 9H21m0 0v3m4-3v3m-7-15h11a3.5 3.5 0 0 1 0 7H21" fill="none" stroke="#D97706" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+      </g>
+      <path d="M8 12a20 20 0 0 1 30-3" fill="none" stroke="#FFF" stroke-width="1.4" opacity="0.65" stroke-linecap="round"/>
+    </svg>`;
+  }
+  
+  if (id === 'ethereum' || s === 'ETH') {
+    return `<svg class="coin-svg" viewBox="0 0 48 48" aria-hidden="true">
+      <defs>
+        <radialGradient id="bg-${uid}" cx="40%" cy="30%" r="70%"><stop offset="0%" stop-color="#334155"/><stop offset="60%" stop-color="#0F172A"/><stop offset="100%" stop-color="#020617"/></radialGradient>
+        <linearGradient id="rim-${uid}" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#E2E8F0"/><stop offset="30%" stop-color="#64748B"/><stop offset="70%" stop-color="#1E293B"/><stop offset="100%" stop-color="#CBD5E1"/></linearGradient>
+        <linearGradient id="l-${uid}" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#C7D2FE"/><stop offset="100%" stop-color="#6366F1"/></linearGradient>
+        <linearGradient id="r-${uid}" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#818CF8"/><stop offset="100%" stop-color="#3730A3"/></linearGradient>
+      </defs>
+      <circle cx="24" cy="24" r="23" fill="url(#rim-${uid})"/>
+      <circle cx="24" cy="24" r="21.2" fill="none" stroke="#0F172A" stroke-width="0.8" stroke-dasharray="1.4 2" opacity="0.6"/>
+      <circle cx="24" cy="24" r="19.5" fill="url(#bg-${uid})"/>
+      <circle cx="24" cy="24" r="18" fill="none" stroke="#94A3B8" stroke-width="0.8" opacity="0.4"/>
+      <g filter="drop-shadow(0 2px 4px rgba(0,0,0,0.7))">
+        <polygon points="24,9 14,24 24,20" fill="url(#l-${uid})"/>
+        <polygon points="24,9 24,20 34,24" fill="url(#r-${uid})"/>
+        <polygon points="24,22 14,26 24,39" fill="#4F46E5"/>
+        <polygon points="24,22 24,39 34,26" fill="#312E81"/>
+        <polygon points="24,9 24,20 14,24" fill="#FFFFFF" opacity="0.25"/>
+      </g>
+      <path d="M8 12a20 20 0 0 1 30-3" fill="none" stroke="#FFF" stroke-width="1.4" opacity="0.7" stroke-linecap="round"/>
+    </svg>`;
+  }
+  
+  if (id === 'solana' || s === 'SOL') {
+    return `<svg class="coin-svg" viewBox="0 0 48 48" aria-hidden="true">
+      <defs>
+        <radialGradient id="bg-${uid}" cx="40%" cy="30%" r="70%"><stop offset="0%" stop-color="#18181B"/><stop offset="60%" stop-color="#09090B"/><stop offset="100%" stop-color="#000000"/></radialGradient>
+        <linearGradient id="rim-${uid}" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#14F195"/><stop offset="50%" stop-color="#9945FF"/><stop offset="100%" stop-color="#00D2FF"/></linearGradient>
+        <linearGradient id="b1-${uid}" x1="0%" y1="0%" x2="100%" y2="0%"><stop offset="0%" stop-color="#00FFA3"/><stop offset="100%" stop-color="#00D2FF"/></linearGradient>
+        <linearGradient id="b2-${uid}" x1="0%" y1="0%" x2="100%" y2="0%"><stop offset="0%" stop-color="#9945FF"/><stop offset="100%" stop-color="#14F195"/></linearGradient>
+        <linearGradient id="b3-${uid}" x1="0%" y1="0%" x2="100%" y2="0%"><stop offset="0%" stop-color="#DC1FFF"/><stop offset="100%" stop-color="#9945FF"/></linearGradient>
+      </defs>
+      <circle cx="24" cy="24" r="23" fill="url(#rim-${uid})"/>
+      <circle cx="24" cy="24" r="20" fill="url(#bg-${uid})"/>
+      <g transform="translate(10,13)" filter="drop-shadow(0 2px 4px rgba(0,0,0,0.75))">
+        <path d="M3.5 0h22l-4 5.5h-22z" fill="url(#b1-${uid})"/>
+        <path d="M21.5 8h-22l4 5.5h22z" fill="url(#b2-${uid})"/>
+        <path d="M3.5 16h22l-4 5.5h-22z" fill="url(#b3-${uid})"/>
+      </g>
+      <path d="M8 12a20 20 0 0 1 30-3" fill="none" stroke="#FFF" stroke-width="1.4" opacity="0.75" stroke-linecap="round"/>
+    </svg>`;
+  }
+
+  if (id === 'ripple' || s === 'XRP') {
+    return `<svg class="coin-svg" viewBox="0 0 48 48" aria-hidden="true">
+      <defs>
+        <radialGradient id="bg-${uid}" cx="40%" cy="30%" r="70%"><stop offset="0%" stop-color="#1E293B"/><stop offset="60%" stop-color="#0A192F"/><stop offset="100%" stop-color="#020C1B"/></radialGradient>
+        <linearGradient id="rim-${uid}" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#E0F2FE"/><stop offset="35%" stop-color="#38BDF8"/><stop offset="70%" stop-color="#0369A1"/><stop offset="100%" stop-color="#BAE6FD"/></linearGradient>
+        <linearGradient id="sym-${uid}" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#FFFFFF"/><stop offset="50%" stop-color="#38BDF8"/><stop offset="100%" stop-color="#0284C7"/></linearGradient>
+      </defs>
+      <circle cx="24" cy="24" r="23" fill="url(#rim-${uid})"/>
+      <circle cx="24" cy="24" r="20" fill="url(#bg-${uid})"/>
+      <g filter="drop-shadow(0 2px 4px rgba(0,0,0,0.65))">
+        <path d="M12 14c4 4 6 7 12 7s8-3 12-7l-3.5-3.5c-3 3-5 5-8.5 5s-5.5-2-8.5-5z" fill="url(#sym-${uid})"/>
+        <path d="M12 34c4-4 6-7 12-7s8 3 12 7l-3.5 3.5c-3-3-5-5-8.5-5s-5.5 2-8.5 5z" fill="url(#sym-${uid})"/>
+      </g>
+      <path d="M8 12a20 20 0 0 1 30-3" fill="none" stroke="#FFF" stroke-width="1.4" opacity="0.65" stroke-linecap="round"/>
+    </svg>`;
+  }
+
+  if (id === 'binancecoin' || s === 'BNB') {
+    return `<svg class="coin-svg" viewBox="0 0 48 48" aria-hidden="true">
+      <defs>
+        <radialGradient id="bg-${uid}" cx="35%" cy="30%" r="70%"><stop offset="0%" stop-color="#261E05"/><stop offset="70%" stop-color="#120D01"/><stop offset="100%" stop-color="#050300"/></radialGradient>
+        <linearGradient id="rim-${uid}" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#FDE68A"/><stop offset="30%" stop-color="#F59E0B"/><stop offset="70%" stop-color="#92400E"/><stop offset="100%" stop-color="#FCD34D"/></linearGradient>
+        <linearGradient id="gd-${uid}" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#FBBF24"/><stop offset="100%" stop-color="#D97706"/></linearGradient>
+      </defs>
+      <circle cx="24" cy="24" r="23" fill="url(#rim-${uid})"/>
+      <circle cx="24" cy="24" r="20" fill="url(#bg-${uid})"/>
+      <g filter="drop-shadow(0 2px 4px rgba(0,0,0,0.7))" fill="url(#gd-${uid})">
+        <polygon points="24,13 29,18 24,23 19,18"/>
+        <polygon points="16,21 21,26 16,31 11,26"/>
+        <polygon points="32,21 37,26 32,31 27,26"/>
+        <polygon points="24,29 29,34 24,39 19,34"/>
+        <polygon points="24,19 29,24 24,29 19,24" fill="#FDE047"/>
+      </g>
+      <path d="M8 12a20 20 0 0 1 30-3" fill="none" stroke="#FFF" stroke-width="1.4" opacity="0.7" stroke-linecap="round"/>
+    </svg>`;
+  }
+
+  if (id === 'cardano' || s === 'ADA') {
+    return `<svg class="coin-svg" viewBox="0 0 48 48" aria-hidden="true">
+      <defs>
+        <radialGradient id="bg-${uid}" cx="35%" cy="30%" r="70%"><stop offset="0%" stop-color="#1E3A8A"/><stop offset="60%" stop-color="#0F172A"/><stop offset="100%" stop-color="#020617"/></radialGradient>
+        <linearGradient id="rim-${uid}" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#93C5FD"/><stop offset="35%" stop-color="#2563EB"/><stop offset="70%" stop-color="#1E3A8A"/><stop offset="100%" stop-color="#BFDBFE"/></linearGradient>
+      </defs>
+      <circle cx="24" cy="24" r="23" fill="url(#rim-${uid})"/>
+      <circle cx="24" cy="24" r="20" fill="url(#bg-${uid})"/>
+      <circle cx="24" cy="24" r="15" fill="none" stroke="#38BDF8" stroke-width="0.8" opacity="0.4" stroke-dasharray="2 3"/>
+      <g filter="drop-shadow(0 2px 4px rgba(0,0,0,0.6))">
+        <circle cx="24" cy="24" r="4.2" fill="#38BDF8"/>
+        <circle cx="24" cy="14" r="2.2" fill="#60A5FA"/><circle cx="24" cy="34" r="2.2" fill="#60A5FA"/>
+        <circle cx="15.3" cy="19" r="2.2" fill="#60A5FA"/><circle cx="32.7" cy="19" r="2.2" fill="#60A5FA"/>
+        <circle cx="15.3" cy="29" r="2.2" fill="#60A5FA"/><circle cx="32.7" cy="29" r="2.2" fill="#60A5FA"/>
+      </g>
+      <path d="M8 12a20 20 0 0 1 30-3" fill="none" stroke="#FFF" stroke-width="1.4" opacity="0.65" stroke-linecap="round"/>
+    </svg>`;
+  }
+
+  if (id === 'dogecoin' || s === 'DOGE') {
+    return `<svg class="coin-svg" viewBox="0 0 48 48" aria-hidden="true">
+      <defs>
+        <radialGradient id="bg-${uid}" cx="35%" cy="30%" r="70%"><stop offset="0%" stop-color="#FDE68A"/><stop offset="50%" stop-color="#D97706"/><stop offset="100%" stop-color="#78350F"/></radialGradient>
+        <linearGradient id="rim-${uid}" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#FEF3C7"/><stop offset="35%" stop-color="#F59E0B"/><stop offset="70%" stop-color="#92400E"/><stop offset="100%" stop-color="#FDE68A"/></linearGradient>
+      </defs>
+      <circle cx="24" cy="24" r="23" fill="url(#rim-${uid})"/>
+      <circle cx="24" cy="24" r="21.2" fill="none" stroke="#451A03" stroke-width="0.8" stroke-dasharray="1.4 2" opacity="0.6"/>
+      <circle cx="24" cy="24" r="19.5" fill="url(#bg-${uid})"/>
+      <g filter="drop-shadow(0 2px 2px rgba(69,26,3,0.9))">
+        <text x="24" y="32" font-family="'Inter',sans-serif" font-weight="900" font-size="24" text-anchor="middle" fill="#FFFBEB">Ð</text>
+      </g>
+      <path d="M8 12a20 20 0 0 1 30-3" fill="none" stroke="#FFF" stroke-width="1.4" opacity="0.7" stroke-linecap="round"/>
+    </svg>`;
+  }
+
+  if (id === 'avalanche-2' || s === 'AVAX') {
+    return `<svg class="coin-svg" viewBox="0 0 48 48" aria-hidden="true">
+      <defs>
+        <radialGradient id="bg-${uid}" cx="35%" cy="30%" r="70%"><stop offset="0%" stop-color="#450A0A"/><stop offset="60%" stop-color="#1C0404"/><stop offset="100%" stop-color="#050101"/></radialGradient>
+        <linearGradient id="rim-${uid}" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#FCA5A5"/><stop offset="35%" stop-color="#EF4444"/><stop offset="70%" stop-color="#7F1D1D"/><stop offset="100%" stop-color="#FECACA"/></linearGradient>
+      </defs>
+      <circle cx="24" cy="24" r="23" fill="url(#rim-${uid})"/>
+      <circle cx="24" cy="24" r="20" fill="url(#bg-${uid})"/>
+      <g filter="drop-shadow(0 2px 4px rgba(0,0,0,0.7))">
+        <polygon points="24,10 32,34 24,30" fill="#EF4444"/>
+        <polygon points="24,10 24,30 16,34" fill="#B91C1C"/>
+        <polygon points="16,28 20,34 14,34" fill="#EF4444"/>
+        <polygon points="32,28 34,34 28,34" fill="#B91C1C"/>
+      </g>
+      <path d="M8 12a20 20 0 0 1 30-3" fill="none" stroke="#FFF" stroke-width="1.4" opacity="0.65" stroke-linecap="round"/>
+    </svg>`;
+  }
+
+  if (id === 'tether' || s === 'USDT') {
+    return `<svg class="coin-svg" viewBox="0 0 48 48" aria-hidden="true">
+      <defs>
+        <radialGradient id="bg-${uid}" cx="35%" cy="30%" r="70%"><stop offset="0%" stop-color="#064E3B"/><stop offset="60%" stop-color="#022C22"/><stop offset="100%" stop-color="#011710"/></radialGradient>
+        <linearGradient id="rim-${uid}" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#A7F3D0"/><stop offset="35%" stop-color="#10B981"/><stop offset="70%" stop-color="#047857"/><stop offset="100%" stop-color="#D1FAE5"/></linearGradient>
+      </defs>
+      <circle cx="24" cy="24" r="23" fill="url(#rim-${uid})"/>
+      <circle cx="24" cy="24" r="20" fill="url(#bg-${uid})"/>
+      <g filter="drop-shadow(0 2px 4px rgba(0,0,0,0.65))">
+        <ellipse cx="24" cy="25" rx="13" ry="5.5" fill="none" stroke="#34D399" stroke-width="2.4"/>
+        <path d="M15 14h18M24 14v17" stroke="#ECFDF5" stroke-width="3.4" stroke-linecap="round"/>
+      </g>
+      <path d="M8 12a20 20 0 0 1 30-3" fill="none" stroke="#FFF" stroke-width="1.4" opacity="0.65" stroke-linecap="round"/>
+    </svg>`;
+  }
+
+  if (id === 'usd-coin' || s === 'USDC') {
+    return `<svg class="coin-svg" viewBox="0 0 48 48" aria-hidden="true">
+      <defs>
+        <radialGradient id="bg-${uid}" cx="35%" cy="30%" r="70%"><stop offset="0%" stop-color="#1E3A8A"/><stop offset="60%" stop-color="#0F172A"/><stop offset="100%" stop-color="#020617"/></radialGradient>
+        <linearGradient id="rim-${uid}" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#93C5FD"/><stop offset="35%" stop-color="#2563EB"/><stop offset="70%" stop-color="#1E3A8A"/><stop offset="100%" stop-color="#BFDBFE"/></linearGradient>
+      </defs>
+      <circle cx="24" cy="24" r="23" fill="url(#rim-${uid})"/>
+      <circle cx="24" cy="24" r="20" fill="url(#bg-${uid})"/>
+      <g filter="drop-shadow(0 2px 4px rgba(0,0,0,0.6))" stroke="#60A5FA" stroke-width="2.6" fill="none">
+        <path d="M24 12c-6.6 0-11 4.5-11 11s4.4 11 11 11" stroke-linecap="round"/>
+        <path d="M24 12c6.6 0 11 4.5 11 11s-4.4 11-11 11" stroke-linecap="round"/>
+        <path d="M24 16v16" stroke="#ECFDF5" stroke-width="2.6" stroke-linecap="round"/>
+      </g>
+      <path d="M8 12a20 20 0 0 1 30-3" fill="none" stroke="#FFF" stroke-width="1.4" opacity="0.65" stroke-linecap="round"/>
+    </svg>`;
+  }
+
+  // Procedural 3D Minted Alloy Coin for all other tokens
+  const k = Math.abs(hash(id || s || 'coin'));
+  const metal = COIN_3D_METALS[k % COIN_3D_METALS.length];
+  const t = s.slice(0, 4) || 'CRYPTO';
+  const fontSize = t.length > 3 ? '13' : (t.length > 2 ? '15' : '17');
+  
+  return `<svg class="coin-svg" viewBox="0 0 48 48" aria-hidden="true">
+    <defs>
+      <radialGradient id="bg-${uid}" cx="35%" cy="30%" r="70%"><stop offset="0%" stop-color="${metal.bg1}"/><stop offset="70%" stop-color="${metal.bg2}"/><stop offset="100%" stop-color="#000000"/></radialGradient>
+      <linearGradient id="rim-${uid}" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="${metal.rim1}"/><stop offset="35%" stop-color="${metal.rim2}"/><stop offset="70%" stop-color="${metal.rim3}"/><stop offset="100%" stop-color="${metal.rim1}"/></linearGradient>
+    </defs>
+    <circle cx="24" cy="24" r="23" fill="url(#rim-${uid})"/>
+    <circle cx="24" cy="24" r="21.2" fill="none" stroke="${metal.rim3}" stroke-width="0.8" stroke-dasharray="1.4 2" opacity="0.6"/>
+    <circle cx="24" cy="24" r="19.5" fill="url(#bg-${uid})"/>
+    <circle cx="24" cy="24" r="18" fill="none" stroke="${metal.acc}" stroke-width="0.8" opacity="0.35"/>
+    <g filter="drop-shadow(0 2px 3px rgba(0,0,0,0.8))">
+      <text x="24" y="29" font-family="'Inter',sans-serif" font-weight="800" font-size="${fontSize}" text-anchor="middle" fill="${metal.fg}" letter-spacing="0.5">${esc(t)}</text>
+    </g>
+    <path d="M8 12a20 20 0 0 1 30-3" fill="none" stroke="#FFF" stroke-width="1.4" opacity="0.65" stroke-linecap="round"/>
+  </svg>`;
+}
+
+let _coinUidCounter = 0;
+function badge(c, lg) {
+  if (!c) return '';
+  _coinUidCounter = (_coinUidCounter + 1) % 100000;
+  const uid = `c${_coinUidCounter}`;
+  const icon = iconSrc(c);
+  const coinSvg = get3DCoinSvg(c, uid);
+  const innerImg = icon ? `<img class="coin-img-inner" src="${esc(icon)}" alt="" loading="lazy">` : '';
+
+  return `<span class="badge${lg ? ' lg' : ''}" title="${esc(c.name || '')} (${esc(c.sym || '')})">
+    <span class="coin-wrap">
+      ${coinSvg}
+      ${innerImg}
+      <span class="coin-gloss" aria-hidden="true"></span>
+    </span>
+  </span>`;
 }
 function ring(score,cls,small){
   const r=52,C=2*Math.PI*r,d=C*score/100;
@@ -2255,7 +2495,7 @@ function postActions(p){
     : `<button class="btn sm" type="button" data-blog="del-req" data-id="${esc(p.id)}" title="Delete article">Delete</button>`;
 
   return `<div class="post-actions">
-    <button class="btn sm primary" type="button" data-blog="read" data-id="${esc(p.id)}">Read</button>
+    <a class="btn sm primary" href="?article=${encodeURIComponent(p.id)}#post=${encodeURIComponent(p.id)}" target="_blank" rel="noopener noreferrer" data-blog="read-tab" data-id="${esc(p.id)}" title="Open research article in a new tab"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"></path><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"></path></svg>Read</a>
     <button class="btn sm" type="button" data-blog="edit" data-id="${esc(p.id)}" title="Edit article"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path></svg>Edit</button>
     <button class="btn sm" type="button" data-blog="pdf" data-id="${esc(p.id)}">Print / PDF</button>
     <button class="btn sm" type="button" data-blog="download" data-id="${esc(p.id)}">Download HTML</button>
@@ -2272,17 +2512,18 @@ function renderBlog(){
   }
   box.innerHTML=B.posts.map(p=>{
     const pId = esc(p.id);
+    const coverUrl = getPostImage(p);
     return `<article class="card post" data-id="${pId}">
-      <div class="pimgbox${p.imageUrl?'':' none'}" data-blog="read" data-id="${pId}" title="Click to read article">
-        ${p.imageUrl?`<img src="${esc(p.imageUrl)}" alt="${esc(p.imageAlt||p.title)}" loading="lazy" decoding="async">`:''}
+      <a class="pimgbox" href="?article=${encodeURIComponent(p.id)}#post=${encodeURIComponent(p.id)}" target="_blank" rel="noopener noreferrer" title="Read ${esc(p.title)} in a new tab">
+        <img src="${esc(coverUrl)}" alt="${esc(p.imageAlt||p.title)}" loading="lazy" decoding="async" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
         <span class="ph" aria-hidden="true">${esc((p.title||'J').trim().charAt(0).toUpperCase())}</span>
-      </div>
+      </a>
       <div class="pmeta">
-        <span class="type ${p.kind==='pdf'?'token':'coin'}">${p.kind==='pdf'?'PDF':'HTML'}</span>
+        <span class="type ${p.kind==='pdf'?'token':'coin'}">${p.kind==='pdf'?'PDF Research Paper':'Methodology Article'}</span>
         <span>${esc(fmtDate(p.createdAt))}</span>
       </div>
-      <h3 data-blog="read" data-id="${pId}" title="Click to read article">${esc(p.title)}</h3>
-      ${p.summary?`<p data-blog="read" data-id="${pId}">${esc(p.summary)}</p>`:''}
+      <h3 class="post-title"><a href="?article=${encodeURIComponent(p.id)}#post=${encodeURIComponent(p.id)}" target="_blank" rel="noopener noreferrer" title="Read ${esc(p.title)} in a new tab">${esc(p.title)}</a></h3>
+      ${p.summary?`<p>${esc(p.summary)}</p>`:''}
       ${postActions(p)}
       ${shareRow(p)}
     </article>`;
@@ -2301,11 +2542,20 @@ function modalClose(id){
   const el=$('#'+id);
   if(!el) return;
   el.hidden=true;
+  if(id === 'readModal'){
+    document.body.classList.remove('reader-full-mode');
+    el.classList.remove('reader-full-mode');
+    const tb = $('#readTopBar');
+    if(tb) tb.hidden = true;
+    if(window.location.search.includes('article')){
+      try{ window.history.pushState(null, '', window.location.pathname); }catch(e){}
+    }
+  }
   if(!document.querySelector('.modal:not([hidden])'))document.documentElement.style.overflow='';
   if(B.opener&&B.opener.focus&&document.contains(B.opener))B.opener.focus();
 }
 
-async function readPost(id){
+async function readPost(id, isNewTab){
   const p = findPost(id);
   if(!p){
     toast('Article not found.');
@@ -2316,23 +2566,43 @@ async function readPost(id){
   $('#readTitle').textContent = p.title;
 
   const ri = $('#readImg');
+  const coverImg = getPostImage(p);
   if(ri){
-    if(p.imageUrl){
-      ri.src = p.imageUrl;
-      ri.alt = p.imageAlt || p.title;
-      ri.hidden = false;
-    } else {
-      ri.removeAttribute('src');
-      ri.hidden = true;
+    ri.src = coverImg;
+    ri.alt = p.imageAlt || p.title;
+    ri.hidden = false;
+  }
+
+  const modalEl = $('#readModal');
+  const topBar = $('#readTopBar');
+  const metaTags = $('#readMetaTags');
+
+  if(isNewTab){
+    document.title = `${p.title} – Crypto Score AI Research`;
+    document.body.classList.add('reader-full-mode');
+    if(modalEl) modalEl.classList.add('reader-full-mode');
+    if(topBar) topBar.hidden = false;
+    if(metaTags){
+      const readMin = Math.max(2, Math.round((p.html || p.summary || '').split(/\s+/).length / 180));
+      metaTags.innerHTML = `
+        <span class="type ${p.kind==='pdf'?'token':'coin'}">${p.kind==='pdf'?'PDF Document':'Technical Whitepaper'}</span>
+        <span>${esc(fmtDate(p.createdAt))}</span>
+        <span>${readMin} min read</span>
+      `;
     }
+  } else {
+    document.body.classList.remove('reader-full-mode');
+    if(modalEl) modalEl.classList.remove('reader-full-mode');
+    if(topBar) topBar.hidden = true;
   }
 
   $('#readActions').innerHTML = `
+    <a class="btn sm" href="?article=${encodeURIComponent(p.id)}#post=${encodeURIComponent(p.id)}" target="_blank" rel="noopener noreferrer" title="Open this article in a dedicated new tab"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>Open in new tab</a>
     <button class="btn sm" type="button" data-blog="edit" data-id="${esc(p.id)}" title="Edit article"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path></svg>Edit article</button>
     <button class="btn sm primary" type="button" data-blog="print"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="6 9 6 2 18 2 18 9"></polyline><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"></path><rect x="6" y="14" width="12" height="8"></rect></svg>Print / Save PDF</button>
     <button class="btn sm" type="button" data-blog="download" data-id="${esc(p.id)}"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>Download HTML</button>
     <button class="btn sm" type="button" data-blog="copy" data-id="${esc(p.id)}">${ICO.link}Copy Link</button>
-    <button class="btn sm danger-btn" type="button" data-blog="del-modal" data-id="${esc(p.id)}" title="Delete article"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path></svg>Delete article</button>
+    <button class="btn sm danger-btn" type="button" data-blog="del-modal" data-id="${esc(p.id)}" title="Delete article"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path></svg>Delete article</button>
   `;
 
   let content = p.html || '';
@@ -2345,12 +2615,9 @@ async function readPost(id){
   } else if(!content){
     content = `<p style="font-size:16px;line-height:1.7">${esc(p.summary || 'No text content provided for this article.')}</p>`;
   } else {
-    // If full HTML document, extract body content
     const bodyMatch = content.match(/<body[^>]*>([\s\S]*?)<\/body>/i);
     if(bodyMatch) content = bodyMatch[1];
-    // Strip scripts for clean rendering
     content = content.replace(/<script\b[^<]*(?:(?!<\/script>)<[^<]*)*<\/script>/gi, '');
-    // Sanitize any hardcoded dark hex colors so contrast is crystal clear in both light and dark themes
     content = content
       .replace(/color:\s*(#1e293b|#0f172a|#000000|#000|#111111|#111|#334155|#333333|#333|#222222|#222|#1a202c)/gi, 'color:var(--fg)')
       .replace(/color:\s*(#64748b|#475569|#94a3b8|#666666|#666|#555555|#555)/gi, 'color:var(--muted)')
@@ -2364,6 +2631,9 @@ async function readPost(id){
     rb.scrollTop = 0;
   }
   modalOpen('readModal');
+  if(isNewTab){
+    window.scrollTo({ top: 0, behavior: 'instant' });
+  }
 }
 
 function downloadHtml(id){
@@ -2580,8 +2850,19 @@ function deletePost(id){
 }
 
 async function blogInit(){
-  const m=/#post=([^&]+)/.exec(location.hash||'');
-  if(m) B.want=decodeURIComponent(m[1]);
+  let targetArticle = null;
+  let isFullTab = false;
+  try{
+    const urlParams = new URLSearchParams(window.location.search);
+    const artParam = urlParams.get('article');
+    const hashM = /#post=([^&]+)/.exec(location.hash||'');
+    if(artParam){
+      targetArticle = artParam;
+      isFullTab = true;
+    } else if(hashM){
+      targetArticle = decodeURIComponent(hashM[1]);
+    }
+  }catch(e){}
 
   try{
     const delStored = JSON.parse(localStorage.getItem('csai-deleted-posts') || '[]');
@@ -2593,22 +2874,23 @@ async function blogInit(){
     if(Array.isArray(stored) && stored.length){
       stored.forEach((p, idx)=>{
         if(!p.id) p.id = slug(p.title || 'article') + '-' + idx;
+        if(!p.imageUrl) p.imageUrl = getPostImage(p);
       });
       // Filter out explicitly deleted articles
       B.posts = stored.filter(p => !B.deletedIds.has(String(p.id).trim()));
     } else {
+      DEFAULT_POSTS.forEach(p => { if(!p.imageUrl) p.imageUrl = getPostImage(p); });
       B.posts = DEFAULT_POSTS.filter(p => !B.deletedIds.has(String(p.id).trim()));
     }
   }catch(e){
+    DEFAULT_POSTS.forEach(p => { if(!p.imageUrl) p.imageUrl = getPostImage(p); });
     B.posts = DEFAULT_POSTS.filter(p => !B.deletedIds.has(String(p.id).trim()));
   }
   B.admin=true;
   B.state='ready';
   renderBlog();
-  if(B.want){
-    const w = B.want;
-    B.want = null;
-    readPost(w);
+  if(targetArticle){
+    readPost(targetArticle, isFullTab);
   }
 }
 
@@ -2616,6 +2898,16 @@ function handleBlogClick(e){
   const t = e.target.closest('[data-blog]');
   if(t){
     const a = t.dataset.blog, id = t.dataset.id;
+    if(a === 'read-tab'){
+      // Allow browser to follow link target="_blank" naturally without preventDefault
+      return;
+    }
+    if(a === 'back-dash'){
+      e.preventDefault();
+      modalClose('readModal');
+      try{ window.history.pushState(null, '', window.location.pathname); }catch(err){}
+      return;
+    }
     if(a === 'new'){ e.preventDefault(); openComposer(); }
     else if(a === 'edit'){ e.preventDefault(); if(!$('#readModal').hidden) modalClose('readModal'); openComposer(id); }
     else if(a === 'close'){ e.preventDefault(); const m = t.closest('.modal'); if(m) modalClose(m.id); }
@@ -2637,8 +2929,12 @@ function handleBlogClick(e){
   // Card delegation: clicking anywhere on the article card outside action buttons/links opens the reader
   const card = e.target.closest('article.post');
   if(card && !e.target.closest('button, a, input, textarea')){
-    e.preventDefault();
-    if(card.dataset.id) readPost(card.dataset.id);
+    const readTabLink = card.querySelector('a[data-blog="read-tab"]') || card.querySelector('a');
+    if(readTabLink){
+      readTabLink.click();
+    } else if(card.dataset.id){
+      readPost(card.dataset.id);
+    }
   }
 }
 
